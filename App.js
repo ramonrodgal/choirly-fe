@@ -22,6 +22,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Group screenOptions={{ headerShown: false}}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         <Stack.Screen name="AllMembers" component={AllMembersScreen} />
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
         <Stack.Screen name="SingleMessage" component={SingleMessageScreen} />
+        </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
   );
