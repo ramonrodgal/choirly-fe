@@ -20,7 +20,7 @@ export default function HomeScreen() {
             onPress={handleSignOut}
             style={styles.button}
             >
-                <Text style={styles.buttonText}>Sign out</Text>
+                <Text style={styles.buttonText}>Sign out now</Text>
             </TouchableOpacity>
             </View>
         </ImageBackground>

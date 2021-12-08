@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./App/Screens/HomeScreen";
 import UserProfileScreen from "./App/Screens/UserProfileScreen";
 import AllMembersScreen from "./App/Screens/AllMembersScreen";
@@ -17,13 +18,14 @@ import RegisterScreen from "./App/Screens/RegisterScreen";
 import SingleMessageScreen from "./App/Screens/SingleMessageScreen";
 
 const Stack = createNativeStackNavigator();
+const Tabs = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home page'}} />
         <Stack.Screen name="UserProfile" component={UserProfileScreen} />
         <Stack.Screen name="AllMembers" component={AllMembersScreen} />
         <Stack.Screen name="Choir" component={ChoirScreen} />
