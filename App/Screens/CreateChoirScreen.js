@@ -27,7 +27,8 @@ export default function CreateChoirScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.label}>Choir name</Text>
+      <Text style={styles.title}>Create a choir group</Text>
+      <Text style={styles.label}>Choir name:</Text>
       <Controller
         control={control}
         rules={{
@@ -46,7 +47,7 @@ export default function CreateChoirScreen() {
       />
       {errors.choirName && <Text>A choir name is required.</Text>}
 
-      <Text style={styles.label}>Location</Text>
+      <Text style={styles.label}>Location:</Text>
       <Controller
         control={control}
         rules={{
@@ -65,7 +66,7 @@ export default function CreateChoirScreen() {
       />
       {errors.location && <Text>A location is required.</Text>}
 
-      <Text style={styles.label}>Description</Text>
+      <Text style={styles.label}>Description:</Text>
       <Controller
         control={control}
         rules={{
@@ -84,7 +85,7 @@ export default function CreateChoirScreen() {
       />
       {errors.description && <Text>A description is required.</Text>}
 
-      <Text style={styles.label}>Image URL</Text>
+      <Text style={styles.label}>Image URL:</Text>
       <Controller
         control={control}
         rules={{
@@ -126,7 +127,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 2,
     backgroundColor: "white",
   },
@@ -136,5 +138,9 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "beige",
     borderRadius: 4,
+  },
+  title: {
+    fontWeight: "bold",
+    padding: 10,
   },
 });
