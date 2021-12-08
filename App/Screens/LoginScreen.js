@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground, Image } from 'react-native';
 import { auth } from '../../firebase';
 
 export default function LoginScreen() {
@@ -36,6 +36,14 @@ export default function LoginScreen() {
         style={styles.container}
         behaviour="padding"
         >
+            <ImageBackground style={styles.background} resizeMode="cover" source={require('../assets/background.png')}>
+            
+            <View style={styles.logoContainer}>
+                <Image
+                style={styles.logo}
+                source={require('../assets/logo.png')}
+                />
+            </View>
             <View style={styles.inputContainer}>
                 <TextInput 
                 placeholder="Email"
@@ -51,7 +59,6 @@ export default function LoginScreen() {
                 secureTextEntry
                 />
             </View>
-
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                 onPress={handleLogin}
@@ -66,6 +73,7 @@ export default function LoginScreen() {
                     <Text style={styles.buttonOutlineText}>Register</Text>
                 </TouchableOpacity>
             </View>
+            </ ImageBackground>
         </KeyboardAvoidingView>
     )
 }
@@ -74,45 +82,66 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center',
+        alignContent: 'center',
+    },
+    background: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        alignContent: 'center'
+    },
+    logoContainer: {
+        flex: 2,
+        // position: "absolute",
+        top: 70,
+        alignItems: "center"
     },
     inputContainer: {
+        flex: 1,
+        // position: "absolute",
+        justifyContent: 'flex-end',
         width: '80%',
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: '#2F4550',
         paddingHorizontal: 15,
         paddingVertical: 10,
-        borderRadius: 10,
+        borderRadius: 15,
         marginTop: 5,
+        color: 'white',
     },
     buttonContainer: {
+        flex: 1,
+        // position: "absolute",
         width: '60%',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        marginTop: 40,
+        marginTop: 20,
     },
     button: {
-        backgroundColor: '#0782F9',
+        backgroundColor: '#B2DED9',
         width: '100%',
         padding: 15,
-        borderRadius: 10,
+        borderRadius: 25,
         alignItems: 'center',
     },
     buttonOutline: {
-        backgroundColor: 'white',
-        marginTop: 5,
-        borderColor: '#0782F9',
-        borderWidth: 2,
+        backgroundColor: '#586F7C',
+        marginTop: 25,
+        borderRadius: 15,
     },
     buttonText: {
-        color: 'white',
+        color: 'black',
         fontWeight: '700',
         fontSize: 16,
     },
     buttonOutlineText: {
-        color: '#0782F9',
+        color: 'white',
         fontWeight: '700',
         fontSize: 16,
-    }
+    },
+    logo: {
+        width: 300,
+        height: 300,
+    },
 })
