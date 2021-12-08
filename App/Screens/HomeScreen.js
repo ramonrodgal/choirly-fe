@@ -1,30 +1,53 @@
-import React from "react";
-import { Button, StyleSheet, ImageBackground, Text, View, Image } from "react-native";
+import { useNavigation } from '@react-navigation/native'
+import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { auth } from '../../firebase';
 
-export default function Home({ navigation }) {
-  return (
-    <ImageBackground 
-    style={styles.background}
-    source={{ uri: 'https://i.pinimg.com/originals/37/af/c1/37afc1f506c8276fa4fffb6e119ee054.jpg'}}>
-        <View style={styles.logoContainer}>
-        <Text>Homepage</Text>
-        <Image style={styles.logo} source={require('../assets/choirly.png')} />
-        <Button
-        title="Go to profile"
-        onPress={() => navigation.navigate("UserProfile")}
-      />
+export default function HomeScreen() {
+    const navigation = useNavigation();
+
+    const handleSignOut = () => {
+        auth.signOut().then(() => {
+            navigation.replace("Login")
+        }).catch(error => alert(error.message))
+    }
+
+    return (
+        <View style={styles.container}>
+            <Text>Email: {auth.currentUser?.email} </Text>
+            <TouchableOpacity
+            onPress={handleSignOut}
+            style={styles.button}
+            >
+                <Text style={styles.buttonText}>Sign out</Text>
+            </TouchableOpacity>
         </View>
-        <View style={styles.loginButton}><Text>Login</Text></View>
-        <View style={styles.registerButton}><Text>Register Now!</Text></View>
-    </ImageBackground>
-  );
+    )
 }
 
 const styles = StyleSheet.create({
-  background: {
+  container: {
       flex: 1,
-      justifyContent: "flex-end",
-      alignItems: "center"
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  button: {
+      backgroundColor: '#0782F9',
+      width: '60%',
+      padding: 15,
+      borderRadius: 10,
+      alignItems: 'center',
+      marginTop: 40,
+  },
+  buttonText: {
+      color: 'white',
+      fontWeight: '700',
+      fontSize: 16,
+  },
+  background: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
   loginButton: {
       width: '100%',
