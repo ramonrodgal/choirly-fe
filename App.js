@@ -27,7 +27,7 @@ export default function App() {
     <NavigationContainer>
       <Drawer.Navigator>
         <Drawer.Screen
-          options={{ headerShown: false }}
+          options={{ headerShown: true }} // need to change this - like this so we can nav out of login when user logged in
           name="Login"
           component={LoginScreen}
         />
