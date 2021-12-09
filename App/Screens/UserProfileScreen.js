@@ -13,11 +13,13 @@ export default function UserProfileScreen({ navigation, route }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>My Profile</Text>
-      <Image
-        style={styles.image}
-        source={require("../assets/musicnote.png")}
-        alt="Profile Image"
-      ></Image>
+      <View>
+        <Image
+          style={styles.image}
+          source={require("../assets/musicnote.png")}
+          alt="Profile Image"
+        ></Image>
+      </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           onPress={() => navigation.navigate("EditProfile")}
@@ -27,7 +29,7 @@ export default function UserProfileScreen({ navigation, route }) {
           <Text style={styles.buttonText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={styles.basicInfo}>
         <Text>First Name: placeholder</Text>
         <Text>Surname: placeholder</Text>
         <Text>About me: placeholder</Text>
@@ -77,5 +79,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "700",
     fontSize: 16,
+  },
+  basicInfo: {
+    alignItems: "flex-end",
   },
 });
