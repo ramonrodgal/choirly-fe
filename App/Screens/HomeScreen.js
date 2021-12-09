@@ -29,7 +29,7 @@ export default function HomeScreen() {
   return (
     <ImageBackground
       style={styles.background}
-      source={require("../assets/background.png")}
+      source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
         <Text>Email: {auth.currentUser?.email} </Text>
