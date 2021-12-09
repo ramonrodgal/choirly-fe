@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,8 +10,35 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { TextInput } from "react-native-gesture-handler";
 
 export default function EditProfileScreen({ navigation, route }) {
+  const [isShowingInput, setIsShowingInput] = useState(false);
+  console.log(isShowingInput);
+
+  const handleFirstName = () => {
+    console.log("pencil pressed first name");
+    setIsShowingInput(true);
+  };
+
+  const FirstName = () => {
+    return isShowingInput ? (
+      <TextInput title="test">Placeholder FN</TextInput>
+    ) : (
+      <View>
+        <Text>Placeholder FN</Text>
+        <FontAwesome
+          name="pencil"
+          size={20}
+          color="black"
+          onPress={handleFirstName}
+        />
+      </View>
+    );
+  };
+
+  useEffect(FirstName, [isShowingInput]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>My Profile</Text>
@@ -23,13 +51,8 @@ export default function EditProfileScreen({ navigation, route }) {
       </View>
 
       <View style={styles.basicInfo}>
-        <Text>First Name: placeholder</Text>
-        <FontAwesome
-          name="pencil"
-          size={20}
-          color="black"
-          onPress={() => console.log("pencil pressed first name")}
-        />
+        <Text>First Name:</Text>
+        <FirstName />
         <Text>Surname: placeholder</Text>
         <FontAwesome
           name="pencil"
