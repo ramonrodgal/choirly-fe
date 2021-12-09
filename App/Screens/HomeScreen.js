@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View, ImageBackground } from 'react-native'
 import { auth } from '../../firebase';
+import CreateChoirScreen from './CreateChoirScreen';
 
 export default function HomeScreen() {
     const navigation = useNavigation();
@@ -10,6 +11,10 @@ export default function HomeScreen() {
         auth.signOut().then(() => {
             navigation.replace("Login")
         }).catch(error => alert(error.message))
+    }
+
+    const goToChoir = () => {
+        navigation.replace("CreateChoir")
     }
 
     return (
@@ -21,6 +26,12 @@ export default function HomeScreen() {
             style={styles.button}
             >
                 <Text style={styles.buttonText}>Sign out now</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+            onPress={goToChoir}
+            style={styles.button}
+            >
+                <Text style={styles.buttonText}>Create Choir</Text>
             </TouchableOpacity>
             </View>
         </ImageBackground>
