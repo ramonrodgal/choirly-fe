@@ -15,34 +15,86 @@ export default function ChoirScreen() {
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.imageContainer}>
-          <Image style={styles.choirLogo} source={{ uri: "https://lh3.googleusercontent.com/proxy/dS2WKRPNwl-9AnwFB0xctZF5Q1LSFkwtUkgaAbTRVLIxsJMcC4cgWjtxchpA1SU8BWnIB_Z-sMIW8GC1LYrFQUlhyuxSkU4"}} />
+          <Image style={styles.choirLogo} source={{ uri: "https://cdn4.iconfinder.com/data/icons/music-and-entertainment/512/Music_Entertainment_Crowd-512.png"}} />
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.title}>VOX </Text>
-          <Text style={styles.choirInfo}>Location: Chester </Text>
+          <Text style={styles.choirInfo}>Location: Chester, St. Mary's Church </Text>
           <Text style={styles.choirInfo}>Established: 1991 </Text>
+          <Text style={styles.choirInfo}>Mambers: 35</Text>
         </View>
       </View>
+
       <View style={styles.descriptionContainer}>
-      <ScrollView>
-        <Text style={styles.title}>About us:</Text>
-        <Text style={styles.description}>
-        But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
-        But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
-        </Text>
-        </ScrollView>
+          <Text style={styles.title}>About us</Text>
+          <Text style={styles.description}>
+          Abilities forfeited situation extremely my to he resembled. Old had conviction discretion understood put principles you. Match means keeps round one her quick. She forming two comfort invited. Yet she income effect edward. Entire desire way design few. Mrs sentiments led solicitude estimating friendship fat. Meant those event is weeks state it to or. Boy but has folly charm there its. Its fact ten spot drew.
+          </Text>
+      </View>
+
+      <View style={styles.eventsContainer}>
+      <Text style={styles.title}>Upcoming events</Text>
         <ScrollView>
-        <Text style={styles.events}>
-        <Text style={styles.title}>Upcoming events</Text>
-        Dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasion
-        </Text>
+          <View style={styles.eventCard}>
+            <View style={styles.eventTitle}>
+              <View style={styles.iconContainer}>
+              <Image style={styles.icon} source={ require("../assets/concertIcon.png")} />
+              </View>
+              <View style={styles.titleContainer}>
+              <Text style={styles.eventTitleText}>Concert - Winter is Coming </Text>
+              </View>
+            </View>
+
+            <View style={styles.eventContainer}>
+              <Text style={styles.eventBody}>Location: Chester</Text>
+              <Text style={styles.eventBody}>Date: 21/12/2021</Text>
+              <Text style={styles.eventBody}>Time: 20:00</Text>
+            </View>
+          </View>
+
+          <View style={styles.eventCard}>
+            <View style={styles.eventTitle}>
+              <View style={styles.iconContainer}>
+              <Image style={styles.icon} source={ require("../assets/choir-icon.jpg")} />
+              </View>
+              <View style={styles.titleContainer}>
+              <Text style={styles.eventTitleText}>Rehearsal - St.Mary's Church </Text>
+              </View>
+            </View>
+
+            <View style={styles.eventContainer}>
+              <Text style={styles.eventBody}>Location: Chester</Text>
+              <Text style={styles.eventBody}>Date: 21/12/2021</Text>
+              <Text style={styles.eventBody}>Time: 20:00</Text>
+            </View>
+          </View>
+
+          <View style={styles.eventCard}>
+            <View style={styles.eventTitle}>
+              <View style={styles.iconContainer}>
+              <Image style={styles.icon} source={ require("../assets/concertIcon.png")} />
+              </View>
+              <View style={styles.titleContainer}>
+              <Text style={styles.eventTitleText}>Concert - Winter is Coming </Text>
+              </View>
+            </View>
+
+            <View style={styles.eventContainer}>
+              <Text style={styles.eventBody}>Location: Chester</Text>
+              <Text style={styles.eventBody}>Date: 21/12/2021</Text>
+              <Text style={styles.eventBody}>Time: 20:00</Text>
+            </View>
+          </View>
+      
         </ScrollView>
       </View>
+
       <View style={styles.bottomContainer}>
         <TouchableOpacity onPress={() => { navigation.navigate("Joining")}} style={styles.button}>
           <Text style={styles.buttonText}>Reguest to join</Text>
         </TouchableOpacity>
       </View>
+      
     </View>
     </ImageBackground>
   )
@@ -58,19 +110,18 @@ const styles = StyleSheet.create({
   },
   background: {
     flex: 1,
-    justifyContent: "flex-end",
     alignItems: "center",
   },
+
   topContainer: {
+    marginTop: 10,
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start'
   },
   imageContainer: {
     width: '40%',
-    borderWidth: 1,
-    borderColor: 'red',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   choirLogo: {
@@ -80,41 +131,80 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     width: '60%',
-    borderWidth: 1,
-    borderColor: 'blue',
     flexDirection: 'column',
   },
   title: {
     fontWeight: "700",
-    color: 'black',
+    color: '#BD7D1E',
   },
   choirInfo: {
     color: 'black',
+    fontSize: 13,
   },
+
+
   descriptionContainer: {
     marginTop: 15,
-    flex: 5,
-    borderWidth: 1,
-    borderColor: 'yellow',
+    flex: 1.5,
   },
   description: {
     color: 'black',
-    backgroundColor: 'white',
+    fontSize: 13,
   },
-  events: {
+
+
+  eventsContainer: {
+    flex: 3.5,
+  },
+  eventCard: {
+    marginTop: 10,
+    backgroundColor: '#EDE5DA',
+    borderRadius: 15,
+  },
+  eventTitle: {
+    height: 35,
+    backgroundColor: '#B2DED9',
+    flexDirection: 'row',
+  },
+  iconContainer: {
+    width: '10%',
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    height: 30,
+    width: 30,
+    // borderWidth: 1,
+    // borderColor: 'purple',
+  },
+  titleContainer: {
+    width: '90%',
+    justifyContent: 'center',
+    paddingLeft: 5,
+    // borderWidth: 1,
+    // borderColor: 'green',
+  },
+  eventTitleText: {
+    fontWeight: "700",
     color: 'black',
-    borderWidth: 1,
-    borderColor: 'pink',
-    marginTop: 15,
-    backgroundColor: 'white',
   },
+
+  eventContainer:{    
+    // borderWidth: 1,
+    paddingLeft: 40,
+    justifyContent: 'flex-start',
+    // borderColor: 'red',
+  },
+  eventBody: {
+    color: 'black',
+    fontSize: 12,
+  },
+
   bottomContainer: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'green',
   },
   button: {
-    backgroundColor: "#B2DED9",
+    backgroundColor: "#BC9C22",
     width: "60%",
     padding: 15,
     borderRadius: 25,
