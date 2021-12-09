@@ -3,6 +3,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "./App/Screens/HomeScreen";
 import UserProfileScreen from "./App/Screens/UserProfileScreen";
@@ -19,24 +20,33 @@ import SingleMessageScreen from "./App/Screens/SingleMessageScreen";
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ title: 'Home page'}} />
-        <Stack.Screen name="UserProfile" component={UserProfileScreen} />
-        <Stack.Screen name="AllMembers" component={AllMembersScreen} />
-        <Stack.Screen name="Choir" component={ChoirScreen} />
-        <Stack.Screen name="CreateChoir" component={CreateChoirScreen} />
-        <Stack.Screen name="EditProfile" component={EditProfileScreen} />
-        <Stack.Screen name="Event" component={EventScreen} />
-        <Stack.Screen name="Joining" component={JoiningScreen} />
-        <Stack.Screen name="Notifications" component={NotificationsScreen} />
-        <Stack.Screen name="Register" component={RegisterScreen} />
-        <Stack.Screen name="SingleMessage" component={SingleMessageScreen} />
-      </Stack.Navigator>
+      <Drawer.Navigator>
+        <Drawer.Screen
+          options={{ headerShown: true }} // need to change this - like this so we can nav out of login when user logged in
+          name="Login"
+          component={LoginScreen}
+        />
+        <Drawer.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: "Home page" }}
+        />
+        <Drawer.Screen name="UserProfile" component={UserProfileScreen} />
+        <Drawer.Screen name="AllMembers" component={AllMembersScreen} />
+        <Drawer.Screen name="Choir" component={ChoirScreen} />
+        <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
+        <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
+        <Drawer.Screen name="Event" component={EventScreen} />
+        <Drawer.Screen name="Joining" component={JoiningScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        <Drawer.Screen name="Register" component={RegisterScreen} />
+        <Drawer.Screen name="SingleMessage" component={SingleMessageScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
