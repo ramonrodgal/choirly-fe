@@ -28,14 +28,38 @@ export default function EditProfileScreen({ navigation, route }) {
           name="pencil"
           size={20}
           color="black"
-          onPress={() => console.log("pencil pressed")}
+          onPress={() => console.log("pencil pressed first name")}
         />
         <Text>Surname: placeholder</Text>
+        <FontAwesome
+          name="pencil"
+          size={20}
+          color="black"
+          onPress={() => console.log("pencil pressed surname")}
+        />
         <Text>About me: placeholder</Text>
+        <FontAwesome
+          name="pencil"
+          size={20}
+          color="black"
+          onPress={() => console.log("pencil pressed about me")}
+        />
         <Text>Number: placeholder</Text>
+        <FontAwesome
+          name="pencil"
+          size={20}
+          color="black"
+          onPress={() => console.log("pencil pressed number")}
+        />
       </View>
       <View>
         <Text>Voice: placeholder</Text>
+        <FontAwesome
+          name="pencil"
+          size={20}
+          color="black"
+          onPress={() => console.log("pencil pressed voice")}
+        />
         <Text>Choir groups I'm a member of: placeholder</Text>
       </View>
       <View style={styles.buttonContainer}>
