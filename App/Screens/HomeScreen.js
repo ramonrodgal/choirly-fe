@@ -6,20 +6,26 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Image
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
-import DropDownPicker from 'react-native-dropdown-picker';
 import { getChoirs } from "../utils/api";
 
 export default function HomeScreen({ navigation }) {
+  const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+  first.toLocaleUpperCase(locale) + rest.join('')
 
   const [choirs, setChoirs ] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     getChoirs().then((choirs) => {
       setChoirs(choirs)
+      setIsLoading(false);
     }).catch((err) => {
+      setIsLoading(false);
       console.log(err)
     })
   }, []);
@@ -36,20 +42,14 @@ export default function HomeScreen({ navigation }) {
   const handleSearch = () => {
     console.log('searching')
   };
-  const goToChoir = (choir) => {
 
+  if (isLoading) {
+    return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
+  } 
+
+  const goToChoir = () => {
     navigation.navigate("Choir", {choir: choir})
   }
-
-
-  // const [open, setOpen] = useState(false);
-  // const [value, setValue] = useState(null);
-  // const [items, setItems] = useState([
-  //   {label: 'Apple', value: 'apple'},
-  //   {label: 'Banana', value: 'banana'}
-  // ]);
-
-  
 
   return (
     <ImageBackground
@@ -67,14 +67,6 @@ export default function HomeScreen({ navigation }) {
           </View>
           <View style={styles.dropdown}>
           <Text style={styles.loc}>dropdown</Text>
-            {/* <DropDownPicker
-              open={open}
-              value={value}
-              items={items}
-              setOpen={setOpen}
-              setValue={setValue}
-              setItems={setItems}
-            /> */}
           </View>
         </View>
         <View style={styles.buttonContainer}>
@@ -89,11 +81,8 @@ export default function HomeScreen({ navigation }) {
           {choirs.map((choir) => {
             return (
               <View style={[styles.card, styles.shadowProp]}>
-              <Text style={styles.choirTitle} onPress={() => navigation.navigate("Choir", {
-              itemId: 86,
-              otherParam: 'anything you want here',
-              })}>{choir.name}</Text>
-              <Text style={styles.loc}>{choir.location}</Text>
+              <Text style={styles.choirTitle} onPress={goToChoir}>{choir.name}</Text>
+              <Text style={styles.loc}>{capitalizeFirstLetter(choir.location)}</Text>
               <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={goToChoir(choir)}>{choir.description} </Text>
               </View>
             )
@@ -176,7 +165,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 14,
   },
-
+  loading: {
+    width: 100,
+    height: 100,
+    alignSelf: "center",
+  },
 //-------------------------CARDS
   choirCardsContainer: {
     flex: 10,
@@ -188,7 +181,7 @@ const styles = StyleSheet.create({
   },
   card: {
     height: 100,
-    width: 350,
+    width: 330,
     backgroundColor: 'white',
     padding: 5,
     borderRadius: 5,

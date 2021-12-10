@@ -7,6 +7,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 export default function ChoirScreen({ route, navigation }) {
   const { choir } = route.params;
+  console.log(choir, '<<<<<<<choir')
   const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
   first.toLocaleUpperCase(locale) + rest.join('')
   
