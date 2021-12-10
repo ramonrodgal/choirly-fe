@@ -1,10 +1,10 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Image } from "react-native";
+import { useNavigation } from "@react-navigation/core";
+
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
 import HomeScreen from "./App/Screens/HomeScreen";
 import UserProfileScreen from "./App/Screens/UserProfileScreen";
 import AllMembersScreen from "./App/Screens/AllMembersScreen";
@@ -19,14 +19,51 @@ import RegisterScreen from "./App/Screens/RegisterScreen";
 import SingleMessageScreen from "./App/Screens/SingleMessageScreen";
 import ChoirGroubTabs from "./App/navigation/ChoirGroupTabNav";
 
-const Stack = createNativeStackNavigator();
-const Tabs = createBottomTabNavigator();
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 const Drawer = createDrawerNavigator();
+
+function LogoTitle() {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("Home");
+      }}
+    >
+      <Image
+        style={{ width: 50, height: 50 }}
+        source={require("./App/assets/logo.png")}
+      />
+    </TouchableOpacity>
+  );
+}
+
+function NotificationBell() {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("Notifications");
+      }}
+    >
+      <MaterialCommunityIcons name="bell" size={24} color="black" />
+    </TouchableOpacity>
+  );
+}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator>
+      <Drawer.Navigator
+        screenOptions={{
+          headerTintColor: "black", // this changes the hamburger colour
+          headerTitle: () => <LogoTitle />,
+          headerTitleAlign: "center", // this centers the logo on android
+          headerRight: () => <NotificationBell />,
+        }}
+      >
         <Drawer.Screen
           options={{ headerShown: true }} // need to change this - like this so we can nav out of login when user logged in
           name="Login"
