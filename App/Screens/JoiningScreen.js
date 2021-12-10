@@ -1,19 +1,17 @@
 import React from 'react'
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, ImageBackground, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 
 export default function JoiningScreen() {
-
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      choirName: "",
-      location: "",
-      description: "",
-      avatarUrl: "",
+      message: "",
     },
   }); // all this is from useForm which is imported from react-hook-form
   const onSubmit = (data) => console.log(data); // on submit the data is logged
