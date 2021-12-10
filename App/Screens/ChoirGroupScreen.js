@@ -6,7 +6,10 @@ import {
   ImageBackground,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 export default function ChoirGroupScreen({ navigation }) {
   return (
@@ -44,6 +47,154 @@ export default function ChoirGroupScreen({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
+        </View>
+
+        <View style={styles.messagesContainer}>
+          <Text style={styles.title}>Messages:</Text>
+          <ScrollView>
+            <TouchableWithoutFeedback
+              style={styles.messageCard}
+              onPress={() => navigation.navigate("SingleMessage")}
+            >
+              <View style={styles.messageTitle}>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.messageTitleText}>
+                    Welcome to all new members
+                  </Text>
+                  <FontAwesome
+                    name="thumbs-up"
+                    size={20}
+                    color="black"
+                    onPress={() => console.log("liked placeholder")}
+                  />
+                </View>
+              </View>
+              <View style={styles.messageContainer}>
+                <Text style={styles.messageBody}>
+                  Quick note to say hello to all new members. Hello Hello Hello
+                  Hello Hello.
+                </Text>
+              </View>
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("SingleMessage");
+                  }}
+                >
+                  <Text style={styles.buttonText}>See comments (12)</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback
+              style={styles.messageCard}
+              onPress={() => navigation.navigate("SingleMessage")}
+            >
+              <View style={styles.messageTitle}>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.messageTitleText}>
+                    Example message title
+                  </Text>
+                  <FontAwesome
+                    name="thumbs-up"
+                    size={20}
+                    color="black"
+                    onPress={() => console.log("liked placeholder")}
+                  />
+                </View>
+              </View>
+              <View style={styles.messageContainer}>
+                <Text style={styles.messageBody}>
+                  Example message in the choir group to replace la la la.
+                </Text>
+              </View>
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("SingleMessage");
+                  }}
+                >
+                  <Text style={styles.buttonText}>See comments (3)</Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
+        </View>
+
+        <View style={styles.eventsContainer}>
+          <Text style={styles.title}>Upcoming events:</Text>
+          <ScrollView>
+            <TouchableWithoutFeedback
+              style={styles.eventCard}
+              onPress={() => navigation.navigate("Event")}
+            >
+              <View style={styles.eventTitle}>
+                <View style={styles.iconContainer}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../assets/concertIcon.png")}
+                  />
+                </View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.eventTitleText}>
+                    Concert - Winter is Coming
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.eventContainer}>
+                <Text style={styles.eventBody}>Location: Chester</Text>
+                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
+                <Text style={styles.eventBody}>Time: 20:00</Text>
+              </View>
+            </TouchableWithoutFeedback>
+
+            <TouchableWithoutFeedback
+              style={styles.eventCard}
+              onPress={() => navigation.navigate("Event")}
+            >
+              <View style={styles.eventTitle}>
+                <View style={styles.iconContainer}>
+                  <Image
+                    style={styles.icon}
+                    source={require("../assets/choir-icon.jpg")}
+                  />
+                </View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.eventTitleText}>
+                    Rehearsal - St.Mary's Church{" "}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.eventContainer}>
+                <Text style={styles.eventBody}>Location: Chester</Text>
+                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
+                <Text style={styles.eventBody}>Time: 20:00</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </ScrollView>
+        </View>
+
+        <View style={styles.filesContainer}>
+          <Text style={styles.title}>Recordings and Songsheets:</Text>
+          <ScrollView>
+            <View style={styles.fileContainer}>
+              <View style={styles.iconContainer}>
+                <Image
+                  style={styles.icon}
+                  source={require("../assets/musicnote.png")}
+                />
+              </View>
+
+              <Text>placeholder file name</Text>
+
+              <FontAwesome
+                name="download"
+                size={20}
+                color="black"
+                onPress={() => console.log("download placeholder")}
+              />
+            </View>
+          </ScrollView>
         </View>
       </View>
     </ImageBackground>
@@ -104,7 +255,87 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "black",
-    fontWeight: "600",
+    fontWeight: "700",
     fontSize: 12,
+  },
+
+  messagesContainer: {
+    flex: 1.5,
+    paddingTop: 5,
+  },
+  messageCard: {
+    marginTop: 10,
+    backgroundColor: "#EDE5DA",
+    borderRadius: 15,
+  },
+  messageTitle: {
+    height: 35,
+    backgroundColor: "#B2DED9",
+    flexDirection: "row",
+  },
+  messageTitleText: {
+    fontWeight: "700",
+    color: "black",
+  },
+  messageContainer: {
+    paddingLeft: 40,
+    justifyContent: "flex-start",
+  },
+  messageBody: {
+    color: "black",
+    fontSize: 12,
+  },
+
+  eventsContainer: {
+    flex: 1.5,
+    paddingTop: 5,
+  },
+  eventCard: {
+    marginTop: 10,
+    backgroundColor: "#EDE5DA",
+    borderRadius: 15,
+  },
+  eventTitle: {
+    height: 35,
+    backgroundColor: "#B2DED9",
+    flexDirection: "row",
+  },
+  iconContainer: {
+    width: "10%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  icon: {
+    height: 30,
+    width: 30,
+  },
+  titleContainer: {
+    width: "90%",
+    justifyContent: "center",
+    paddingLeft: 5,
+  },
+  eventTitleText: {
+    fontWeight: "700",
+    color: "black",
+  },
+
+  eventContainer: {
+    paddingLeft: 40,
+    justifyContent: "flex-start",
+  },
+  eventBody: {
+    color: "black",
+    fontSize: 12,
+  },
+
+  filesContainer: {
+    flex: 1.5,
+    paddingTop: 5,
+    borderColor: "black",
+    borderWidth: 1,
+  },
+  fileContainer: {
+    flexDirection: "row",
+    width: "100%",
   },
 });
