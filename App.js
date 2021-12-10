@@ -17,7 +17,6 @@ import LoginScreen from "./App/Screens/LoginScreen";
 import NotificationsScreen from "./App/Screens/NotificationsScreen";
 import RegisterScreen from "./App/Screens/RegisterScreen";
 import SingleMessageScreen from "./App/Screens/SingleMessageScreen";
-import ChoirGroupScreen from "./App/Screens/ChoirGroupScreen";
 import ChoirGroubTabs from "./App/navigation/ChoirGroupTabNav";
 
 const Stack = createNativeStackNavigator();
