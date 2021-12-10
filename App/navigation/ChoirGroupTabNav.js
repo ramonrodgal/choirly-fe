@@ -1,7 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import ChoirGroupScreen from "../Screens/ChoirGroupScreen";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import MessagesScreen from "../Screens/MessagesScreen";
+import EventsScreen from "../Screens/EventsScreen";
+import FilesScreen from "../Screens/FilesScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,17 +32,17 @@ export default function ChoirGroubTabs() {
     >
       <Tab.Screen
         name="Messages"
-        component={ChoirGroupScreen}
+        component={MessagesScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Events"
-        component={ChoirGroupScreen}
+        component={EventsScreen}
         options={{ headerShown: false }}
       />
       <Tab.Screen
         name="Files"
-        component={ChoirGroupScreen}
+        component={FilesScreen}
         options={{
           headerShown: false,
         }}
