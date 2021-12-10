@@ -17,6 +17,7 @@ import LoginScreen from "./App/Screens/LoginScreen";
 import NotificationsScreen from "./App/Screens/NotificationsScreen";
 import RegisterScreen from "./App/Screens/RegisterScreen";
 import SingleMessageScreen from "./App/Screens/SingleMessageScreen";
+import ChoirGroupScreen from "./App/Screens/ChoirGroupScreen";
 
 const Stack = createNativeStackNavigator();
 const Tabs = createBottomTabNavigator();
@@ -39,6 +40,7 @@ export default function App() {
         <Drawer.Screen name="UserProfile" component={UserProfileScreen} />
         <Drawer.Screen name="AllMembers" component={AllMembersScreen} />
         <Drawer.Screen name="Choir" component={ChoirScreen} />
+        <Drawer.Screen name="ChoirGroup" component={ChoirGroupScreen} />
         <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
         <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
         <Drawer.Screen name="Event" component={EventScreen} />
