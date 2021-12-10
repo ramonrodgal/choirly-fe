@@ -6,10 +6,11 @@ import { ScrollView } from "react-native-gesture-handler";
 
 
 export default function ChoirScreen({ route, navigation }) {
-  const { choir } = route.params;
-  console.log(choir, '<<<<<<<choir')
-  const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
-  first.toLocaleUpperCase(locale) + rest.join('')
+  const { choirId } = route.params;
+  console.log(choirId, '<<<<<<<choir id');
+
+  // const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+  // first.toLocaleUpperCase(locale) + rest.join('')
   
   return (
     <ImageBackground
@@ -19,22 +20,22 @@ export default function ChoirScreen({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.imageContainer}>
-          <Image style={styles.choirLogo} source={{ uri: choir.avatar_url}} />
+          {/* <Image style={styles.choirLogo} source={{ uri: choir.avatar_url}} /> */}
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>{choir.name}</Text>
-          <Text style={styles.choirInfo}>{capitalizeFirstLetter(choir.location)}</Text>
+          <Text style={styles.title}>ID: {JSON.stringify(choirId)}</Text>
+          {/* <Text style={styles.choirInfo}>{capitalizeFirstLetter(choir.location)}</Text>
           <Text style={styles.choirInfo}>Mambers: {choir.members.length}</Text>
-          <Text style={styles.choirInfo}>{JSON.stringify(choir.facebook)}</Text>
+          <Text style={styles.choirInfo}>{JSON.stringify(choir.facebook)}</Text> */}
 
         </View>
       </View>
 
       <View style={styles.descriptionContainer}>
           <Text style={styles.title}>About us</Text>
-          <Text numberOfLines={7} ellipsizeMode="tail" style={styles.description}>
+          {/* <Text numberOfLines={7} ellipsizeMode="tail" style={styles.description}>
           {choir.description}
-          </Text>
+          </Text> */}
       </View>
 
       <View style={styles.eventsContainer}>

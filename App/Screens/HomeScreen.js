@@ -42,14 +42,13 @@ export default function HomeScreen({ navigation }) {
   const handleSearch = () => {
     console.log('searching')
   };
+  // const goToChoir = (id) => {
+  //   navigation.navigate("Choir", {id: id})
+  // }
 
   if (isLoading) {
     return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
   } 
-
-  const goToChoir = () => {
-    navigation.navigate("Choir", {choir: choir})
-  }
 
   return (
     <ImageBackground
@@ -81,9 +80,9 @@ export default function HomeScreen({ navigation }) {
           {choirs.map((choir) => {
             return (
               <View style={[styles.card, styles.shadowProp]}>
-              <Text style={styles.choirTitle} onPress={goToChoir}>{choir.name}</Text>
+              <Text style={styles.choirTitle} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.name}</Text>
               <Text style={styles.loc}>{capitalizeFirstLetter(choir.location)}</Text>
-              <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={goToChoir(choir)}>{choir.description} </Text>
+              {/* <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={goToChoir(choir._id)}>{choir.description} </Text> */}
               </View>
             )
           })}
