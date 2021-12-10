@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   StyleSheet,
@@ -8,8 +9,18 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import { auth } from "../../firebase";
 
 export default function UserProfileScreen({ navigation, route }) {
+  const handleSignOut = () => {
+    auth
+      .signOut()
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .catch((error) => alert(error.message));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>My Profile</Text>
@@ -39,6 +50,10 @@ export default function UserProfileScreen({ navigation, route }) {
         <Text>Voice: placeholder</Text>
         <Text>Choir groups I'm a member of: placeholder</Text>
       </View>
+      <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+          <Text style={styles.buttonText}>Sign out now</Text>
+        </TouchableOpacity>
+        <Text>Email: {auth.currentUser?.email} </Text>
     </SafeAreaView>
   );
 }

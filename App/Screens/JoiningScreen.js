@@ -3,8 +3,8 @@ import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, ImageBackground, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
 
-export default function JoiningScreen() {
-  const navigation = useNavigation();
+export default function JoiningScreen({ navigation }) {
+
   const {
     control,
     handleSubmit,

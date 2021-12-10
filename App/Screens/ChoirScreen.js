@@ -5,8 +5,11 @@ import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity } from
 import { ScrollView } from "react-native-gesture-handler";
 
 
-export default function ChoirScreen() {
-  const navigation = useNavigation();
+export default function ChoirScreen({ route, navigation }) {
+  const { choir } = route.params;
+  const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+  first.toLocaleUpperCase(locale) + rest.join('')
+  
   return (
     <ImageBackground
     style={styles.background}
@@ -15,20 +18,21 @@ export default function ChoirScreen() {
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.imageContainer}>
-          <Image style={styles.choirLogo} source={{ uri: "https://cdn4.iconfinder.com/data/icons/music-and-entertainment/512/Music_Entertainment_Crowd-512.png"}} />
+          <Image style={styles.choirLogo} source={{ uri: choir.avatar_url}} />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>VOX </Text>
-          <Text style={styles.choirInfo}>Location: Chester, St. Mary's Church </Text>
-          <Text style={styles.choirInfo}>Established: 1991 </Text>
-          <Text style={styles.choirInfo}>Mambers: 35</Text>
+          <Text style={styles.title}>{choir.name}</Text>
+          <Text style={styles.choirInfo}>{capitalizeFirstLetter(choir.location)}</Text>
+          <Text style={styles.choirInfo}>Mambers: {choir.members.length}</Text>
+          <Text style={styles.choirInfo}>{JSON.stringify(choir.facebook)}</Text>
+
         </View>
       </View>
 
       <View style={styles.descriptionContainer}>
           <Text style={styles.title}>About us</Text>
-          <Text style={styles.description}>
-          Abilities forfeited situation extremely my to he resembled. Old had conviction discretion understood put principles you. Match means keeps round one her quick. She forming two comfort invited. Yet she income effect edward. Entire desire way design few. Mrs sentiments led solicitude estimating friendship fat. Meant those event is weeks state it to or. Boy but has folly charm there its. Its fact ten spot drew.
+          <Text numberOfLines={7} ellipsizeMode="tail" style={styles.description}>
+          {choir.description}
           </Text>
       </View>
 
