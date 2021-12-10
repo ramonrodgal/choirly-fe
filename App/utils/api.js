@@ -9,3 +9,9 @@ export const getChoirs = () => {
         return res.data.choirs;
     })
 }
+
+export const getChoirById = (choirId) => {
+    return choirApi.get(`/choirs/${choirId}`).then((res) => {
+        return res.data.choir;
+    })
+}
