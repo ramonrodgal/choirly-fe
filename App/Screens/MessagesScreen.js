@@ -11,7 +11,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-export default function ChoirGroupScreen({ navigation }) {
+export default function MessagesScreen({ navigation }) {
   return (
     <ImageBackground
       style={styles.background}
@@ -120,82 +120,6 @@ export default function ChoirGroupScreen({ navigation }) {
             </TouchableWithoutFeedback>
           </ScrollView>
         </View>
-
-        <View style={styles.eventsContainer}>
-          <Text style={styles.title}>Upcoming events:</Text>
-          <ScrollView>
-            <TouchableWithoutFeedback
-              style={styles.eventCard}
-              onPress={() => navigation.navigate("Event")}
-            >
-              <View style={styles.eventTitle}>
-                <View style={styles.iconContainer}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../assets/concertIcon.png")}
-                  />
-                </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.eventTitleText}>
-                    Concert - Winter is Coming
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventContainer}>
-                <Text style={styles.eventBody}>Location: Chester</Text>
-                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-                <Text style={styles.eventBody}>Time: 20:00</Text>
-              </View>
-            </TouchableWithoutFeedback>
-
-            <TouchableWithoutFeedback
-              style={styles.eventCard}
-              onPress={() => navigation.navigate("Event")}
-            >
-              <View style={styles.eventTitle}>
-                <View style={styles.iconContainer}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../assets/choir-icon.jpg")}
-                  />
-                </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.eventTitleText}>
-                    Rehearsal - St.Mary's Church{" "}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventContainer}>
-                <Text style={styles.eventBody}>Location: Chester</Text>
-                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-                <Text style={styles.eventBody}>Time: 20:00</Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
-        </View>
-
-        <View style={styles.filesContainer}>
-          <Text style={styles.title}>Recordings and Songsheets:</Text>
-          <ScrollView>
-            <View style={styles.fileContainer}>
-              <View style={styles.iconContainer}>
-                <Image
-                  style={styles.icon}
-                  source={require("../assets/musicnote.png")}
-                />
-              </View>
-
-              <Text>placeholder file name</Text>
-
-              <FontAwesome
-                name="download"
-                size={20}
-                color="black"
-                onPress={() => console.log("download placeholder")}
-              />
-            </View>
-          </ScrollView>
-        </View>
       </View>
     </ImageBackground>
   );
@@ -260,7 +184,7 @@ const styles = StyleSheet.create({
   },
 
   messagesContainer: {
-    flex: 1.5,
+    flex: 4,
     paddingTop: 5,
   },
   messageCard: {
@@ -286,20 +210,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-  eventsContainer: {
-    flex: 1.5,
-    paddingTop: 5,
-  },
-  eventCard: {
-    marginTop: 10,
-    backgroundColor: "#EDE5DA",
-    borderRadius: 15,
-  },
-  eventTitle: {
-    height: 35,
-    backgroundColor: "#B2DED9",
-    flexDirection: "row",
-  },
   iconContainer: {
     width: "10%",
     alignItems: "center",
@@ -313,29 +223,5 @@ const styles = StyleSheet.create({
     width: "90%",
     justifyContent: "center",
     paddingLeft: 5,
-  },
-  eventTitleText: {
-    fontWeight: "700",
-    color: "black",
-  },
-
-  eventContainer: {
-    paddingLeft: 40,
-    justifyContent: "flex-start",
-  },
-  eventBody: {
-    color: "black",
-    fontSize: 12,
-  },
-
-  filesContainer: {
-    flex: 1.5,
-    paddingTop: 5,
-    borderColor: "black",
-    borderWidth: 1,
-  },
-  fileContainer: {
-    flexDirection: "row",
-    width: "100%",
   },
 });
