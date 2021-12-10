@@ -1,17 +1,34 @@
 
 import { useNavigation } from "@react-navigation/native";
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
+import { getChoirById } from "../utils/api";
 
 
 export default function ChoirScreen({ route, navigation }) {
   const { choirId } = route.params;
-  console.log(choirId, '<<<<<<<choir id');
 
-  // const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
-  // first.toLocaleUpperCase(locale) + rest.join('')
-  
+  const [choir, setChoir ] = useState({})
+  const [isLoading, setIsLoading] = useState(true);
+
+  const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
+  first.toLocaleUpperCase(locale) + rest.join('')
+  useEffect(() => {
+    setIsLoading(true);
+    getChoirById(choirId).then((choir) => {
+      setChoir(choir)
+      setIsLoading(false);
+    }).catch((err) => {
+      setIsLoading(false);
+      console.log(err)
+    })
+  }, [choirId]);
+
+  if (isLoading) {
+    return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
+  } 
+
   return (
     <ImageBackground
     style={styles.background}
@@ -20,22 +37,22 @@ export default function ChoirScreen({ route, navigation }) {
     <View style={styles.container}>
       <View style={styles.topContainer}>
         <View style={styles.imageContainer}>
-          {/* <Image style={styles.choirLogo} source={{ uri: choir.avatar_url}} /> */}
+          <Image style={styles.choirLogo} source={{ uri: choir.avatar_url}} />
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.title}>ID: {JSON.stringify(choirId)}</Text>
-          {/* <Text style={styles.choirInfo}>{capitalizeFirstLetter(choir.location)}</Text>
-          <Text style={styles.choirInfo}>Mambers: {choir.members.length}</Text>
-          <Text style={styles.choirInfo}>{JSON.stringify(choir.facebook)}</Text> */}
+          <Text style={styles.title}>{choir.name}</Text>
+          <Text style={styles.choirInfo}>{capitalizeFirstLetter(choir.location)}</Text>
+          <Text style={styles.choirInfo}>Members: {choir.members.length}</Text>
+          <Text style={styles.choirInfo}>{JSON.stringify(choir.facebook)}</Text>
 
         </View>
       </View>
 
       <View style={styles.descriptionContainer}>
           <Text style={styles.title}>About us</Text>
-          {/* <Text numberOfLines={7} ellipsizeMode="tail" style={styles.description}>
+          <Text numberOfLines={7} ellipsizeMode="tail" style={styles.description}>
           {choir.description}
-          </Text> */}
+          </Text>
       </View>
 
       <View style={styles.eventsContainer}>
