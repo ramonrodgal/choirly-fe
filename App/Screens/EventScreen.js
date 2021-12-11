@@ -9,6 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function EventScreen() {
   return (
@@ -52,7 +53,7 @@ export default function EventScreen() {
           </View>
         </View>
 
-        <View style={styles.buttonContainer}>
+        <View style={styles.responseButtonContainer}>
           <TouchableOpacity
             style={styles.goingButton}
             onPress={() => {
@@ -60,6 +61,12 @@ export default function EventScreen() {
             }}
           >
             <Text>Going</Text>
+            <FontAwesome
+              name="check"
+              size={15}
+              color="black"
+              onPress={() => console.log("liked placeholder")}
+            />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.notGoingButton}
@@ -68,6 +75,12 @@ export default function EventScreen() {
             }}
           >
             <Text>Not Going</Text>
+            <FontAwesome
+              name="close"
+              size={15}
+              color="black"
+              onPress={() => console.log("liked placeholder")}
+            />
           </TouchableOpacity>
         </View>
 
@@ -176,21 +189,35 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
   },
 
-  // GOING/NOT GOING BUTTONS
+  // RESPONSE BUTTONS
+  responseButtonContainer: {
+    flex: 1,
+    alignItems: "center",
+  },
   goingButton: {
     backgroundColor: "green",
     borderRadius: 2,
     padding: 5,
+    alignItems: "center",
+    width: "50%",
+    marginTop: 10,
   },
-  notGoingButton: { backgroundColor: "red", borderRadius: 2, padding: 5 },
+  notGoingButton: {
+    backgroundColor: "red",
+    borderRadius: 2,
+    padding: 5,
+    alignItems: "center",
+    width: "50%",
+    marginTop: 10,
+  },
 
   // ADD COMMENT
   addCommentContainer: {
-    flex: 2,
+    flex: 1,
     paddingTop: 5,
   },
   commentBoxContainer: {
-    flex: 0.5,
+    flex: 1,
     backgroundColor: "white",
   },
   buttonContainer: {
@@ -199,8 +226,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "70%",
-    padding: 4,
+    width: "100%",
+    padding: 6,
     borderRadius: 50,
     alignItems: "center",
     marginTop: 10,
