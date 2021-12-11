@@ -10,6 +10,7 @@ import UserProfileScreen from "./App/Screens/UserProfileScreen";
 import AllMembersScreen from "./App/Screens/AllMembersScreen";
 import ChoirScreen from "./App/Screens/ChoirScreen";
 import CreateChoirScreen from "./App/Screens/CreateChoirScreen";
+import CreateEventScreen from "./App/Screens/CreateEventScreen";
 import EditProfileScreen from "./App/Screens/EditProfileScreen";
 import EventScreen from "./App/Screens/EventScreen";
 import JoiningScreen from "./App/Screens/JoiningScreen";
@@ -79,6 +80,7 @@ export default function App() {
         <Drawer.Screen name="Choir" component={ChoirScreen} />
         <Drawer.Screen name="ChoirGroup" component={ChoirGroubTabs} />
         <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
+        <Drawer.Screen name="CreateEvent" component={CreateEventScreen} />
         <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
         <Drawer.Screen name="Event" component={EventScreen} />
         <Drawer.Screen name="Joining" component={JoiningScreen} />
