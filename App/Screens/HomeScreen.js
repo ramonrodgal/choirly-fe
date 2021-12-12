@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  Image
+  Image, 
+  Picker
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
@@ -17,18 +18,19 @@ export default function HomeScreen({ navigation }) {
   first.toLocaleUpperCase(locale) + rest.join('')
 
   const [choirs, setChoirs ] = useState([])
+  const [location, setLocation] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    getChoirs().then((choirs) => {
+    getChoirs(location).then((choirs) => {
       setChoirs(choirs)
       setIsLoading(false);
     }).catch((err) => {
       setIsLoading(false);
       console.log(err)
     })
-  }, []);
+  }, [location]);
 
   // const handleSignOut = () => {
   //   auth
@@ -39,10 +41,6 @@ export default function HomeScreen({ navigation }) {
   //     .catch((error) => alert(error.message));
   // };
 
-  const handleSearch = () => {
-    console.log('searching')
-  };
-  
   if (isLoading) {
     return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
   } 
@@ -56,35 +54,42 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Find your local choir</Text>
         </View>
-
         <View style={styles.searchContainer}>
           <View style={styles.location}>
             <Text style={styles.loc}>LOCATION</Text>
           </View>
           <View style={styles.dropdown}>
-          <Text style={styles.loc}>dropdown</Text>
+            <Picker
+              selectedValue={location}
+              style={{ height: 50, width: 150 }}
+              onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
+            >
+              <Picker.Item label="Manchester" value="Manchester" />
+              <Picker.Item label="Liverpool" value="Liverpool" />
+              <Picker.Item label="Chester" value="Chester" />
+              <Picker.Item label="See all" value="" />
+            </Picker>
           </View>
         </View>
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSearch} style={styles.button}>
             <Text style={styles.buttonText}>Search</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={styles.choirCardsContainer}>
-
-
+          <ScrollView>
           {choirs.map((choir) => {
             return (
-              <ScrollView>
-              <View style={[styles.card, styles.shadowProp]}>
+              <View key={choir._id} style={[styles.card, styles.shadowProp]}>
               <Text style={styles.choirTitle} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.name}</Text>
               <Text style={styles.loc}>{capitalizeFirstLetter(choir.location)}</Text>
               <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.description} </Text>
               </View>
-              </ScrollView>
+
             )
           })}
+          </ScrollView>
         </View>
       </View>
     </ImageBackground>
@@ -173,7 +178,8 @@ const styles = StyleSheet.create({
     width: 360,
     // borderColor: 'green',
     alignItems: "center",
-    justifyContent: 'flex-start',
+    // justifyContent: 'center',
+    // alignContent: "flex-start",
     margin: 5,
   },
   card: {

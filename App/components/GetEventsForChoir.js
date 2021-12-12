@@ -26,7 +26,7 @@ export default function GetEvents({ choirId }) {
         <ScrollView>
         {events.map((event) => {
             return (
-            <View style={styles.eventCard}>
+            <View key={event._id} style={styles.eventCard}>
                 <View style={styles.eventTitle}>
                     <View style={styles.iconContainer}>
                         {(event.type) === 'Concert' ? <Image style={styles.icon} source={ require("../assets/concertIcon.png")} /> : <Image style={styles.icon} source={ require("../assets/choir-icon.jpg")} />}

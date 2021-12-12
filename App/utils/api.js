@@ -4,7 +4,10 @@ const choirApi = axios.create({
     baseURL: "https://choirly.herokuapp.com/api"
 })
 
-export const getChoirs = () => {
+export const getChoirs = (location) => {
+    if(location) return choirApi.get(`/choirs?location=${location}`).then((res) => {
+        return res.data.choirs
+    })
     return choirApi.get("/choirs").then((res) => {
         return res.data.choirs;
     })
