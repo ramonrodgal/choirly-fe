@@ -32,6 +32,12 @@ export const deleteChoirById = (choir_id) => {
   });
 };
 
+export const addMemberToChoir = (username, choir_id) => {
+  return choirApi.patch(`choirs/${choir_id}/users/${username}`).then((res) => {
+    return res.data.choir;
+  });
+};
+
 export const deleteMemberFromChoir = (username, choir_id) => {
   return choirApi.delete(`choirs/${choir_id}/users/${username}`).then((res) => {
     return res.data.choir;
