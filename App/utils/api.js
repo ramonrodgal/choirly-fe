@@ -85,3 +85,9 @@ export const postFileByChoir = (choir_id, body) => {
     return res.data.choir;
   });
 };
+
+export const deleteFileById = (choir_id, file_id) => {
+  return choirApi.delete(`choirs/${choir_id}/files/${file_id}`).then((res) => {
+    return res.data.choir;
+  });
+};
