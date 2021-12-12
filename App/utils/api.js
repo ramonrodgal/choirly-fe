@@ -26,6 +26,12 @@ export const getChoirById = (choirId) => {
   });
 };
 
+export const deleteChoirById = (choir_id) => {
+  return choirApi.delete(`/choirs/${choir_id}`).then((res) => {
+    return res.data;
+  });
+};
+
 export const getEventsByChoir = (choirId) => {
   return choirApi.get(`/events/choir/${choirId}`).then((res) => {
     return res.data.events;
@@ -52,6 +58,6 @@ export const postUser = (body) => {
 
 export const deleteUser = (username) => {
   return choirApi.delete(`/users/${username}`).then((res) => {
-    return res.data.user;
+    return res.data;
   });
 };
