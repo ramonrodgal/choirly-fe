@@ -123,3 +123,9 @@ export const updateNotificationById = (notification_id, body) => {
       return res.data.notification;
     });
 };
+
+export const postMessage = (body) => {
+  return choirApi.post("messages", body).then((res) => {
+    return res.data.message;
+  });
+};
