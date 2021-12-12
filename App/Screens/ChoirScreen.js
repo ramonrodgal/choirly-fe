@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import { getChoirById } from "../utils/api";
+import GetEventsForChoir from "../components/GetEventsForChoir";
 
 
 export default function ChoirScreen({ route, navigation }) {
@@ -14,6 +15,7 @@ export default function ChoirScreen({ route, navigation }) {
 
   const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
   first.toLocaleUpperCase(locale) + rest.join('')
+
   useEffect(() => {
     setIsLoading(true);
     getChoirById(choirId).then((choir) => {
@@ -55,65 +57,12 @@ export default function ChoirScreen({ route, navigation }) {
           </Text>
       </View>
 
-      <View style={styles.eventsContainer}>
-      <Text style={styles.title}>Upcoming events</Text>
-        <ScrollView>
-          <View style={styles.eventCard}>
-            <View style={styles.eventTitle}>
-              <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={ require("../assets/concertIcon.png")} />
-              </View>
-              <View style={styles.titleContainer}>
-              <Text style={styles.eventTitleText}>Concert - Winter is Coming </Text>
-              </View>
-            </View>
+      <Text style={styles.eventsTitle}>Upcoming events</Text>
 
-            <View style={styles.eventContainer}>
-              <Text style={styles.eventBody}>Location: Chester</Text>
-              <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-              <Text style={styles.eventBody}>Time: 20:00</Text>
-            </View>
-          </View>
-
-          <View style={styles.eventCard}>
-            <View style={styles.eventTitle}>
-              <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={ require("../assets/choir-icon.jpg")} />
-              </View>
-              <View style={styles.titleContainer}>
-              <Text style={styles.eventTitleText}>Rehearsal - St.Mary's Church </Text>
-              </View>
-            </View>
-
-            <View style={styles.eventContainer}>
-              <Text style={styles.eventBody}>Location: Chester</Text>
-              <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-              <Text style={styles.eventBody}>Time: 20:00</Text>
-            </View>
-          </View>
-
-          <View style={styles.eventCard}>
-            <View style={styles.eventTitle}>
-              <View style={styles.iconContainer}>
-              <Image style={styles.icon} source={ require("../assets/concertIcon.png")} />
-              </View>
-              <View style={styles.titleContainer}>
-              <Text style={styles.eventTitleText}>Concert - Winter is Coming </Text>
-              </View>
-            </View>
-
-            <View style={styles.eventContainer}>
-              <Text style={styles.eventBody}>Location: Chester</Text>
-              <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-              <Text style={styles.eventBody}>Time: 20:00</Text>
-            </View>
-          </View>
-      
-        </ScrollView>
-      </View>
+      <GetEventsForChoir choirId={choirId}/>
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity onPress={() => { navigation.navigate("Joining")}} style={styles.button}>
+        <TouchableOpacity onPress={() => { navigation.navigate("Joining", {choirId: choirId, avatar:choir.avatar_url, choirName:choir.name})}} style={styles.button}>
           <Text style={styles.buttonText}>Reguest to join</Text>
         </TouchableOpacity>
       </View>
@@ -148,8 +97,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   choirLogo: {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     borderRadius: 50,
   },
   infoContainer: {
@@ -183,6 +132,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: '#EDE5DA',
     borderRadius: 15,
+  },
+  eventsTitle: {
+    marginTop: 15,
+    alignSelf: 'flex-start',
+    fontWeight: "700",
+    color: '#BD7D1E',
   },
   eventTitle: {
     height: 35,
