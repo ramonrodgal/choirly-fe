@@ -14,6 +14,12 @@ export const getChoirs = (location) => {
   });
 };
 
+export const postChoir = (body) => {
+  return choirApi.post("/choirs", body).then((res) => {
+    return res.data.choir;
+  });
+};
+
 export const getChoirById = (choirId) => {
   return choirApi.get(`/choirs/${choirId}`).then((res) => {
     return res.data.choir;
