@@ -43,3 +43,9 @@ export const patchUser = (username, body) => {
     return res.data.user;
   });
 };
+
+export const postUser = (body) => {
+  return choirApi.post("/users", body).then((res) => {
+    return res.data.user;
+  });
+};
