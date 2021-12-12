@@ -18,7 +18,14 @@ export default function CreateEventScreen() {
   const [startTime, setStartTime] = useState(date);
   const [endTime, setEndTime] = useState(date);
 
-  // at the moment the start and end times are on the current date
+  const durationMilliseconds = endTime - startTime;
+  const durationHours = Math.floor((durationMilliseconds % 86400000) / 3600000); // hours
+  const durationMins = Math.round(
+    ((durationMilliseconds % 86400000) % 3600000) / 60000
+  ); // minutes
+  console.log("hours:", durationHours, "minutes:", durationMins);
+  // at the moment the start and end times are on the current date - this is fine to get duration but not perfect
+
   // need to change this and set a duration state which is the difference between start and end
 
   const [open, setOpen] = useState(false);
@@ -43,9 +50,6 @@ export default function CreateEventScreen() {
     const currentTime = selectedDate || date;
     setEndTime(currentTime);
   };
-  console.log(date);
-  console.log(startTime);
-  console.log(endTime);
 
   const {
     control,
