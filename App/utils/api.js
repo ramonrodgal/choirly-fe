@@ -5,11 +5,13 @@ const choirApi = axios.create({
 });
 
 export const getChoirs = (location) => {
-  if (location)
-    return choirApi.get(`/choirs?location=${location}`).then((res) => {
-      return res.data.choirs;
-    });
-  return choirApi.get("/choirs").then((res) => {
+  let path = `/choirs`;
+
+  if (location) {
+    path += `?location=${location}`;
+  }
+
+  return choirApi.get(path).then((res) => {
     return res.data.choirs;
   });
 };
