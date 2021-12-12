@@ -141,3 +141,9 @@ export const getMessageById = (message_id) => {
     return res.data.message;
   });
 };
+
+export const postComment = (message_id, body) => {
+  return choirApi.post(`messages/${message_id}/comments`, body).then((res) => {
+    return res.data.message;
+  });
+};
