@@ -42,10 +42,7 @@ export default function HomeScreen({ navigation }) {
   const handleSearch = () => {
     console.log('searching')
   };
-  // const goToChoir = (id) => {
-  //   navigation.navigate("Choir", {id: id})
-  // }
-
+  
   if (isLoading) {
     return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
   } 
@@ -75,19 +72,19 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         <View style={styles.choirCardsContainer}>
-          <ScrollView>
+
 
           {choirs.map((choir) => {
             return (
+              <ScrollView>
               <View style={[styles.card, styles.shadowProp]}>
               <Text style={styles.choirTitle} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.name}</Text>
               <Text style={styles.loc}>{capitalizeFirstLetter(choir.location)}</Text>
-              {/* <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={goToChoir(choir._id)}>{choir.description} </Text> */}
+              <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.description} </Text>
               </View>
+              </ScrollView>
             )
           })}
-
-          </ScrollView>
         </View>
       </View>
     </ImageBackground>
@@ -173,14 +170,15 @@ const styles = StyleSheet.create({
   choirCardsContainer: {
     flex: 10,
     // borderWidth: 1,
-    width: 350,
+    width: 360,
     // borderColor: 'green',
     alignItems: "center",
+    justifyContent: 'flex-start',
     margin: 5,
   },
   card: {
     height: 100,
-    width: 330,
+    // width: 350,
     backgroundColor: 'white',
     padding: 5,
     borderRadius: 5,
@@ -208,8 +206,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
 //-------------------------BUTTONS
-  
-  
   logo: {
     width: 300,
     height: 300,

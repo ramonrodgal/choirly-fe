@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, ImageBackground, Image, Button, TextInput, TouchableOpacity } from 'react-native';
 import { useForm, Controller } from "react-hook-form";
+import { getChoirById } from "../utils/api";
 
-export default function JoiningScreen({ navigation }) {
-
+export default function JoiningScreen({ route, navigation }) {
+  const { choirId, avatar, choirName } = route.params;
+  
   const {
     control,
     handleSubmit,
@@ -22,12 +24,12 @@ export default function JoiningScreen({ navigation }) {
     source={require("../assets/white-background.png")}
     >
     <View  style={styles.topContainer}>
-      <Image style={styles.choirLogo} source={{ uri: "https://cdn4.iconfinder.com/data/icons/music-and-entertainment/512/Music_Entertainment_Crowd-512.png"}} />
+    <Image style={styles.choirLogo} source={{ uri: avatar}} />
     </View>
 
 
     <View  style={styles.messageContainer}>
-      <Text style={styles.title}>Send message to Vox</Text>
+      <Text style={styles.title}>Send message to {choirName}</Text>
       <Controller
         control={control}
         rules={{
@@ -50,11 +52,10 @@ export default function JoiningScreen({ navigation }) {
     </View>
 
     <View style={styles.requestContainer}>
-        <TouchableOpacity onPress={() => { navigation.navigate("Joining")}} style={styles.button}>
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Reguest to join</Text>
         </TouchableOpacity>
       </View>
-
     </ImageBackground>
   )
 }

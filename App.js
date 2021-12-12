@@ -33,7 +33,7 @@ function LogoTitle() {
       }}
     >
       <Image
-        style={{ width: 50, height: 50 }}
+        style={{ width: 60, height: 60 }}
         source={require("./App/assets/logo.png")}
       />
     </TouchableOpacity>
@@ -43,7 +43,7 @@ function LogoTitle() {
 function NotificationBell() {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity
+    <TouchableOpacity style={{ paddingRight: 20 }}
       onPress={() => {
         navigation.navigate("Notifications");
       }}

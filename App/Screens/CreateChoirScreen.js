@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
@@ -7,10 +7,16 @@ import {
   Alert,
   StyleSheet,
   SafeAreaView,
+  ImageBackground,
+  TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
+import Swal from 'sweetalert2';
 
 export default function CreateChoirScreen() {
+  const [charCount, setCharCount] = useState(0);
+  
   const {
     control,
     handleSubmit,
@@ -26,8 +32,17 @@ export default function CreateChoirScreen() {
   const onSubmit = (data) => console.log(data); // on submit the data is logged
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Create a choir group</Text>
+    <ImageBackground
+    style={styles.background}
+    source={require("../assets/white-background.png")}
+  >
+    <View style={styles.container}>
+    <ScrollView>
+      <View style={styles.titleContainer}>
+          <Text style={styles.title}>Create a choir group</Text>
+      </View>
+
+      <View style={styles.formContainer}>
       <Text style={styles.label}>Choir name:</Text>
       <Controller
         control={control}
@@ -74,7 +89,7 @@ export default function CreateChoirScreen() {
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={styles.input}
+            style={styles.inputDesc}
             placeholder="Enter a description here"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -84,12 +99,13 @@ export default function CreateChoirScreen() {
         name="description"
       />
       {errors.description && <Text>A description is required.</Text>}
+      <Text style={styles.chars}>Remaining characters: 400</Text>
 
       <Text style={styles.label}>Image URL:</Text>
       <Controller
         control={control}
         rules={{
-          required: false,
+          required: true,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
@@ -102,45 +118,105 @@ export default function CreateChoirScreen() {
         )}
         name="avatarUrl"
       />
-      <View style={styles.button}>
-        <Button title="Create a choir group" onPress={handleSubmit(onSubmit)} />
       </View>
-    </SafeAreaView>
+      
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Create a choir group</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 1,
-    height: 40,
-    padding: 10,
-    borderRadius: 4,
-  },
-  label: {
-    color: "black",
-    padding: 0,
-    margin: 2,
-    marginLeft: 0,
-    alignItems: "center",
-  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 2,
-    backgroundColor: "white",
+    padding: 15,
+    paddingTop: 0,
   },
-  button: {
-    marginTop: 40,
-    color: "white",
-    height: 40,
-    backgroundColor: "beige",
-    borderRadius: 4,
+  background: {
+    flex: 1,
+    alignItems: "center",
+  },
+
+  //-------------------------TITLE
+  titleContainer: {
+    marginTop: 10,
+    flex: 0.5,
+    width: '100%',
+    // borderWidth: 1,
+    // borderColor: 'red',
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
-    fontWeight: "bold",
-    padding: 10,
+    fontWeight: "700",
+    fontSize: 16,
+    color: '#BD7D1E',
+  },
+
+//----------------------------FORM CONTAINER
+
+  formContainer: {
+    flex: 8,
+    alignItems: "center",
+    // borderWidth: 1,
+    // borderColor: 'green',
+  },
+
+  input: {
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 1,
+    height: 30,
+    width: 280,
+    padding: 8,
+    borderRadius: 5,
+  },
+  inputDesc: {
+    backgroundColor: "white",
+    borderColor: "black",
+    borderWidth: 1,
+    height: 150,
+    width: 280,
+    padding: 8,
+    borderRadius: 5,
+  },
+  label: {
+    color: "black",
+    padding: 0,
+    marginTop: 20,
+    fontSize: 12,
+    fontWeight: "600",
+    alignItems: "center",
+  },
+  chars: {
+    fontSize: 10,
+  },
+
+//------------------------------BUTTON
+  buttonContainer: {
+    flex: 1,
+    // borderWidth: 1,
+    // borderColor: 'blue',
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#BC9C22",
+    width: "60%",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });
