@@ -129,3 +129,15 @@ export const postMessage = (body) => {
     return res.data.message;
   });
 };
+
+export const getMessageByChoirId = (choir_id) => {
+  return choirApi.get(`messages/choir/${choir_id}`).then((res) => {
+    return res.data.messages;
+  });
+};
+
+export const getMessageById = (message_id) => {
+  return choirApi.get(`messages/${message_id}`).then((res) => {
+    return res.data.message;
+  });
+};
