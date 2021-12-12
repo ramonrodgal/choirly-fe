@@ -92,8 +92,14 @@ export const deleteFileById = (choir_id, file_id) => {
   });
 };
 
-getNotificationByUsername = (username) => {
+export const getNotificationByUsername = (username) => {
   return choirApi.get(`notifications/user/${username}/`).then((res) => {
     return res.data.notifications;
+  });
+};
+
+export const postNotificationByUsername = (username, body) => {
+  return choirApi.post(`notifications/user/${username}`, body).then((res) => {
+    return res.data.notification;
   });
 };
