@@ -147,3 +147,11 @@ export const postComment = (message_id, body) => {
     return res.data.message;
   });
 };
+
+export const likeMessage = (message_id, username) => {
+  return choirApi
+    .patch(`messages/${message_id}/likes`, { username: username })
+    .then((res) => {
+      return res.data.message;
+    });
+};
