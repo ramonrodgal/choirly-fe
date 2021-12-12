@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -18,23 +18,52 @@ export default function CreateEventScreen() {
   const [startTime, setStartTime] = useState(date);
   const [endTime, setEndTime] = useState(date);
 
-  const durationMilliseconds = endTime - startTime;
-  const durationHours = Math.floor((durationMilliseconds % 86400000) / 3600000); // hours
-  const durationMins = Math.round(
-    ((durationMilliseconds % 86400000) % 3600000) / 60000
-  ); // minutes
-  console.log("hours:", durationHours, "minutes:", durationMins);
-  // at the moment the start and end times are on the current date - this is fine to get duration but not perfect
+  const [duration, setDuration] = useState(null);
 
-  // need to change this and set a duration state which is the difference between start and end
-
+  // event type
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
+  const [type, setType] = useState("rehearsal");
   const [items, setItems] = useState([
     { label: "Rehearsal", value: "rehearsal" },
     { label: "Performance", value: "performance" },
     { label: "Other", value: "other" },
   ]);
+
+  useEffect(() => {
+    const durationMilliseconds = endTime - startTime;
+    const durationHours = Math.floor(
+      (durationMilliseconds % 86400000) / 3600000
+    ); // hours
+    const durationMins = Math.round(
+      ((durationMilliseconds % 86400000) % 3600000) / 60000
+    ); // minutes
+    // this sometimes gives 59 mins instead of 1 hour so may want to try out other method
+
+    // deals with singular/plural
+    let h;
+    if (durationHours === 1) {
+      h = "1 hour ";
+    } else if (durationHours > 1) {
+      h = `${durationHours} hours `;
+    } else {
+      h = "";
+    }
+
+    // deals with singular/plural
+    let m;
+    if (durationMins === 1) {
+      m = "1 minute";
+    } else if (durationMins > 1) {
+      m = `${durationMins} minutes`;
+    } else {
+      m = "";
+    }
+
+    setDuration(`${h}${m}`);
+  }, [startTime, endTime]);
+
+  // at the moment the start and end times are on the current date
+  // this is fine to get duration but not perfect
 
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -51,6 +80,7 @@ export default function CreateEventScreen() {
     setEndTime(currentTime);
   };
 
+  // from react-hook-form
   const {
     control,
     handleSubmit,
@@ -59,12 +89,14 @@ export default function CreateEventScreen() {
     defaultValues: {
       title: "",
       location: "",
-      date: "",
-      type: "",
-      description: "",
+      details: "",
     },
-  }); // all this is from useForm which is imported from react-hook-form
-  const onSubmit = (data) => console.log(data); // on submit the data is logged
+  });
+
+  const onSubmit = (data) => {
+    const eventPost = { ...data, duration, date, type };
+    // this is where the post request would go - choir id needs to be added
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -138,21 +170,24 @@ export default function CreateEventScreen() {
           display="default"
           onChange={endTimeChange}
           mode="time"
+          minimumDate={startTime}
         />
       </View>
+
+      <Text>Duration: {duration}</Text>
 
       <Text style={styles.label}>Type of event:</Text>
       <DropDownPicker
         open={open}
-        value={value}
+        value={type}
         items={items}
         setOpen={setOpen}
-        setValue={setValue}
+        setValue={setType}
         setItems={setItems}
+        placeholder="Rehearsal"
       />
-      {errors.type && <Text>A type is required.</Text>}
 
-      <Text style={styles.label}>Description:</Text>
+      <Text style={styles.label}>Details:</Text>
       <Controller
         control={control}
         rules={{
@@ -167,9 +202,9 @@ export default function CreateEventScreen() {
             value={value}
           />
         )}
-        name="description"
+        name="details"
       />
-      {errors.description && <Text>A description is required.</Text>}
+      {errors.details && <Text>Details about the event are required.</Text>}
 
       <View style={styles.button}>
         <Button title="Create an event" onPress={handleSubmit(onSubmit)} />
