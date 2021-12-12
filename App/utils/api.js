@@ -56,6 +56,12 @@ export const postEventByChoir = (choir_id, body) => {
   });
 };
 
+export const getEventById = (event_id) => {
+  return choirApi.get(`events/${event_id}`).then((res) => {
+    return res.data.event;
+  });
+};
+
 export const getUserByUsername = (username) => {
   return choirApi.get(`/users/${username}`).then((res) => {
     return res.data.user;
