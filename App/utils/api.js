@@ -37,3 +37,9 @@ export const getUserByUsername = (username) => {
     return res.data.user;
   });
 };
+
+export const patchUser = (username, body) => {
+  return choirApi.patch(`/users/${username}`, body).then((res) => {
+    return res.data.user;
+  });
+};
