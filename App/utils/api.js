@@ -103,3 +103,11 @@ export const postNotificationByUsername = (username, body) => {
     return res.data.notification;
   });
 };
+
+export const updateNotificationById = (notification_id, body) => {
+  return choirApi
+    .patch(`notifications/${notification_id}`, body)
+    .then((res) => {
+      return res.data.notification;
+    });
+};
