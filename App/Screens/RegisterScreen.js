@@ -17,7 +17,6 @@ export default function RegisterScreen() {
             username: "",
             first_name: "",
             last_name: "",
-            phone_number: "",
         },
       }); // all this is from useForm which is imported from react-hook-form
     
@@ -26,12 +25,10 @@ export default function RegisterScreen() {
         const first_name = data.first_name;
         const last_name = data.last_name;
         const phone_number = parseInt(data.phone_number);
-        console.log(email, username, first_name, last_name, phone_number)
         postUser(email, username, first_name, last_name, phone_number).then((user) => {
             setConfirmation('Your profile has been created')
         })
     }
-    console.log(confirmation, '<<<<<,confirmation')
     return (
         <ImageBackground
         style={styles.background}
@@ -125,7 +122,7 @@ export default function RegisterScreen() {
                     <TouchableOpacity title='Submit' onPress={handleSubmit(onSubmit)} style={styles.button}>
                     <Text style={styles.buttonText}>Register</Text>
                     </TouchableOpacity>
-                    <Text>{confirmation}</Text>
+                    <Text style={styles.confirmation}>{confirmation}</Text>
                 </View>
             </ScrollView>
             </View>
@@ -220,4 +217,7 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         fontSize: 16,
     },
+    confirmation: {
+        marginTop: 20,
+    }
 })
