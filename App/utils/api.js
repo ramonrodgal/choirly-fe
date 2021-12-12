@@ -49,3 +49,9 @@ export const postUser = (body) => {
     return res.data.user;
   });
 };
+
+export const deleteUser = (username) => {
+  return choirApi.delete(`/users/${username}`).then((res) => {
+    return res.data.user;
+  });
+};
