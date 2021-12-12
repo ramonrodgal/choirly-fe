@@ -79,3 +79,9 @@ export const deleteUser = (username) => {
     return res.data;
   });
 };
+
+export const postFileByChoir = (choir_id, body) => {
+  return choirApi.post(`choirs/${choir_id}/files`, body).then((res) => {
+    return res.data.choir;
+  });
+};
