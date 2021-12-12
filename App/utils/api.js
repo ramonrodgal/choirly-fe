@@ -62,6 +62,12 @@ export const getEventById = (event_id) => {
   });
 };
 
+export const addUserToEvent = (event_id, body) => {
+  return choirApi.patch(`events/${event_id}/users`, body).then((res) => {
+    return res.data.event;
+  });
+};
+
 export const getUserByUsername = (username) => {
   return choirApi.get(`/users/${username}`).then((res) => {
     return res.data.user;
