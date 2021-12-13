@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack"; 
 
 import HomeScreen from "./App/Screens/HomeScreen";
 import UserProfileScreen from "./App/Screens/UserProfileScreen";
@@ -23,7 +24,9 @@ import ChoirGroubTabs from "./App/navigation/ChoirGroupTabNav";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+
 const Drawer = createDrawerNavigator();
+// const Stack = createStackNavigator();
 
 function LogoTitle() {
   const navigation = useNavigation();
@@ -75,6 +78,7 @@ export default function App() {
           component={HomeScreen}
           options={{ title: "Home page" }}
         />
+        <Drawer.Screen name="Register" component={RegisterScreen} />
         <Drawer.Screen name="UserProfile" component={UserProfileScreen} />
         <Drawer.Screen name="AllMembers" component={AllMembersScreen} />
         <Drawer.Screen name="Choir" component={ChoirScreen} />
@@ -85,7 +89,7 @@ export default function App() {
         <Drawer.Screen name="Event" component={EventScreen} />
         <Drawer.Screen name="Joining" component={JoiningScreen} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-        <Drawer.Screen name="Register" component={RegisterScreen} />
+
         <Drawer.Screen name="SingleMessage" component={SingleMessageScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
