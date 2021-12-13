@@ -12,7 +12,6 @@ import { postComment, getMessageById } from "../utils/api";
 import { auth } from "../../firebase";
 import { FontAwesome } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
-import Comments from "../components/Comments";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
 export default function SingleMessageScreen({ navigation }) {
