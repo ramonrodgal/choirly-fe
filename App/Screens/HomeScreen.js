@@ -6,30 +6,34 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
-  Image, 
-  Picker
+  Image,
+  Picker,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
 
 export default function HomeScreen({ navigation }) {
-  const capitalizeFirstLetter = ([ first, ...rest ], locale = navigator.language) =>
-  first.toLocaleUpperCase(locale) + rest.join('')
+  const capitalizeFirstLetter = (
+    [first, ...rest],
+    locale = navigator.language
+  ) => first.toLocaleUpperCase(locale) + rest.join("");
 
-  const [choirs, setChoirs ] = useState([])
-  const [location, setLocation] = useState('');
+  const [choirs, setChoirs] = useState([]);
+  const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    getChoirs(location).then((choirs) => {
-      setChoirs(choirs)
-      setIsLoading(false);
-    }).catch((err) => {
-      setIsLoading(false);
-      console.log(err)
-    })
+    getChoirs(location)
+      .then((choirs) => {
+        setChoirs(choirs);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
   }, [location]);
 
   // const handleSignOut = () => {
@@ -42,8 +46,15 @@ export default function HomeScreen({ navigation }) {
   // };
 
   if (isLoading) {
-    return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
-  } 
+    return (
+      <Image
+        style={styles.loading}
+        source={{
+          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
+        }}
+      />
+    );
+  }
 
   return (
     <ImageBackground
@@ -79,17 +90,44 @@ export default function HomeScreen({ navigation }) {
 
         <View style={styles.choirCardsContainer}>
           <ScrollView>
-          {choirs.map((choir) => {
-            return (
-              <View key={choir._id} style={[styles.card, styles.shadowProp]}>
-              <Text style={styles.choirTitle} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.name}</Text>
-              <Text style={styles.loc}>{capitalizeFirstLetter(choir.location)}</Text>
-              <Text numberOfLines={2} ellipsizeMode="tail" style={styles.choirDesc} onPress={() => navigation.navigate("Choir", {choirId: choir._id})}>{choir.description} </Text>
-              </View>
-
-            )
-          })}
+            {choirs.map((choir) => {
+              return (
+                <View key={choir._id} style={[styles.card, styles.shadowProp]}>
+                  <Text
+                    style={styles.choirTitle}
+                    onPress={() =>
+                      navigation.navigate("Choir", { choirId: choir._id })
+                    }
+                  >
+                    {choir.name}
+                  </Text>
+                  <Text style={styles.loc}>
+                    {capitalizeFirstLetter(choir.location)}
+                  </Text>
+                  <Text
+                    numberOfLines={2}
+                    ellipsizeMode="tail"
+                    style={styles.choirDesc}
+                    onPress={() =>
+                      navigation.navigate("Choir", { choirId: choir._id })
+                    }
+                  >
+                    {choir.description}{" "}
+                  </Text>
+                </View>
+              );
+            })}
           </ScrollView>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.navigate("Create choir");
+            }}
+          >
+            <Text style={styles.buttonText}>Create a choir group</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ImageBackground>
@@ -109,11 +147,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-//-------------------------TITLE
+  //-------------------------TITLE
   titleContainer: {
     marginTop: 10,
     flex: 1,
-    width: '100%',
+    width: "100%",
     // borderWidth: 1,
     // borderColor: 'red',
     alignItems: "center",
@@ -121,27 +159,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
-    color: '#BD7D1E',
+    color: "#BD7D1E",
   },
 
-//-------------------------SEARCH
+  //-------------------------SEARCH
   searchContainer: {
     marginTop: 10,
     flex: 1,
     // borderWidth: 1,
     // borderColor: 'blue',
-    flexDirection: 'row',
+    flexDirection: "row",
     width: 350,
     justifyContent: "center",
     alignItems: "center",
   },
   location: {
-    width: '40%',
+    width: "40%",
     // borderWidth: 1,
     // borderColor: 'pink',
   },
   dropdown: {
-    width: '60%',
+    width: "60%",
     // borderWidth: 1,
     // borderColor: 'pink',
   },
@@ -172,11 +210,10 @@ const styles = StyleSheet.create({
     height: 100,
     alignSelf: "center",
     justifyContent: "center",
-    alignItems:"center",
-    alignContent: "center"
-
+    alignItems: "center",
+    alignContent: "center",
   },
-//-------------------------CARDS
+  //-------------------------CARDS
   choirCardsContainer: {
     flex: 10,
     // borderWidth: 1,
@@ -190,33 +227,31 @@ const styles = StyleSheet.create({
   card: {
     height: 100,
     // width: 350,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 5,
     borderRadius: 5,
     marginTop: 10,
   },
   shadowProp: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.8,
-    shadowRadius: 2,  
-    elevation: 5
+    shadowRadius: 2,
+    elevation: 5,
   },
   loc: {
     fontWeight: "700",
   },
   choirTitle: {
     fontWeight: "700",
-    color: '#586F7C',
+    color: "#586F7C",
   },
-  choirDesc: {
-
-  },
+  choirDesc: {},
   seeMore: {
-    color: '#BC9C22',
-    alignSelf: 'flex-start',
+    color: "#BC9C22",
+    alignSelf: "flex-start",
   },
-//-------------------------BUTTONS
+  //-------------------------BUTTONS
   logo: {
     width: 300,
     height: 300,
@@ -225,5 +260,25 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 70,
     alignItems: "center",
+  },
+  //------------------------------BUTTON
+  buttonContainer: {
+    flex: 1,
+    // borderWidth: 1,
+    // borderColor: 'blue',
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#BC9C22",
+    width: "60%",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
   },
 });
