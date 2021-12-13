@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,115 +10,25 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import ChoirSummary from "../components/ChoirSummary";
+import GetMessagesForChoir from "../components/GetMessagesForChoir";
 
 export default function MessagesScreen({ navigation }) {
+  const username = "genie"; // hardcoded for now
+  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+
   return (
     <ImageBackground
       style={styles.background}
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.choirLogo}
-              source={{
-                uri: "https://cdn4.iconfinder.com/data/icons/music-and-entertainment/512/Music_Entertainment_Crowd-512.png",
-              }}
-            />
-          </View>
-
-          <View style={styles.infoContainer}>
-            <Text style={styles.title}>VOX </Text>
-            <Text style={styles.choirInfo}>
-              Location: Chester, St. Mary's Church{" "}
-            </Text>
-            <Text style={styles.choirInfo}>Established: 1991 </Text>
-            <Text style={styles.choirInfo}>Mambers: 35</Text>
-
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("AllMembers");
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>See all members</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <ChoirSummary navigation={navigation} />
 
         <View style={styles.messagesContainer}>
           <Text style={styles.title}>Messages:</Text>
-          <ScrollView>
-            <TouchableWithoutFeedback
-              style={styles.messageCard}
-              onPress={() => navigation.navigate("SingleMessage")}
-            >
-              <View style={styles.messageTitle}>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.messageTitleText}>
-                    Welcome to all new members
-                  </Text>
-                  <FontAwesome
-                    name="thumbs-up"
-                    size={20}
-                    color="black"
-                    onPress={() => console.log("liked placeholder")}
-                  />
-                </View>
-              </View>
-              <View style={styles.messageContainer}>
-                <Text style={styles.messageBody}>
-                  Quick note to say hello to all new members. Hello Hello Hello
-                  Hello Hello.
-                </Text>
-              </View>
-              <View>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("SingleMessage");
-                  }}
-                >
-                  <Text style={styles.buttonText}>See comments (12)</Text>
-                </TouchableOpacity>
-              </View>
-            </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback
-              style={styles.messageCard}
-              onPress={() => navigation.navigate("SingleMessage")}
-            >
-              <View style={styles.messageTitle}>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.messageTitleText}>
-                    Example message title
-                  </Text>
-                  <FontAwesome
-                    name="thumbs-up"
-                    size={20}
-                    color="black"
-                    onPress={() => console.log("liked placeholder")}
-                  />
-                </View>
-              </View>
-              <View style={styles.messageContainer}>
-                <Text style={styles.messageBody}>
-                  Example message in the choir group to replace la la la.
-                </Text>
-              </View>
-              <View>
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate("SingleMessage");
-                  }}
-                >
-                  <Text style={styles.buttonText}>See comments (3)</Text>
-                </TouchableOpacity>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
+          <GetMessagesForChoir choirId={choirId} />
         </View>
 
         <View style={styles.buttonContainer}>

@@ -10,67 +10,28 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import ChoirSummary from "../components/ChoirSummary";
+import GetFilesForChoir from "../components/GetFilesForChoir";
 
 export default function FilesScreen({ navigation }) {
+  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+
   return (
     <ImageBackground
       style={styles.background}
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.choirLogo}
-              source={{
-                uri: "https://cdn4.iconfinder.com/data/icons/music-and-entertainment/512/Music_Entertainment_Crowd-512.png",
-              }}
-            />
-          </View>
-
-          <View style={styles.infoContainer}>
-            <Text style={styles.title}>VOX </Text>
-            <Text style={styles.choirInfo}>
-              Location: Chester, St. Mary's Church{" "}
-            </Text>
-            <Text style={styles.choirInfo}>Established: 1991 </Text>
-            <Text style={styles.choirInfo}>Mambers: 35</Text>
-
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("AllMembers");
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>See all members</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <ChoirSummary navigation={navigation} />
 
         <View style={styles.filesContainer}>
           <Text style={styles.title}>Recordings and Songsheets:</Text>
-          <ScrollView>
-            <View style={styles.fileContainer}>
-              <View style={styles.iconContainer}>
-                <Image
-                  style={styles.icon}
-                  source={require("../assets/musicnote.png")}
-                />
-              </View>
-
-              <Text>placeholder file name</Text>
-
-              <FontAwesome
-                name="download"
-                size={20}
-                color="black"
-                onPress={() => console.log("download placeholder")}
-              />
-            </View>
-          </ScrollView>
+          <GetFilesForChoir choirId={choirId} />
         </View>
+
+        <TouchableOpacity>
+          <Text>Upload here</Text>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
