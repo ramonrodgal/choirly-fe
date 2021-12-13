@@ -11,7 +11,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
-export default function FilesScreen() {
+export default function FilesScreen({ navigation }) {
   return (
     <ImageBackground
       style={styles.background}
