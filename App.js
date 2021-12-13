@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/core";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { createStackNavigator } from "@react-navigation/stack"; 
+import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "./App/Screens/HomeScreen";
 import UserProfileScreen from "./App/Screens/UserProfileScreen";
@@ -23,7 +23,6 @@ import ChoirGroubTabs from "./App/navigation/ChoirGroupTabNav";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 
 const Drawer = createDrawerNavigator();
 // const Stack = createStackNavigator();
@@ -47,7 +46,8 @@ function LogoTitle() {
 function NotificationBell() {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity style={{ paddingRight: 20 }}
+    <TouchableOpacity
+      style={{ paddingRight: 20 }}
       onPress={() => {
         navigation.navigate("Notifications");
       }}
@@ -84,13 +84,13 @@ export default function App() {
         <Drawer.Screen name="Choir" component={ChoirScreen} />
         <Drawer.Screen name="ChoirGroup" component={ChoirGroubTabs} />
         <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
-        <Drawer.Screen name="CreateEvent" component={CreateEventScreen} />
+        {/* <Drawer.Screen name="CreateEvent" component={CreateEventScreen} /> */}
         <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
-        <Drawer.Screen name="Event" component={EventScreen} />
+        {/* <Drawer.Screen name="Event" component={EventScreen} /> */}
         <Drawer.Screen name="Joining" component={JoiningScreen} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
 
-        <Drawer.Screen name="SingleMessage" component={SingleMessageScreen} />
+        {/* <Drawer.Screen name="SingleMessage" component={SingleMessageScreen} /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );

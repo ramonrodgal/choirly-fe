@@ -120,6 +120,17 @@ export default function MessagesScreen({ navigation }) {
             </TouchableWithoutFeedback>
           </ScrollView>
         </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.navigate("CreateMessage");
+            }}
+          >
+            <Text stlye={styles.buttonText}>Post a message</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
