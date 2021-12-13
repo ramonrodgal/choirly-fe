@@ -62,7 +62,7 @@ export default function ChoirScreen({ route, navigation }) {
       <GetEventsForChoir choirId={choirId}/>
 
       <View style={styles.bottomContainer}>
-        <TouchableOpacity onPress={() => { navigation.navigate("Joining", {choirId: choirId, avatar:choir.avatar_url, choirName:choir.name})}} style={styles.button}>
+        <TouchableOpacity onPress={() => { navigation.navigate("Joining", {choirId: choirId, avatar:choir.avatar_url, choirName:choir.name, choirLeader:choir.leader})}} style={styles.button}>
           <Text style={styles.buttonText}>Reguest to join</Text>
         </TouchableOpacity>
       </View>

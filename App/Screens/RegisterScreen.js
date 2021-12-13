@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
 
-export default function RegisterScreen() {
+export default function RegisterScreen({navigation}) {
     const [confirmation, setConfirmation] = useState('');
     const email = auth.currentUser.email;
 
@@ -23,7 +23,7 @@ export default function RegisterScreen() {
     const onSubmit = (data) => {
         const body = {
             email: email,
-            username: data.username,
+            username: email,
             first_name: data.first_name,
             last_name: data.last_name,
             phone_number: parseInt(data.phone_number)
@@ -45,7 +45,7 @@ export default function RegisterScreen() {
                 </View>
             
                 <View style={styles.formContainer}>
-                <Text style={styles.label}>Username *</Text>
+                {/* <Text style={styles.label}>Username *</Text>
                 <Controller
                     control={control}
                     rules={{
@@ -62,7 +62,7 @@ export default function RegisterScreen() {
                     )}
                     name="username"
                 />
-                {errors.username && <Text>Please enter a username.</Text>}
+                {errors.username && <Text>Please enter a username.</Text>} */}
 
                 <Text style={styles.label}>First name *</Text>
                 <Controller
@@ -122,10 +122,27 @@ export default function RegisterScreen() {
                 </View>
                 <Text style={styles.label}>* Required fields</Text>
                 <View style={styles.buttonContainer}>
+
+                    
+                    {confirmation ? 
+                    <View>
+                    <Text>{confirmation}</Text>
+                    <TouchableOpacity
+                    style={styles.blueButton}
+                    onPress={() => { navigation.navigate("Profile")}}
+                    >
+                        <Text style={styles.buttonText}>See profile</Text>
+                    </TouchableOpacity>
+                    </View> : 
+                    <View style={styles.requestContainer}>
                     <TouchableOpacity title='Submit' onPress={handleSubmit(onSubmit)} style={styles.button}>
                     <Text style={styles.buttonText}>Register</Text>
                     </TouchableOpacity>
-                    <Text style={styles.confirmation}>{confirmation}</Text>
+                    </View>
+        }
+
+
+
                 </View>
             </ScrollView>
             </View>
@@ -220,4 +237,18 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         fontSize: 16,
     },
+    blueButton: {
+        backgroundColor: "#B2DED9",
+        padding: 15,
+        borderRadius: 25,
+        alignItems: "center",
+        marginTop: 10,
+      },
+    
+      requestContainer: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: 'blue',
+        alignItems: "center",
+      },
 })

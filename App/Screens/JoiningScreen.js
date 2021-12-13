@@ -11,10 +11,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { getChoirById } from "../utils/api";
+import { postNotificationByUsername } from "../utils/api";
 
 export default function JoiningScreen({ route, navigation }) {
-  const { choirId, avatar, choirName } = route.params;
+  const { choirId, avatar, choirName, choirLeader } = route.params;
+  const [confirmation, setConfirmation] = useState('');
 
   const {
     control,
@@ -26,8 +27,18 @@ export default function JoiningScreen({ route, navigation }) {
     },
   }); // all this is from useForm which is imported from react-hook-form
   const onSubmit = (data) => {
-    console.log(data);
-    navigation.navigate("All choirs");
+    const body = {
+      "username": choirLeader,
+      "choir": choirName,
+      "author": "placeholder",
+      "type": "message",
+      "message": data.message,
+    }
+    console.log(body);
+    postNotificationByUsername(choirLeader, body).then((res) => {
+      setConfirmation("Your request has been sent")
+    })
+    // navigation.navigate("All choirs");
   }; // on submit the data is logged
   // this submit function needs to change - might need separate for each button
 
@@ -41,7 +52,7 @@ export default function JoiningScreen({ route, navigation }) {
       </View>
 
       <View style={styles.messageContainer}>
-        <Text style={styles.title}>Send message to {choirName}</Text>
+        <Text style={styles.title}>Send message to the leader of {choirName}</Text>
         <Controller
           control={control}
           rules={{
@@ -50,7 +61,7 @@ export default function JoiningScreen({ route, navigation }) {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               style={styles.input}
-              placeholder="Drop us a line if you have any questions"
+              placeholder="Type here"
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
@@ -58,22 +69,37 @@ export default function JoiningScreen({ route, navigation }) {
           )}
           name="message"
         />
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           style={styles.sendButton}
         >
           <Text style={styles.buttonText}>Send</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
-      <View style={styles.requestContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={handleSubmit(onSubmit)}
-        >
-          <Text style={styles.buttonText}>Reguest to join</Text>
-        </TouchableOpacity>
-      </View>
+
+        {confirmation ? 
+            <View style={styles.confirmation}>
+              <Text>{confirmation}</Text>
+              {/* <Button onPress={navigation.navigate("All choirs")}>Go home</Button> */}
+              <TouchableOpacity
+              style={styles.blueButton}
+              onPress={() => { navigation.navigate("All choirs")}}
+              >
+                <Text style={styles.buttonText}>Go back to home screen</Text>
+              </TouchableOpacity>
+            </View> : 
+            <View style={styles.requestContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={styles.buttonText}>Send and request to join</Text>
+            </TouchableOpacity>
+            </View>
+        }
+          
+
     </ImageBackground>
   );
 }
@@ -103,12 +129,12 @@ const styles = StyleSheet.create({
   },
 
   messageContainer: {
-    flex: 5,
+    flex: 2,
     alignContent: "center",
     // justifyContent: 'center',
     alignItems: "center",
-    // borderWidth: 1,
-    // borderColor: 'red',
+    borderWidth: 1,
+    borderColor: 'red',
     marginTop: 10,
   },
   title: {
@@ -119,7 +145,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderColor: "black",
     borderWidth: 1,
-    height: 200,
+    height: 100,
     width: 350,
     padding: 10,
     borderRadius: 5,
@@ -137,11 +163,19 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  blueButton: {
+    backgroundColor: "#B2DED9",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 10,
+  },
 
   requestContainer: {
     flex: 1,
-    // borderWidth: 1,
-    // borderColor: 'blue',
+    borderWidth: 1,
+    borderColor: 'blue',
+    alignItems: "center",
   },
   button: {
     backgroundColor: "#BC9C22",
@@ -151,4 +185,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
+  confirmation: {
+    flex: 1,
+    alignItems: "center",
+    fontSize: 10,
+        borderWidth: 1,
+    borderColor: 'green',
+  }
 });
