@@ -101,6 +101,17 @@ export default function EventsScreen({ navigation }) {
             </TouchableWithoutFeedback>
           </ScrollView>
         </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              navigation.navigate("CreateEvent");
+            }}
+          >
+            <Text stlye={styles.buttonText}>Create an event</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );
