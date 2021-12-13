@@ -11,8 +11,12 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
+import { postEventByChoir } from "../utils/api";
 
 export default function CreateEventScreen() {
+  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+  const choirName = "African Children's Choir"; // hardcoded for now
+
   const [date, setDate] = useState(new Date());
 
   const [startTime, setStartTime] = useState(date);
@@ -94,7 +98,16 @@ export default function CreateEventScreen() {
   });
 
   const onSubmit = (data) => {
-    const eventPost = { ...data, duration, date, type };
+    const eventPost = { ...data, duration, date, type, choir: choirName };
+    console.log(eventPost);
+
+    postEventByChoir(choirId, eventPost)
+      .then(() => {
+        console.log("event sent");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // this is where the post request would go - choir id needs to be added
   };
 
