@@ -21,11 +21,14 @@ export default function RegisterScreen() {
       }); // all this is from useForm which is imported from react-hook-form
     
     const onSubmit = (data) => {
-        const username = data.username;
-        const first_name = data.first_name;
-        const last_name = data.last_name;
-        const phone_number = parseInt(data.phone_number);
-        postUser(email, username, first_name, last_name, phone_number).then((user) => {
+        const body = {
+            email: email,
+            username: data.username,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            phone_number: parseInt(data.phone_number)
+        }
+        postUser(body).then((user) => {
             setConfirmation('Your profile has been created')
         })
     }
@@ -99,7 +102,7 @@ export default function RegisterScreen() {
                 />
                 {errors.last_name && <Text>Last name is required.</Text>}
 
-                <Text style={styles.label}>Phone number (don't worry, it won't be publically visible):</Text>
+                <Text style={styles.label}>Phone number (don't worry, we won't make it publically visible)</Text>
                 <Controller
                     control={control}
                     rules={{
@@ -117,7 +120,7 @@ export default function RegisterScreen() {
                     name="phone_number"
                 />
                 </View>
-                <Text>* Required fields</Text>
+                <Text style={styles.label}>* Required fields</Text>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity title='Submit' onPress={handleSubmit(onSubmit)} style={styles.button}>
                     <Text style={styles.buttonText}>Register</Text>
@@ -217,7 +220,4 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         fontSize: 16,
     },
-    confirmation: {
-        marginTop: 20,
-    }
 })

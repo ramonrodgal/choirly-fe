@@ -46,6 +46,7 @@ export default function LoginScreen() {
       })
       .catch((error) => alert(error.message));
   };
+  
   return (
     <KeyboardAvoidingView style={styles.container} behaviour="padding">
       <ImageBackground
