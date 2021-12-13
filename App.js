@@ -84,9 +84,9 @@ export default function App() {
         <Drawer.Screen name="Choir" component={ChoirScreen} />
         <Drawer.Screen name="ChoirGroup" component={ChoirGroubTabs} />
         <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
-        <Drawer.Screen name="CreateEvent" component={CreateEventScreen} />
+        {/* <Drawer.Screen name="CreateEvent" component={CreateEventScreen} /> */}
         <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
-        <Drawer.Screen name="Event" component={EventScreen} />
+        {/* <Drawer.Screen name="Event" component={EventScreen} /> */}
         <Drawer.Screen name="Joining" component={JoiningScreen} />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
 
