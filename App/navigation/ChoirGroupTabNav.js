@@ -6,6 +6,7 @@ import EventsScreen from "../Screens/EventsScreen";
 import FilesScreen from "../Screens/FilesScreen";
 
 import { MessagesStackNav } from "./MessagesStackNav";
+import { EventsStackNav } from "./EventsStackNav";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ export default function ChoirGroubTabs() {
 
           if (route.name === "MessagesMain") {
             iconName = focused ? "envelope-open" : "envelope";
-          } else if (route.name === "Events") {
+          } else if (route.name === "EventsMain") {
             iconName = focused ? "calendar" : "calendar-o";
           } else if (route.name === "Files") {
             iconName = focused ? "folder-open" : "folder";
@@ -37,9 +38,9 @@ export default function ChoirGroubTabs() {
         options={{ headerShown: false, title: "Messages" }}
       />
       <Tab.Screen
-        name="Events"
-        component={EventsScreen}
-        options={{ headerShown: false }}
+        name="EventsMain"
+        component={EventsStackNav}
+        options={{ headerShown: false, title: "Events" }}
       />
       <Tab.Screen
         name="Files"
