@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   ImageBackground,
   StyleSheet,
@@ -8,10 +8,48 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { postComment, getMessageById } from "../utils/api";
+import { auth } from "../../firebase";
 import { FontAwesome } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
+import Comments from "../components/Comments";
 
+//WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
 export default function SingleMessageScreen({ navigation }) {
+  const [comment, setComment] = useState("");
+  const [message, setMessage] = useState({});
+  const [comments, setComments] = useState([]);
+
+  let message_id = "61b0c4c065064fdfb889a163"; //HARDCODED
+
+  //WHEN THE PAGE IS OPEN WE NEED TO MAKE A REQUEST TO GET THE MESSAGE
+  useEffect(() => {
+    getMessageById(message_id)
+      .then((message) => {
+        setMessage(message);
+        setComments(message.comments);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  }, []);
+
+  const handlePostComment = () => {
+    const body = {
+      author: "genie", //HARDCODED SHOULD BE REPLACED WITH auth.currentUser.email or usernam,
+      body: comment,
+    };
+
+    postComment(message._id, body)
+      .then((message) => {
+        setMessage(message);
+        setComments(message.comments);
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
+
   return (
     <ImageBackground
       style={styles.background}
@@ -24,9 +62,7 @@ export default function SingleMessageScreen({ navigation }) {
         >
           <View style={styles.messageTitle}>
             <View style={styles.titleContainer}>
-              <Text style={styles.messageTitleText}>
-                Welcome to all new members
-              </Text>
+              <Text style={styles.messageTitleText}>{message.title}</Text>
               <FontAwesome
                 name="thumbs-up"
                 size={20}
@@ -36,22 +72,21 @@ export default function SingleMessageScreen({ navigation }) {
             </View>
           </View>
           <View style={styles.messageContainer}>
-            <Text style={styles.messageBody}>
-              Quick note to say hello to all new members. Hello Hello Hello
-              Hello Hello.
-            </Text>
+            <Text style={styles.messageBody}>{message.body}</Text>
           </View>
         </View>
 
         <View style={styles.addCommentContainer}>
           <View style={styles.commentBoxContainer}>
-            <TextInput placeholder="Add a comment..."></TextInput>
+            <TextInput
+              onChangeText={setComment}
+              value={comment}
+              placeholder="Add a comment..."
+            ></TextInput>
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => {
-                console.log("placeholder for posting comment");
-              }}
+              onPress={() => handlePostComment()}
               style={styles.button}
             >
               <Text style={styles.buttonText}>Add comment</Text>
@@ -59,36 +94,45 @@ export default function SingleMessageScreen({ navigation }) {
           </View>
         </View>
 
-        <View style={styles.commentsContainer}>
-          <ScrollView>
-            <View style={styles.commentCard}>
-              <View style={styles.commentTitle}>
-                <View style={styles.iconContainer}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../assets/concertIcon.png")} // to be replaced with user image
-                  />
-                </View>
-                <View style={styles.commentContainer}>
-                  <Text style={styles.commentTitleText}>
-                    username placeholder
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.commentContainer}>
-                <Text style={styles.commentBody}>
-                  Body of the comment, blah blah blah, placeholder
-                </Text>
-                <Text style={styles.commentDate}>
-                  Date and time posted placeholder
-                </Text>
-              </View>
+        {comments.map((comment) => {
+          return (
+            <View>
+              <Text>{comment.author}</Text>
+              <Text>{comment.body}</Text>
+              <Text>{Date(comment.created_at).toString().slice(0, -15)}</Text>
             </View>
-          </ScrollView>
-        </View>
+          );
+        })}
       </View>
     </ImageBackground>
   );
+}
+
+//COMMENT STYLE BUT I COULDN'T POPULATED IT
+{
+  /* <View>
+      <ScrollView>
+        <View>
+          <View>
+            <View>
+              <Image
+                style={styles.icon}
+                source={require("../assets/concertIcon.png")} // to be replaced with user image
+              />
+            </View>
+            <View style={styles.commentContainer}>
+              <Text style={styles.commentTitleText}>{comment.author}</Text>
+            </View>
+          </View>
+          <View style={styles.commentContainer}>
+            <Text style={styles.commentBody}>{comment.body}</Text>
+            <Text style={styles.commentDate}>
+              {Date(comment.created_at).toString()}
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </View> */
 }
 
 const styles = StyleSheet.create({
