@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, Button } from "react-native";
-import { updateNotificationById } from "../utils/api";
+import {
+  updateNotificationById,
+  postNotificationByUsername,
+  addMemberToChoir,
+} from "../utils/api";
 
 export default function Notification({ notification }) {
   const [notificationObj, setNotificationObj] = useState(notification);
-
-  console.log(notificationObj);
 
   useEffect(() => {
     const body = {
@@ -22,23 +24,74 @@ export default function Notification({ notification }) {
   }, []);
 
   const handleAccept = (notificationId) => {
-    updateNotificationById(notificationId, { accepted: true }).then(
-      (notification) => {
-        setNotificationObj(notification);
-      }
-    );
+    return updateNotificationById(notificationId, { accepted: true })
+      .then((notification) => {
+        return setNotificationObj(notification);
+      })
+      .then(() => {
+        console.log(notificationObj.author);
+
+        return addMemberToChoir(
+          notificationObj.author,
+          notificationObj.choir_id
+        ).then((choir) => {
+          console.log("The user joined the group");
+        });
+      })
+      .then(() => {
+        const body = {
+          username: notificationObj.author,
+          choir: notificationObj.choir,
+          type: "accept",
+          accepted: true,
+          author: notificationObj.username,
+        };
+        return postNotificationByUsername(notificationObj.author, body).then(
+          (notification) => {
+            console.log("Notification send");
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
   };
 
-  console.log(notificationObj);
+  const handleReject = (notificationId) => {
+    updateNotificationById(notificationId, { rejected: true })
+      .then((notification) => {
+        setNotificationObj(notification);
+      })
+      .then(() => {
+        const body = {
+          username: notificationObj.author,
+          choir: notificationObj.choir,
+          type: "accept",
+          rejected: true,
+          author: notificationObj.username,
+        };
+        return postNotificationByUsername(notificationObj.author, body).then(
+          (notification) => {
+            console.log("Notification send");
+          }
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   if (notification.type === "join") {
-    if (notificationObj.accepted === false) {
+    if (
+      notificationObj.accepted === false &&
+      notificationObj.rejected === false
+    ) {
       return (
         <View>
           <Text>
             {notificationObj.author} wants to join {notificationObj.choir}
           </Text>
-          <Text>{Date(notificationObj.date)}</Text>
+          <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
           <Button
             title="Accept"
             onPress={() => handleAccept(notification._id)}
@@ -50,15 +103,49 @@ export default function Notification({ notification }) {
         </View>
       );
     } else {
-      return <View></View>;
+      if (notificationObj.rejected === true) {
+        return (
+          <View>
+            <Text>
+              You rejected {notificationObj.username} to join{" "}
+              {notificationObj.choir}
+            </Text>
+            <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+          </View>
+        );
+      } else {
+        return (
+          <View>
+            <Text>
+              You accepted {notificationObj.username} to join{" "}
+              {notificationObj.choir}
+            </Text>
+            <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+          </View>
+        );
+      }
     }
   }
 
   if (notification.type === "message") {
-    return <View></View>;
+    return (
+      <View>
+        <Text>You have a new message in {notificationObj.choir}</Text>
+        <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+      </View>
+    );
   }
 
   if (notification.type === "accept") {
-    return <View></View>;
+    return (
+      <View>
+        <Text>
+          {notification.accepted
+            ? `You have been accepted to ${notification.choir}`
+            : `Your request to join ${notification.choir} have been rejected`}
+        </Text>
+        {notification.accepted ? <Text></Text> : Text}
+      </View>
+    );
   }
 }
