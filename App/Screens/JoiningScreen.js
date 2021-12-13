@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, Text, View, ImageBackground, Image, Button, TextInput, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Image,
+  Button,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { getChoirById } from "../utils/api";
 
 export default function JoiningScreen({ route, navigation }) {
   const { choirId, avatar, choirName } = route.params;
-  
+
   const {
     control,
     handleSubmit,
@@ -16,48 +25,57 @@ export default function JoiningScreen({ route, navigation }) {
       message: "",
     },
   }); // all this is from useForm which is imported from react-hook-form
-  const onSubmit = (data) => console.log(data); // on submit the data is logged
+  const onSubmit = (data) => {
+    console.log(data);
+    navigation.navigate("All choirs");
+  }; // on submit the data is logged
+  // this submit function needs to change - might need separate for each button
 
   return (
     <ImageBackground
-    style={styles.background}
-    source={require("../assets/white-background.png")}
+      style={styles.background}
+      source={require("../assets/white-background.png")}
     >
-    <View  style={styles.topContainer}>
-    <Image style={styles.choirLogo} source={{ uri: avatar}} />
-    </View>
+      <View style={styles.topContainer}>
+        <Image style={styles.choirLogo} source={{ uri: avatar }} />
+      </View>
 
-
-    <View  style={styles.messageContainer}>
-      <Text style={styles.title}>Send message to {choirName}</Text>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Drop us a line if you have any questions"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="message"
-      />
-        <TouchableOpacity onPress={handleSubmit(onSubmit)} style={styles.sendButton}>
+      <View style={styles.messageContainer}>
+        <Text style={styles.title}>Send message to {choirName}</Text>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles.input}
+              placeholder="Drop us a line if you have any questions"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+          name="message"
+        />
+        <TouchableOpacity
+          onPress={handleSubmit(onSubmit)}
+          style={styles.sendButton}
+        >
           <Text style={styles.buttonText}>Send</Text>
         </TouchableOpacity>
-    </View>
+      </View>
 
-    <View style={styles.requestContainer}>
-        <TouchableOpacity style={styles.button}>
+      <View style={styles.requestContainer}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(onSubmit)}
+        >
           <Text style={styles.buttonText}>Reguest to join</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -84,19 +102,18 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 
-
   messageContainer: {
     flex: 5,
-    alignContent: 'center',
+    alignContent: "center",
     // justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: "center",
     // borderWidth: 1,
     // borderColor: 'red',
     marginTop: 10,
   },
   title: {
     fontWeight: "700",
-    color: '#BD7D1E',
+    color: "#BD7D1E",
   },
   input: {
     backgroundColor: "white",
@@ -134,4 +151,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-})
+});
