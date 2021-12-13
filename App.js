@@ -81,7 +81,7 @@ export default function App() {
         />
         <Drawer.Screen name="Register" component={RegisterScreen} />
         <Drawer.Screen name="Profile" component={UserProfileStackNav} />
-        <Drawer.Screen name="AllMembers" component={AllMembersScreen} />
+        {/* <Drawer.Screen name="AllMembers" component={AllMembersScreen} /> */}
         <Drawer.Screen name="Choir" component={ChoirScreen} />
         <Drawer.Screen name="ChoirGroup" component={ChoirGroubTabs} />
         <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
