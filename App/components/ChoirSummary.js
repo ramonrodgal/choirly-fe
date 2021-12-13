@@ -1,48 +1,73 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import ChoirSummary from "../components/ChoirSummary";
-import GetMessagesForChoir from "../components/GetMessagesForChoir";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { getChoirById } from "../utils/api";
 
-export default function MessagesScreen({ navigation }) {
-  const username = "genie"; // hardcoded for now
+export default function ChoirSummary({ navigation }) {
   const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
 
+  const [choir, setChoir] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const capitalizeFirstLetter = (
+    [first, ...rest],
+    locale = navigator.language
+  ) => first.toLocaleUpperCase(locale) + rest.join("");
+
+  useEffect(() => {
+    setIsLoading(true);
+    getChoirById(choirId)
+      .then((choir) => {
+        setChoir(choir);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [choirId]);
+
+  if (isLoading) {
+    return (
+      <Image
+        style={styles.loading}
+        source={{
+          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
+        }}
+      />
+    );
+  }
+
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
-      <View style={styles.container}>
-        <ChoirSummary navigation={navigation} />
+    <View style={styles.topContainer}>
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.choirLogo}
+          source={{
+            uri: choir.avatar_url,
+          }}
+        />
+      </View>
 
-        <View style={styles.messagesContainer}>
-          <Text style={styles.title}>Messages:</Text>
-
-          <GetMessagesForChoir choirId={choirId} />
-        </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{choir.name}</Text>
+        <Text style={styles.choirInfo}>
+          {capitalizeFirstLetter(choir.location)}
+        </Text>
+        <Text style={styles.choirInfo}>Leader: {choir.leader} </Text>
+        <Text style={styles.choirInfo}>Mambers: {choir.members.length}</Text>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
-            style={styles.button}
             onPress={() => {
-              navigation.navigate("CreateMessage");
+              navigation.navigate("AllMembers");
             }}
+            style={styles.button}
           >
-            <Text stlye={styles.buttonText}>Post a message</Text>
+            <Text style={styles.buttonText}>See all members</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ImageBackground>
+    </View>
   );
 }
 

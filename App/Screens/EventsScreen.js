@@ -4,102 +4,26 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import ChoirSummary from "../components/ChoirSummary";
+import GetEventsForChoir from "../components/GetEventsForChoir";
 
 export default function EventsScreen({ navigation }) {
+  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+
   return (
     <ImageBackground
       style={styles.background}
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <View style={styles.topContainer}>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.choirLogo}
-              source={{
-                uri: "https://cdn4.iconfinder.com/data/icons/music-and-entertainment/512/Music_Entertainment_Crowd-512.png",
-              }}
-            />
-          </View>
-
-          <View style={styles.infoContainer}>
-            <Text style={styles.title}>VOX </Text>
-            <Text style={styles.choirInfo}>
-              Location: Chester, St. Mary's Church{" "}
-            </Text>
-            <Text style={styles.choirInfo}>Established: 1991 </Text>
-            <Text style={styles.choirInfo}>Mambers: 35</Text>
-
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate("AllMembers");
-                }}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>See all members</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
+        <ChoirSummary navigation={navigation} />
 
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
-          <ScrollView>
-            <TouchableWithoutFeedback
-              style={styles.eventCard}
-              onPress={() => navigation.navigate("Event")}
-            >
-              <View style={styles.eventTitle}>
-                <View style={styles.iconContainer}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../assets/concertIcon.png")}
-                  />
-                </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.eventTitleText}>
-                    Concert - Winter is Coming
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventContainer}>
-                <Text style={styles.eventBody}>Location: Chester</Text>
-                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-                <Text style={styles.eventBody}>Time: 20:00</Text>
-              </View>
-            </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback
-              style={styles.eventCard}
-              onPress={() => navigation.navigate("Event")}
-            >
-              <View style={styles.eventTitle}>
-                <View style={styles.iconContainer}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../assets/choir-icon.jpg")}
-                  />
-                </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.eventTitleText}>
-                    Rehearsal - St.Mary's Church{" "}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.eventContainer}>
-                <Text style={styles.eventBody}>Location: Chester</Text>
-                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-                <Text style={styles.eventBody}>Time: 20:00</Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </ScrollView>
+          <GetEventsForChoir choirId={choirId} />
         </View>
 
         <View style={styles.buttonContainer}>
