@@ -1,5 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import {
   StyleSheet,
   Text,
@@ -9,37 +10,46 @@ import {
   Button,
   TouchableOpacity,
   ScrollView,
+  TextInput,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { TextInput } from "react-native-gesture-handler";
+import { patchUser } from "../utils/api";
 
 export default function EditProfileScreen({ navigation, route }) {
-  const { username, first_name, last_name } = route.params;
-  const [isShowingInput, setIsShowingInput] = useState(false);
-  // console.log(isShowingInput);
+  const { username, firstName, lastName, avatar } = route.params;
+  const [confirmation, setConfirmation] = useState('');
 
-  const handleFirstName = () => {
-    console.log("pencil pressed first name");
-    setIsShowingInput(true);
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    } = useForm({
+    defaultValues: {
+        first_name: "",
+        last_name: "",
+        about_me: "",
+        phone_number: "",
+        voice: "",
+        avatar_url: "",
+    },
+  }); 
 
-  const FirstName = () => {
-    return isShowingInput ? (
-      <TextInput title="test">Type here</TextInput>
-    ) : (
-      <View>
-        <Text>{first_name}</Text>
-        <FontAwesome
-          name="pencil"
-          size={20}
-          color="black"
-          onPress={handleFirstName}
-        />
-      </View>
-    );
-  };
-
-  useEffect(FirstName, [isShowingInput]);
+  const onSubmit = (data) => {
+    const body = {
+        username: username,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        phone_number: parseInt(data.phone_number),
+        about_me: data.about_me,
+        avatar_url: data.avatar_url,
+    }
+    patchUser(username, body).then((user) => {
+        setConfirmation('Your profile has been updated')
+        console.log('done')
+    }).catch((err) => {
+      console.log(err.response.data)
+    })
+}
 
   return (
   <View style={styles.container}>
@@ -50,73 +60,143 @@ export default function EditProfileScreen({ navigation, route }) {
 
 {/* //-------------------------------------------------------------AVATAR */}
       <View style={styles.avatar}>
+      {(avatar) ? 
         <Image
-          style={styles.image}
-          source={{ uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/actor-brad-pitt-attends-the-screening-of-once-upon-a-time-news-photo-1578089601.jpg?crop=1.00xw:0.667xh;0,0.0363xh&resize=480:*"}}
+        style={styles.image}
+        source={{ uri: avatar}}
+        alt="Profile Image"
+      /> : 
+      
+        <Image
+          style={styles.imageRandom}
+          source={{ uri: "https://static.wikia.nocookie.net/mrmen/images/6/69/Tickle_transparent.png/revision/latest/scale-to-width-down/262?cb=20200815230202"}}
           alt="Profile Image"
         />
+      }
       </View>
 
 {/* //------------------------------------------------------------------ INFO */}
     <ScrollView>
       <View style={styles.basicInfo}>
+        <Text style={styles.label}>First name: {firstName}</Text>
+          <Controller
+              control={control}
+              rules={{
+              required: false,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                  style={styles.input}
+                  placeholder="Enter your first name here"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+              />
+              )}
+              name="first_name"
+          />
+        </View>
 
-        <Text>First Name:</Text>
-        <FirstName />
-
-        <Text>Surname: {last_name}</Text>
-        <FontAwesome
-          name="pencil"
-          size={20}
-          color="black"
-          onPress={() => console.log("pencil pressed surname")}
+        <View style={styles.basicInfo}>
+        <Text style={styles.label}>Last name: {lastName}</Text>
+        <Controller
+            control={control}
+            rules={{
+            required: false,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your last name here"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+            />
+            )}
+            name="last_name"
         />
+        </View>
 
-      
-        <Text>About me: placeholder</Text>
-        <FontAwesome
-          name="pencil"
-          size={20}
-          color="black"
-          onPress={() => console.log("pencil pressed about me")}
+        <View style={styles.basicInfo}>
+        <Text style={styles.label}>Avatar url</Text>
+        <Controller
+            control={control}
+            rules={{
+            required: false,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your avatar url here"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+            />
+            )}
+            name="avatar_url"
         />
-
-
-        <Text>Number: placeholder</Text>
-        <FontAwesome
-          name="pencil"
-          size={20}
-          color="black"
-          onPress={() => console.log("pencil pressed number")}
+        </View>
+        
+        <View style={styles.basicInfo}>
+        <Text style={styles.label}>About me</Text>
+        <Controller
+            control={control}
+            rules={{
+            required: false,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+                style={styles.input}
+                placeholder="Enter about me here"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+            />
+            )}
+            name="about_me"
         />
-
-
-        <Text>Voice: placeholder</Text>
-        <FontAwesome
-          name="pencil"
-          size={20}
-          color="black"
-          onPress={() => console.log("pencil pressed voice")}
+        </View>
+        
+        <View style={styles.basicInfo}>
+        <Text style={styles.label}>Phone number</Text>
+        <Controller
+            control={control}
+            rules={{
+            required: false,
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+                style={styles.input}
+                placeholder="Enter your phone number here"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+            />
+            )}
+            name="phone_number"
         />
+        </View>
 
-      </View>
     </ScrollView>
 
 {/* //------------------------------------------------------------------ SUBMIT BUTTON*/}
 
+    {confirmation ? 
+      <View>
+      <Text>{confirmation}</Text>
+      <TouchableOpacity
+      style={styles.blueButton}
+      onPress={() => { navigation.navigate("Home")}}
+      >
+          <Text style={styles.buttonText}>Home</Text>
+      </TouchableOpacity>
+      </View> : 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() =>
-            console.log(
-              "placeholder for changes actions - add navigate to userprofile"
-            )
-          }
-          title="Submit changes"
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Submit Changes</Text>
-        </TouchableOpacity>
+      <TouchableOpacity title='Submit' onPress={handleSubmit(onSubmit)} style={styles.button}>
+      <Text style={styles.buttonText}>Submit changes</Text>
+      </TouchableOpacity>
       </View>
+    }
     </View>
   );
 }
@@ -140,8 +220,8 @@ const styles = StyleSheet.create({
     // alignContent: 'flex-start',
     // position: 'absolute',
     justifyContent: 'flex-start',
-    borderWidth: 1,
-    borderColor: 'red',
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
   // nameTitle: {
   //   fontWeight: "bold",
@@ -172,8 +252,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 0,
-    borderWidth: 1,
-    borderColor: 'orange',
+    // borderWidth: 1,
+    // borderColor: 'orange',
     marginTop: 10,
   },
   button: {
@@ -188,14 +268,22 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
+  blueButton: {
+    backgroundColor: "#B2DED9",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 10,
+  },
   basicInfo: {
-    borderWidth: 1,
+    // borderWidth: 1,
     backgroundColor: '#DBDBDB',
-    borderColor: 'blue',
+    // borderColor: 'blue',
     // minHeight: 50,
     fontSize: 14,
     padding: 5,
     borderRadius: 6,
+    marginTop: 10,
   },
   test: {
     backgroundColor: 'white',

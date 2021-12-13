@@ -31,13 +31,14 @@ export default function UserProfileScreen({ navigation, route }) {
   useEffect(() => {
     setIsLoading(true);
     getUserByUsername(username).then((user) => {
-      setUser(user)
+      setUser(user);
       setIsLoading(false);
     }).catch((err) => {
       setIsLoading(false);
       console.log(err)
     })
   }, [username]);
+
 
   if (isLoading) {
     return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
@@ -56,11 +57,20 @@ export default function UserProfileScreen({ navigation, route }) {
 
 {/* //-------------------------------------------------------------AVATAR */}
       <ImageBackground style={styles.avatar} imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10}} source={{ uri: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8anVuZ2xlfGVufDB8fDB8fA%3D%3D&w=1000&q=80"}}>
+
+        {(user.avatar_url) ? 
         <Image
-          style={styles.image}
-          source={{ uri: "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/actor-brad-pitt-attends-the-screening-of-once-upon-a-time-news-photo-1578089601.jpg?crop=1.00xw:0.667xh;0,0.0363xh&resize=480:*"}}
+        style={styles.image}
+        source={{ uri: user.avatar_url}}
+        alt="Profile Image"
+      /> : 
+      
+        <Image
+          style={styles.imageRandom}
+          source={{ uri: "https://static.wikia.nocookie.net/mrmen/images/6/69/Tickle_transparent.png/revision/latest/scale-to-width-down/262?cb=20200815230202"}}
           alt="Profile Image"
         />
+      }
       </ImageBackground>
 
 {/* //----------------------------------------------------------------NAME AND SURNAME */}
@@ -72,7 +82,7 @@ export default function UserProfileScreen({ navigation, route }) {
 {/* //----------------------------------------------------------------EDIT PROFILE BUTTON */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("EditProfile", {username: username, first_name: user.first_name, last_name:user.last_name})}
+          onPress={() => navigation.navigate("EditProfile", {username: username, firstName: user.first_name, lastName:user.last_name, avatar: user.avatar_url})}
           title="Edit Profile"
           style={styles.button}
         >
@@ -141,8 +151,8 @@ const styles = StyleSheet.create({
     // alignContent: 'flex-start',
     // position: 'absolute',
     justifyContent: 'flex-start',
-    borderWidth: 1,
-    borderColor: 'red',
+    // borderWidth: 1,
+    // borderColor: 'red',
   },
   // nameTitle: {
   //   fontWeight: "bold",
@@ -166,6 +176,11 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     marginTop: 68,
   },
+  imageRandom: {
+    width: 150,
+    height: 150,
+    marginTop: 60,
+  },
 
   titleInfo: {
     fontWeight: "bold",
@@ -178,8 +193,8 @@ const styles = StyleSheet.create({
     // flex: 1,
     alignContent: 'center',
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: 'yellow',
+    // borderWidth: 1,
+    // borderColor: 'yellow',
     marginTop: 75,
     fontSize: 14,
   },
@@ -190,8 +205,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 0,
-    borderWidth: 1,
-    borderColor: 'orange',
+    // borderWidth: 1,
+    // borderColor: 'orange',
     marginTop: 10,
   },
   button: {
@@ -210,18 +225,18 @@ const styles = StyleSheet.create({
 // ----------------------------------------INFO
   basicInfo: {
     // flex: 3,
-    borderWidth: 1,
+    // borderWidth: 1,
     backgroundColor: '#DBDBDB',
-    borderColor: 'red',
+    // borderColor: 'red',
     minHeight: 50,
     fontSize: 14,
     padding: 5,
     borderRadius: 6,
   },
   voice: {
-    borderWidth: 1,
+    // borderWidth: 1,
     backgroundColor: '#DBDBDB',
-    borderColor: 'red',
+    // borderColor: 'red',
     fontSize: 14,
     padding: 5,
     borderRadius: 6,
@@ -245,7 +260,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 0,
-    borderWidth: 1,
-    borderColor: 'orange',
+    // borderWidth: 1,
+    // borderColor: 'orange',
   }
 });

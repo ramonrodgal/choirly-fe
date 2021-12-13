@@ -17,6 +17,7 @@ export default function RegisterScreen({navigation}) {
             username: "",
             first_name: "",
             last_name: "",
+            phone_number: "",
         },
       }); // all this is from useForm which is imported from react-hook-form
     
@@ -26,10 +27,12 @@ export default function RegisterScreen({navigation}) {
             username: email,
             first_name: data.first_name,
             last_name: data.last_name,
-            phone_number: parseInt(data.phone_number)
+            phone_number: data.phone_number,
         }
         postUser(body).then((user) => {
             setConfirmation('Your profile has been created')
+        }).catch((err) => {
+            console.log(err.response.data)
         })
     }
     return (
