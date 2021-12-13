@@ -24,6 +24,7 @@ import ChoirGroubTabs from "./App/navigation/ChoirGroupTabNav";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserProfileStackNav } from "./App/navigation/UserProfileStackNav";
+import { HomeStackNav } from "./App/navigation/HomeStackNav";
 
 const Drawer = createDrawerNavigator();
 // const Stack = createStackNavigator();
@@ -76,19 +77,19 @@ export default function App() {
         />
         <Drawer.Screen
           name="Home"
-          component={HomeScreen}
-          options={{ title: "Home page" }}
+          component={HomeStackNav}
+          // options={{ title: "Home page" }}
         />
         <Drawer.Screen name="Register" component={RegisterScreen} />
         <Drawer.Screen name="Profile" component={UserProfileStackNav} />
         <Drawer.Screen name="AllMembers" component={AllMembersScreen} />
-        <Drawer.Screen name="Choir" component={ChoirScreen} />
+        {/* <Drawer.Screen name="Choir" component={ChoirScreen} /> */}
         <Drawer.Screen name="ChoirGroup" component={ChoirGroubTabs} />
-        <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} />
+        {/* <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} /> */}
         {/* <Drawer.Screen name="CreateEvent" component={CreateEventScreen} /> */}
         {/* <Drawer.Screen name="EditProfile" component={EditProfileScreen} /> */}
         {/* <Drawer.Screen name="Event" component={EventScreen} /> */}
-        <Drawer.Screen name="Joining" component={JoiningScreen} />
+        {/* <Drawer.Screen name="Joining" component={JoiningScreen} /> */}
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
 
         {/* <Drawer.Screen name="SingleMessage" component={SingleMessageScreen} /> */}
