@@ -87,7 +87,11 @@ export default function EditProfileScreen({ navigation, route }) {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => console.log("placeholder for changes actions")}
+          onPress={() =>
+            console.log(
+              "placeholder for changes actions - add navigate to userprofile"
+            )
+          }
           title="Submit changes"
           style={styles.button}
         >
