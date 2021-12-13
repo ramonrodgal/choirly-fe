@@ -11,7 +11,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { getMessageByChoirId } from "../utils/api";
 
-export default function GetMessagesForChoir({ choirId }) {
+export default function GetMessagesForChoir({ choirId, navigation }) {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

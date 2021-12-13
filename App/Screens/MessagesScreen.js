@@ -28,7 +28,7 @@ export default function MessagesScreen({ navigation }) {
         <View style={styles.messagesContainer}>
           <Text style={styles.title}>Messages:</Text>
 
-          <GetMessagesForChoir choirId={choirId} />
+          <GetMessagesForChoir choirId={choirId} navigation={navigation} />
         </View>
 
         <View style={styles.buttonContainer}>
