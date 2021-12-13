@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,8 +10,23 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
+import { getEventById } from "../utils/api";
 
-export default function EventScreen() {
+export default function EventScreen({ route, navigation }) {
+  const { event_id } = route.params;
+
+  const [event, setEvent] = useState({});
+
+  useEffect(() => {
+    getEventById(event_id)
+      .then((event) => {
+        setEvent(event);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log(event);
   return (
     <ImageBackground
       style={styles.background}
@@ -19,10 +34,7 @@ export default function EventScreen() {
     >
       <View style={styles.container}>
         <View style={styles.eventsContainer}>
-          <View
-            style={styles.eventCard}
-            onPress={() => navigation.navigate("Event")}
-          >
+          <View style={styles.eventCard}>
             <View>
               <View style={styles.eventTitle}>
                 <View style={styles.iconContainer}>
@@ -33,21 +45,20 @@ export default function EventScreen() {
                 </View>
 
                 <View style={styles.titleContainer}>
-                  <Text style={styles.eventTitleText}>
-                    Concert - Winter is Coming
-                  </Text>
+                  <Text style={styles.eventTitleText}>{event.title}</Text>
                 </View>
               </View>
 
               <View style={styles.eventContainer}>
-                <Text style={styles.eventBody}>Location: Chester</Text>
-                <Text style={styles.eventBody}>Date: 21/12/2021</Text>
-                <Text style={styles.eventBody}>Time: 20:00</Text>
-                <Text style={styles.eventTitleText}>Details:</Text>
+                <Text style={styles.eventBody}>Location: {event.location}</Text>
                 <Text style={styles.eventBody}>
-                  This is the space where the details of the event go, such as
-                  if you pay, don't turn up late, blah blah blah.{" "}
+                  Date: {event.date.slice(0, 10)}
                 </Text>
+                <Text style={styles.eventBody}>
+                  Time: {event.date.slice(11, 16)}
+                </Text>
+                <Text style={styles.eventTitleText}>Details:</Text>
+                <Text style={styles.eventBody}>{event.details}</Text>
               </View>
             </View>
           </View>
@@ -102,29 +113,26 @@ export default function EventScreen() {
 
         <View style={styles.commentsContainer}>
           <ScrollView>
-            <View style={styles.commentCard}>
-              <View style={styles.commentTitle}>
-                <View style={styles.iconContainer}>
-                  <Image
-                    style={styles.icon}
-                    source={require("../assets/concertIcon.png")} // to be replaced with user image
-                  />
+            {event.comments.map((comment) => {
+              return (
+                <View style={styles.commentCard} key={comment._id}>
+                  <View style={styles.commentTitle}>
+                    <View style={styles.commentContainer}>
+                      <Text style={styles.commentTitleText}>
+                        {comment.author}
+                      </Text>
+                    </View>
+                  </View>
+                  <View style={styles.commentContainer}>
+                    <Text style={styles.commentBody}>{comment.body}</Text>
+                    <Text style={styles.commentDate}>
+                      Posted at {comment.created_at.slice(11, 16)} on
+                      {comment.created_at.slice(0, 10)}
+                    </Text>
+                  </View>
                 </View>
-                <View style={styles.commentContainer}>
-                  <Text style={styles.commentTitleText}>
-                    username placeholder
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.commentContainer}>
-                <Text style={styles.commentBody}>
-                  Body of the comment, blah blah blah, placeholder
-                </Text>
-                <Text style={styles.commentDate}>
-                  Date and time posted placeholder
-                </Text>
-              </View>
-            </View>
+              );
+            })}
           </ScrollView>
         </View>
       </View>
