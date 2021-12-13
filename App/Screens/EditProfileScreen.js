@@ -13,8 +13,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { TextInput } from "react-native-gesture-handler";
 
 export default function EditProfileScreen({ navigation, route }) {
+  const { username } = route.params;
   const [isShowingInput, setIsShowingInput] = useState(false);
-  console.log(isShowingInput);
+  // console.log(isShowingInput);
 
   const handleFirstName = () => {
     console.log("pencil pressed first name");
@@ -41,7 +42,7 @@ export default function EditProfileScreen({ navigation, route }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>My Profile</Text>
+      <Text style={styles.title}>My Profile. Logged in as: {username}</Text>
       <View>
         <Image
           style={styles.image}

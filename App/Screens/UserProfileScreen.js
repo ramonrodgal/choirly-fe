@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,8 +10,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { auth } from "../../firebase";
+import { getUserByUsername } from "../utils/api";
 
 export default function UserProfileScreen({ navigation, route }) {
+  const username = auth.currentUser.email;
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState({})
+
   const handleSignOut = () => {
     auth
       .signOut()
@@ -21,9 +26,24 @@ export default function UserProfileScreen({ navigation, route }) {
       .catch((error) => alert(error.message));
   };
 
+  useEffect(() => {
+    setIsLoading(true);
+    getUserByUsername(username).then((user) => {
+      setUser(user)
+      setIsLoading(false);
+    }).catch((err) => {
+      setIsLoading(false);
+      console.log(err)
+    })
+  }, [username]);
+
+  if (isLoading) {
+    return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
+  } 
+
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>My Profile</Text>
+      <Text style={styles.title}>My Profile. Logged in as {username}</Text>
       <View>
         <Image
           style={styles.image}
@@ -33,7 +53,7 @@ export default function UserProfileScreen({ navigation, route }) {
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("EditProfile")}
+          onPress={() => navigation.navigate("EditProfile", {username: username})}
           title="Edit Profile"
           style={styles.button}
         >
@@ -41,10 +61,9 @@ export default function UserProfileScreen({ navigation, route }) {
         </TouchableOpacity>
       </View>
       <View style={styles.basicInfo}>
-        <Text>First Name: placeholder</Text>
-        <Text>Surname: placeholder</Text>
+        <Text>First name: {user.first_name}</Text>
+        <Text>Last neme: {user.last_name}</Text>
         <Text>About me: placeholder</Text>
-        <Text>Number: placeholder</Text>
       </View>
       <View>
         <Text>Voice: placeholder</Text>
@@ -53,7 +72,6 @@ export default function UserProfileScreen({ navigation, route }) {
       <TouchableOpacity onPress={handleSignOut} style={styles.button}>
           <Text style={styles.buttonText}>Sign out now</Text>
         </TouchableOpacity>
-        <Text>Email: {auth.currentUser?.email} </Text>
     </SafeAreaView>
   );
 }
@@ -85,8 +103,8 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#B2DED9",
-    width: "80%",
-    padding: 5,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
     borderRadius: 25,
     alignItems: "center",
   },

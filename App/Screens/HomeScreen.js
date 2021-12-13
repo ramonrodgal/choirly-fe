@@ -167,9 +167,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   loading: {
+    marginTop: 200,
     width: 100,
     height: 100,
     alignSelf: "center",
+    justifyContent: "center",
+    alignItems:"center",
+    alignContent: "center"
+
   },
 //-------------------------CARDS
   choirCardsContainer: {
