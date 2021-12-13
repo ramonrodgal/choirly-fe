@@ -65,6 +65,9 @@ export default function ChoirScreen({ route, navigation }) {
         <TouchableOpacity onPress={() => { navigation.navigate("Joining", {choirId: choirId, avatar:choir.avatar_url, choirName:choir.name, choirLeader:choir.leader})}} style={styles.button}>
           <Text style={styles.buttonText}>Reguest to join</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.button}>
+          <Text style={styles.buttonText} >See all choirs</Text>
+        </TouchableOpacity>
       </View>
       
     </View>
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
 
   descriptionContainer: {
     marginTop: 15,
-    flex: 1.5,
+    flex: 2,
   },
   description: {
     color: 'black',
@@ -126,7 +129,7 @@ const styles = StyleSheet.create({
 
 
   eventsContainer: {
-    flex: 3.5,
+    flex: 2,
   },
   eventCard: {
     marginTop: 10,
@@ -179,7 +182,8 @@ const styles = StyleSheet.create({
   },
 
   bottomContainer: {
-    flex: 1,
+    alignItems: "center",
+    flex: 2,
   },
   button: {
     backgroundColor: "#BC9C22",
