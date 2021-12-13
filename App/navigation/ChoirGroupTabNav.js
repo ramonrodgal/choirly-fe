@@ -5,17 +5,19 @@ import MessagesScreen from "../Screens/MessagesScreen";
 import EventsScreen from "../Screens/EventsScreen";
 import FilesScreen from "../Screens/FilesScreen";
 
+import { MessagesStackNav } from "./MessagesStackNav";
+
 const Tab = createBottomTabNavigator();
 
 export default function ChoirGroubTabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Messages"
+      initialRouteName="MessagesMain"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
-          if (route.name === "Messages") {
+          if (route.name === "MessagesMain") {
             iconName = focused ? "envelope-open" : "envelope";
           } else if (route.name === "Events") {
             iconName = focused ? "calendar" : "calendar-o";
@@ -23,7 +25,6 @@ export default function ChoirGroubTabs() {
             iconName = focused ? "folder-open" : "folder";
           }
 
-          // You can return any component that you like here!
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "tomato",
@@ -31,9 +32,9 @@ export default function ChoirGroubTabs() {
       })}
     >
       <Tab.Screen
-        name="Messages"
-        component={MessagesScreen}
-        options={{ headerShown: false }}
+        name="MessagesMain"
+        component={MessagesStackNav}
+        options={{ headerShown: false, title: "Messages" }}
       />
       <Tab.Screen
         name="Events"
