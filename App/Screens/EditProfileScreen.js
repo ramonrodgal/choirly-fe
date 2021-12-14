@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -15,190 +14,198 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { patchUser } from "../utils/api";
 
-
 export default function EditProfileScreen({ navigation, route }) {
   const { username, firstName, lastName, avatar } = route.params;
-  const [confirmation, setConfirmation] = useState('');
-
+  const [confirmation, setConfirmation] = useState("");
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-    } = useForm({
+  } = useForm({
     defaultValues: {
-        first_name: "",
-        last_name: "",
-        about_me: "",
-        phone_number: "",
-        voice: "",
-        avatar_url: "",
+      first_name: "",
+      last_name: "",
+      about_me: "",
+      phone_number: "",
+      voice: "",
+      avatar_url: "",
     },
-  }); 
+  });
 
   const onSubmit = (data) => {
     const body = {
-        username: username,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        phone_number: parseInt(data.phone_number),
-        about_me: data.about_me,
-        avatar_url: data.avatar_url,
-    }
-    patchUser(username, body).then((user) => {
-        setConfirmation('Your profile has been updated')
-        console.log('done')
-    }).catch((err) => {
-      console.log(err.response.data)
-    })
-}
+      username: username,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      phone_number: data.phone_number,
+      about_me: data.about_me,
+      avatar_url: data.avatar_url,
+    };
+    patchUser(username, body)
+      .then((user) => {
+        setConfirmation("Your profile has been updated");
+        console.log("done");
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+      });
+  };
 
   return (
-  <View style={styles.container}>
-{/* //--------------------------------------------------------------TOP NAME */}
-    <View style={styles.topName}>
-      <Text style={styles.title}>{username}</Text>
-    </View>
-
-{/* //-------------------------------------------------------------AVATAR */}
-      <View style={styles.avatar}>
-      {(avatar) ? 
-        <Image
-        style={styles.image}
-        source={{ uri: avatar}}
-        alt="Profile Image"
-      /> : 
-      
-        <Image
-          style={styles.imageRandom}
-          source={{ uri: "https://static.wikia.nocookie.net/mrmen/images/6/69/Tickle_transparent.png/revision/latest/scale-to-width-down/262?cb=20200815230202"}}
-          alt="Profile Image"
-        />
-      }
+    <View style={styles.container}>
+      {/* //--------------------------------------------------------------TOP NAME */}
+      <View style={styles.topName}>
+        <Text style={styles.title}>{username}</Text>
       </View>
 
-{/* //------------------------------------------------------------------ INFO */}
-    <ScrollView>
-      <View style={styles.basicInfo}>
-        <Text style={styles.label}>First name: {firstName}</Text>
+      {/* //-------------------------------------------------------------AVATAR */}
+      <View style={styles.avatar}>
+        {avatar ? (
+          <Image
+            style={styles.image}
+            source={{ uri: avatar }}
+            alt="Profile Image"
+          />
+        ) : (
+          <Image
+            style={styles.imageRandom}
+            source={{
+              uri: "https://static.wikia.nocookie.net/mrmen/images/6/69/Tickle_transparent.png/revision/latest/scale-to-width-down/262?cb=20200815230202",
+            }}
+            alt="Profile Image"
+          />
+        )}
+      </View>
+
+      {/* //------------------------------------------------------------------ INFO */}
+      <ScrollView>
+        <View style={styles.basicInfo}>
+          <Text style={styles.label}>First name: {firstName}</Text>
           <Controller
-              control={control}
-              rules={{
+            control={control}
+            rules={{
               required: false,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
+            }}
+            render={({ field: { onChange, onBlur, value } }) => (
               <TextInput
-                  style={styles.input}
-                  placeholder="Enter your first name here"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
+                style={styles.input}
+                placeholder="Enter your first name here"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
               />
-              )}
-              name="first_name"
+            )}
+            name="first_name"
           />
         </View>
 
         <View style={styles.basicInfo}>
-        <Text style={styles.label}>Last name: {lastName}</Text>
-        <Controller
+          <Text style={styles.label}>Last name: {lastName}</Text>
+          <Controller
             control={control}
             rules={{
-            required: false,
+              required: false,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
+              <TextInput
                 style={styles.input}
                 placeholder="Enter your last name here"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-            />
+              />
             )}
             name="last_name"
-        />
+          />
         </View>
 
         <View style={styles.basicInfo}>
-        <Text style={styles.label}>Avatar url</Text>
-        <Controller
+          <Text style={styles.label}>Avatar url</Text>
+          <Controller
             control={control}
             rules={{
-            required: false,
+              required: false,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
+              <TextInput
                 style={styles.input}
                 placeholder="Enter your avatar url here"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-            />
+              />
             )}
             name="avatar_url"
-        />
+          />
         </View>
-        
+
         <View style={styles.basicInfo}>
-        <Text style={styles.label}>About me</Text>
-        <Controller
+          <Text style={styles.label}>About me</Text>
+          <Controller
             control={control}
             rules={{
-            required: false,
+              required: false,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
+              <TextInput
                 style={styles.input}
                 placeholder="Enter about me here"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-            />
+              />
             )}
             name="about_me"
-        />
+          />
         </View>
-        
+
         <View style={styles.basicInfo}>
-        <Text style={styles.label}>Phone number</Text>
-        <Controller
+          <Text style={styles.label}>Phone number</Text>
+          <Controller
             control={control}
             rules={{
-            required: false,
+              required: false,
             }}
             render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
+              <TextInput
                 style={styles.input}
                 placeholder="Enter your phone number here"
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-            />
+              />
             )}
             name="phone_number"
-        />
+          />
         </View>
+      </ScrollView>
 
-    </ScrollView>
+      {/* //------------------------------------------------------------------ SUBMIT BUTTON*/}
 
-{/* //------------------------------------------------------------------ SUBMIT BUTTON*/}
-
-    {confirmation ? 
-      <View>
-      <Text>{confirmation}</Text>
-      <TouchableOpacity
-      style={styles.blueButton}
-      onPress={() => { navigation.goBack()}}
-      >
-          <Text style={styles.buttonText}>See profile</Text>
-      </TouchableOpacity>
-      </View> : 
-      <View style={styles.buttonContainer}>
-      <TouchableOpacity title='Submit' onPress={handleSubmit(onSubmit)} style={styles.button}>
-      <Text style={styles.buttonText}>Submit changes</Text>
-      </TouchableOpacity>
-      </View>
-    }
+      {confirmation ? (
+        <View>
+          <Text>{confirmation}</Text>
+          <TouchableOpacity
+            style={styles.blueButton}
+            onPress={() => {
+              navigation.goBack();
+            }}
+          >
+            <Text style={styles.buttonText}>See profile</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            title="Submit"
+            onPress={handleSubmit(onSubmit)}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Submit changes</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -209,19 +216,19 @@ const styles = StyleSheet.create({
     alignContent: "center",
     padding: 15,
     paddingTop: 0,
-    backgroundColor: 'white',
-    },
+    backgroundColor: "white",
+  },
   background: {
     flex: 1,
     // alignItems: "center",
-    },
+  },
 
-// -------------------------------- top name
+  // -------------------------------- top name
   topName: {
     // flex: 1,
     // alignContent: 'flex-start',
     // position: 'absolute',
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     // borderWidth: 1,
     // borderColor: 'red',
   },
@@ -281,7 +288,7 @@ const styles = StyleSheet.create({
   },
   basicInfo: {
     // borderWidth: 1,
-    backgroundColor: '#DBDBDB',
+    backgroundColor: "#DBDBDB",
     // borderColor: 'blue',
     // minHeight: 50,
     fontSize: 14,
@@ -290,6 +297,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   test: {
-    backgroundColor: 'white',
-  }
+    backgroundColor: "white",
+  },
 });
