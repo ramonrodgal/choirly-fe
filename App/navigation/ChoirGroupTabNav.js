@@ -32,17 +32,20 @@ export default function ChoirGroubTabs() {
     >
       <Tab.Screen
         name="MessagesMain"
-        component={MessagesStackNav}
+        children={() => <MessagesStackNav value={"value"} />}
+        //component={MessagesStackNav}
         options={{ headerShown: false, title: "Messages" }}
       />
       <Tab.Screen
         name="EventsMain"
-        component={EventsStackNav}
+        children={() => <EventsStackNav />}
+        //component={EventsStackNav}
         options={{ headerShown: false, title: "Events" }}
       />
       <Tab.Screen
         name="FilesMain"
-        component={FilesStackNav}
+        children={() => <FilesStackNav />}
+        //component={FilesStackNav}
         options={{
           headerShown: false,
           title: "Files",
