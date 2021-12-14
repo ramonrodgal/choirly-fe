@@ -10,31 +10,56 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
-import { getEventById } from "../utils/api";
+import { addUserToEvent, getEventById } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
+import { auth } from "../../firebase";
 
 export default function EventScreen({ route, navigation }) {
   const { eventId, choirId } = route.params;
+  const username = auth.currentUser.displayName;
 
+  const [going, setGoing] = useState(false); // on reload of page it becomes false again - how to stop this happening?
   const [event, setEvent] = useState({
+    // need to use useEffect
     date: "",
     comments: [],
-    // going: [],
-    // not_going: [],
+    going: [],
+    not_going: [],
   });
-  // if object empty then null, or do use effect
-  // useFocusEffect(
-  useEffect(() => {
-    getEventById(eventId)
+  console.log(going);
+  useFocusEffect(
+    useCallback(() => {
+      getEventById(eventId)
+        .then((event) => {
+          setEvent(event);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [going])
+  );
+
+  function handleGoing() {
+    const body = { username, going: true };
+    addUserToEvent(eventId, body)
       .then((event) => {
-        setEvent(event);
+        setGoing(true);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  // );
-  console.log(event);
+  }
+
+  function handleNotGoing() {
+    const body = { username, going: false };
+    addUserToEvent(eventId, body)
+      .then((event) => {
+        setGoing(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <ImageBackground
@@ -77,31 +102,31 @@ export default function EventScreen({ route, navigation }) {
           <TouchableOpacity
             style={styles.goingButton}
             onPress={() => {
-              console.log("going placeholder");
+              handleGoing();
             }}
           >
             <Text>Going</Text>
-            <FontAwesome
-              name="check"
-              size={15}
-              color="black"
-              onPress={() => console.log("liked placeholder")}
-            />
+            <FontAwesome name="check" size={15} color="black" />
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.notGoingButton}
             onPress={() => {
-              console.log("not going placeholder");
+              handleNotGoing();
             }}
           >
             <Text>Not Going</Text>
-            <FontAwesome
-              name="close"
-              size={15}
-              color="black"
-              onPress={() => console.log("liked placeholder")}
-            />
+            <FontAwesome name="close" size={15} color="black" />
           </TouchableOpacity>
+        </View>
+
+        <View>
+          <Text>{event.going.length} people are going to this event.</Text>
+          {event.going.includes(username) ? (
+            <Text>You're going to this event</Text>
+          ) : (
+            <Text>You're not going to this event</Text>
+          )}
         </View>
 
         <View style={styles.addCommentContainer}>
