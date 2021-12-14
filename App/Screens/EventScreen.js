@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,20 +15,25 @@ import { useFocusEffect } from "@react-navigation/core";
 
 export default function EventScreen({ route, navigation }) {
   const { event_id } = route.params;
-
-  const [event, setEvent] = useState({});
-
-  useFocusEffect(
-    useCallback(() => {
-      getEventById(event_id)
-        .then((event) => {
-          setEvent(event);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [])
-  );
+  console.log(event_id);
+  const [event, setEvent] = useState({
+    date: "",
+    comments: [],
+    // going: [],
+    // not_going: [],
+  });
+  // if object empty then null, or do use effect
+  // useFocusEffect(
+  useEffect(() => {
+    getEventById(event_id)
+      .then((event) => {
+        setEvent(event);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  // );
   console.log(event);
 
   return (
