@@ -38,6 +38,7 @@ export default function GetEvents({ choirId }) {
     );
   }
 
+
   if (events.length === 0) {
     return (
       <View style={styles.eventsContainer}>
@@ -53,7 +54,7 @@ export default function GetEvents({ choirId }) {
               <View key={event._id} style={styles.eventCard}>
                 <View style={styles.eventTitle}>
                   <View style={styles.iconContainer}>
-                    {event.type === "Concert" ? (
+                    {event.type === "Performance" ? (
                       <Image
                         style={styles.icon}
                         source={require("../assets/concertIcon.png")}
@@ -80,7 +81,7 @@ export default function GetEvents({ choirId }) {
                     Time: {event.date.slice(11, 16)}
                   </Text>
                   <Text style={styles.eventBody}>
-                    Duration: {event.duration} hr
+                    Duration: {event.duration}
                   </Text>
                 </View>
               </View>
@@ -90,6 +91,7 @@ export default function GetEvents({ choirId }) {
       </View>
     );
   }
+
 }
 
 const styles = StyleSheet.create({
