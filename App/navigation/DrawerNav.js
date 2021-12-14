@@ -1,9 +1,7 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 
-// import LoginScreen from "./App/Screens/LoginScreen";
 import { HomeStackNav } from "./HomeStackNav";
-// import RegisterScreen from "./App/Screens/RegisterScreen";
 import { UserProfileStackNav } from "./UserProfileStackNav";
 import ChoirGroubTabs from "./ChoirGroupTabNav";
 import NotificationsScreen from "../Screens/NotificationsScreen";
@@ -25,13 +23,7 @@ export default function DrawerNav() {
         headerRight: () => <NotificationBell />,
       }}
     >
-      {/* <Drawer.Screen
-          options={{ headerShown: true }} // need to change this to not show
-          name="Login"
-          component={LoginScreen}
-        /> */}
       <Drawer.Screen name="Home" component={HomeStackNav} />
-      {/* <Drawer.Screen name="Register" component={RegisterScreen} /> */}
       <Drawer.Screen name="Profile" component={UserProfileStackNav} />
       <Drawer.Screen
         name="ChoirGroup"
