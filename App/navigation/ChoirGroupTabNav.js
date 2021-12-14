@@ -9,6 +9,10 @@ import { FilesStackNav } from "./FilesStackNav";
 const Tab = createBottomTabNavigator();
 
 export default function ChoirGroubTabs() {
+  const choirId = "61b0c4c065064fdfb889a148"; //HARDCODED
+
+  console.log(choirId, "Choir Id inside ChoirGroupTabs");
+
   return (
     <Tab.Navigator
       initialRouteName="MessagesMain"
@@ -32,19 +36,19 @@ export default function ChoirGroubTabs() {
     >
       <Tab.Screen
         name="MessagesMain"
-        children={() => <MessagesStackNav value={"value"} />}
+        children={() => <MessagesStackNav choirId={choirId} />}
         //component={MessagesStackNav}
         options={{ headerShown: false, title: "Messages" }}
       />
       <Tab.Screen
         name="EventsMain"
-        children={() => <EventsStackNav />}
+        children={() => <EventsStackNav choirId={choirId} />}
         //component={EventsStackNav}
         options={{ headerShown: false, title: "Events" }}
       />
       <Tab.Screen
         name="FilesMain"
-        children={() => <FilesStackNav />}
+        children={() => <FilesStackNav choirId={choirId} />}
         //component={FilesStackNav}
         options={{
           headerShown: false,

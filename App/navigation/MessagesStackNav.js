@@ -7,15 +7,27 @@ import CreateMessageScreen from "../Screens/CreateMessageScreen.js";
 import AllMembersScreen from "../Screens/AllMembersScreen.js";
 const Stack = createStackNavigator();
 
-const MessagesStackNav = () => {
+const MessagesStackNav = (props) => {
+  const { choirId } = props;
+
+  console.log(choirId, "Choir Id inside MessagesStackNav");
+
   return (
     <Stack.Navigator
       initialRoute="Messages"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="Messages" component={MessagesScreen} />
+      <Stack.Screen
+        name="Messages"
+        children={() => <MessagesScreen choirId={choirId} />}
+        //component={MessagesScreen}
+      />
       <Stack.Screen name="SingleMessage" component={SingleMessageScreen} />
-      <Stack.Screen name="CreateMessage" component={CreateMessageScreen} />
+      <Stack.Screen
+        name="CreateMessage"
+        children={() => <CreateMessageScreen choirId={choirId} />}
+        //component={CreateMessageScreen}
+      />
       <Stack.Screen name="AllMembers" component={AllMembersScreen} />
     </Stack.Navigator>
   );
