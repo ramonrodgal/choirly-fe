@@ -32,13 +32,14 @@ export default function RegisterScreen({ navigation }) {
   const onSubmit = (data) => {
     const body = {
       email: email,
-      username: email,
+      username: data.username,
       first_name: data.first_name,
       last_name: data.last_name,
       phone_number: data.phone_number,
     };
     postUser(body)
       .then((user) => {
+        auth.currentUser.updateProfile({ displayName: user.username });
         setConfirmation("Your profile has been created");
       })
       .catch((err) => {
@@ -57,24 +58,24 @@ export default function RegisterScreen({ navigation }) {
           </View>
 
           <View style={styles.formContainer}>
-            {/* <Text style={styles.label}>Username *</Text>
-                <Controller
-                    control={control}
-                    rules={{
-                    required: true,
-                    }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput
-                        style={styles.input}
-                        placeholder="username"
-                        onBlur={onBlur}
-                        onChangeText={onChange}
-                        value={value}
-                    />
-                    )}
-                    name="username"
+            <Text style={styles.label}>Username *</Text>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  placeholder="username"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
                 />
-                {errors.username && <Text>Please enter a username.</Text>} */}
+              )}
+              name="username"
+            />
+            {errors.username && <Text>Please enter a username.</Text>}
 
             <Text style={styles.label}>First name *</Text>
             <Controller
