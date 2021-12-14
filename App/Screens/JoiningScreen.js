@@ -34,7 +34,6 @@ export default function JoiningScreen({ route, navigation }) {
       "type": "message",
       "message": data.message,
     }
-    console.log(body);
     postNotificationByUsername(choirLeader, body).then((res) => {
       setConfirmation("Your request has been sent")
     })
@@ -81,7 +80,6 @@ export default function JoiningScreen({ route, navigation }) {
         {confirmation ? 
             <View style={styles.confirmation}>
               <Text>{confirmation}</Text>
-              {/* <Button onPress={navigation.navigate("All choirs")}>Go home</Button> */}
               <TouchableOpacity
               style={styles.blueButton}
               onPress={() => { navigation.navigate("All choirs")}}
@@ -133,8 +131,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
     // justifyContent: 'center',
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: 'red',
+    // borderWidth: 1,
+    // borderColor: 'red',
     marginTop: 10,
   },
   title: {
@@ -173,8 +171,8 @@ const styles = StyleSheet.create({
 
   requestContainer: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: 'blue',
+    // borderWidth: 1,
+    // borderColor: 'blue',
     alignItems: "center",
   },
   button: {
