@@ -63,11 +63,14 @@ export default function CreateEventScreen() {
       m = "";
     }
 
+    // combining the date with the start time
+    const dateString = date.toISOString().slice(0, 11);
+    const timeString = startTime.toISOString().slice(11);
+    const finalDate = new Date(`${dateString}${timeString}`);
+
+    setDate(finalDate);
     setDuration(`${h}${m}`);
   }, [startTime, endTime]);
-
-  // at the moment the start and end times are on the current date
-  // this is fine to get duration but not perfect
 
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -171,6 +174,7 @@ export default function CreateEventScreen() {
           display="default"
           onChange={startTimeChange}
           mode="time"
+          minuteInterval="5"
         />
       </View>
 
@@ -184,6 +188,7 @@ export default function CreateEventScreen() {
           onChange={endTimeChange}
           mode="time"
           minimumDate={startTime}
+          minuteInterval="5"
         />
       </View>
 
