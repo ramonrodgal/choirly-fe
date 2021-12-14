@@ -9,8 +9,8 @@ import {
   Image,
 } from "react-native";
 import { postComment, getMessageById } from "../utils/api";
-import { auth } from "../../firebase";
 import { FontAwesome } from "@expo/vector-icons";
+import { auth } from "../../firebase";
 import { TextInput } from "react-native-gesture-handler";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
@@ -18,17 +18,22 @@ export default function SingleMessageScreen({ navigation }) {
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState({});
   const [comments, setComments] = useState([]);
+  const [addComment, setAddComment ] = useState(false);  
+  const [isLoading, setIsLoading] = useState(true);
 
   let message_id = "61b0c4c065064fdfb889a163"; //HARDCODED
 
   //WHEN THE PAGE IS OPEN WE NEED TO MAKE A REQUEST TO GET THE MESSAGE
   useEffect(() => {
+    setIsLoading(true);
     getMessageById(message_id)
       .then((message) => {
         setMessage(message);
         setComments(message.comments);
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         console.log(err.response.data);
       });
   }, []);
@@ -49,6 +54,9 @@ export default function SingleMessageScreen({ navigation }) {
       });
   };
 
+  if (isLoading) {
+    return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
+  } 
   return (
     <ImageBackground
       style={styles.background}
@@ -58,21 +66,15 @@ export default function SingleMessageScreen({ navigation }) {
 
 {/* //---------------------------------------------------------TOP CONTAINER */}
         <View style={styles.topContainer}>
-          <Image style={styles.arrow} source={require('../assets/left-arrow.png')} />
-          <Image style={styles.avatar} source={{ uri: "https://i.pinimg.com/originals/ef/0b/32/ef0b32277c967ebe67e66c606a0080ed.gif"}}/>  
+          <Image style={styles.arrow} onPress={() => navigation.goBack()} source={require('../assets/left-arrow.png')} />
         </View>
 
 {/* //---------------------------------------------------------TITLE */}
         <View style={styles.messageContainer}>
 
           <View style={styles.titleContainer}>
-            <Text style={styles.messageTitleText}>{message.title}</Text>
-            {/* <FontAwesome
-              name="thumbs-up"
-              size={20}
-              color="black"
-              onPress={() => console.log("liked placeholder")}
-            /> */}
+          <Text style={styles.postedBy}>Posted by {message.author}</Text>
+          <Text style={styles.messageTitleText}>{message.title}</Text>
           </View>
 
 {/* //---------------------------------------------------------MESSAGE BODY */}
@@ -82,37 +84,58 @@ export default function SingleMessageScreen({ navigation }) {
         </View>
         </View>
 
-
-{/* //-------------------------------------------------------ADD COMMENTS MENU CONTAINER */}
+      
+{/* //--------------------------------------------------ADD COMMENTS MENU CONTAINER */}
         <View style={styles.addCommentContainer}>
-          <View style={styles.commentBoxContainer}>
-            <TextInput
+
+        <FontAwesome
+              name="thumbs-up"
+              style={styles.icon}
+              size={20}
+              color="black"
+              onPress={() => console.log("liked placeholder")}
+            /><Text>Like</Text>
+        <FontAwesome
+              name="comment"
+              style={styles.iconCom}
+              size={20}
+              color="black"
+              onPress={() => console.log("liked placeholder")}
+            /><Text onPress={() => {
+              setAddComment(true)
+            }}>Comment</Text>
+
+
+        </View>
+        {(addComment) ? 
+        <View style={styles.newCommentContainer}>
+          <TextInput style={styles.input}
               onChangeText={setComment}
               value={comment}
               placeholder="Add a comment..."
-            ></TextInput>
-          </View>
-          <View style={styles.buttonContainer}>
+            ></TextInput> 
             <TouchableOpacity
               onPress={() => handlePostComment()}
               style={styles.button}
             >
-              <Text style={styles.buttonText}>Add comment</Text>
+              <Text style={styles.buttonText}>Send</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+            </View>
+            : <Text></Text>}
 
         <ScrollView>
         {comments.map((comment) => {
           return (
             <View style={styles.commentCard}>
-              <Text>{comment.author}</Text>
+              <Text style={styles.author}>{comment.author}</Text>
               <Text>{comment.body}</Text>
-              <Text>{Date(comment.created_at).toString().slice(0, -15)}</Text>
+              <Text style={styles.date}>{Date(comment.created_at).toString().slice(0, -15)}</Text>
             </View>
           );
         })}
         </ScrollView>
+
+
       </View>
     </ImageBackground>
   );
@@ -127,19 +150,20 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // padding: 15,
     paddingTop: 0,
-    borderWidth: 1,
-    borderColor: 'pink',
+    // borderWidth: 1,
+    // borderColor: 'pink',
   },
   background: {
     flex: 1,
     alignItems: "center",
   },
   topContainer: {
-    borderWidth: 1,
-    borderColor: 'green',
+    // borderWidth: 1,
+    // borderColor: 'green',
     flexDirection: 'row',
     flexWrap: "wrap",
     alignItems: 'flex-start',
+    marginTop: 5,
 
   },
   arrow: {
@@ -154,52 +178,101 @@ const styles = StyleSheet.create({
   },
 
   // MESSAGE
-  messagesContainer: {
-    flex: 4,
-    padding: 10,
-    paddingTop: 5,
-    borderWidth: 1,
-    borderColor: 'purple',
+  messageContainer: {
+    marginTop: 10,
   },
   titleContainer: {
-    borderWidth: 1,
-    borderColor: 'purple',
-    backgroundColor: 'yellow',
+  backgroundColor: '#B2DED9',
+  padding: 8,
   },
   messageTitleText: {
     fontWeight: "700",
     color: "black",
   },
+  postedBy: {
+    fontSize: 10,
+    color: 'black',
+    marginBottom: 10,
+  },
   bodyContainer: {
-    borderWidth: 1,
-    borderColor: 'purple',
-    backgroundColor: 'orange',
+    backgroundColor: '#EBE2D8',
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    padding: 8,
   },
   messageBody: {
     color: "black",
     fontSize: 12,
   },
-  iconContainer: {
-    width: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: 'blue',
+
+// -------------------MENU
+  addCommentContainer: {
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#CBCBCB',
+    marginVertical: 10,
+    marginHorizontal: 15,
+    flexDirection: 'row',
+    padding: 10,
+    justifyContent: 'center'
+
   },
   icon: {
-    height: 30,
-    width: 30,
+    marginRight: 3,
   },
-  titleContainer: {
-    width: "90%",
-    justifyContent: "center",
-    paddingLeft: 5,
+  iconCom: {
+    marginRight: 3,
+    marginLeft: 20,
+  },
+
+// -------------------NEW COMMENT CONTTAINER
+  newCommentContainer: {
+    // borderWidth: 1,
+    // borderColor: 'green',
+    alignItems: 'center',
+
+  },
+  input: {
+    backgroundColor: 'white',
+    width: 340,
+    height: 100,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'yellow',
+    borderColor: 'black',
+    padding: 8,
   },
+  button: {
+    backgroundColor: "#BC9C22",
+    width: 60,
+    padding: 7,
+    borderRadius: 50,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 12,
+  },
+
+//---------------------------------COMMENT CARD
   commentCard: {
-    borderWidth: 1,
-    borderColor: 'red',
-    backgroundColor: 'grey'
-,  }
+    // borderWidth: 1,
+    // borderColor: 'red',
+    backgroundColor: '#EBE2D8',
+    marginBottom: 10,
+    borderRadius: 8,
+    padding: 5,
+  },
+  menuIcons: {
+    margin: 5,
+  },
+  author: {
+    color: '#2F4550',
+    fontWeight: "700",
+  },
+  date: {
+    fontSize: 10,
+  }
 });
