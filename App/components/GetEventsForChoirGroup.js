@@ -16,8 +16,6 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(choirId, "ChoirId inside GetEventsForChoirGroup");
-
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);
@@ -58,7 +56,7 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
               <View key={event._id} style={styles.eventCard}>
                 <TouchableWithoutFeedback
                   onPress={() => {
-                    navigation.navigate("Event", { event_id: event._id });
+                    navigation.navigate("Event", { eventId: event._id });
                   }}
                 >
                   <View style={styles.eventTitle}>
