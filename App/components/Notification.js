@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, StyleSheet } from "react-native";
 import {
   updateNotificationById,
   postNotificationByUsername,
@@ -149,3 +149,7 @@ export default function Notification({ notification }) {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  
+})

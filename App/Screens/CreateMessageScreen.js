@@ -5,6 +5,7 @@ import {
   getChoirById,
   postNotificationByUsername,
 } from "../utils/api";
+
 import { auth } from "../../firebase";
 import { useForm, Controller } from "react-hook-form";
 
@@ -12,15 +13,30 @@ import { useForm, Controller } from "react-hook-form";
 export default function CreateMessageScreen() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-
-  const [members, setMembers] = useState([]);
+    const [members, setMembers] = useState([]);
   const [choirName, setChoirName] = useState("");
   const [leader, setLeader] = useState("");
-
+  
   const choir_id = "61b0c4c065064fdfb889a148"; //HARDCODED
 
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      title: "",
+      text: "",
+    },
+  });
+
   const handlePostMessage = () => {
-    const body = {
+    if (title === "" || text === "") {
+      console.log("Invalid");
+      return;
+    }
+
+const body = {
       choir: choirName,
       title: title,
       body: text,
@@ -53,7 +69,7 @@ export default function CreateMessageScreen() {
         console.log(err.response.data);
       });
   };
-
+  
   useEffect(() => {
     getChoirById(choir_id)
       .then((choir) => {
@@ -69,18 +85,44 @@ export default function CreateMessageScreen() {
   return (
     <View>
       <Text>Title</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setTitle}
-        value={title}
-        placeholder="Write a title"
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={styles.input}
+            placeholder="Write a title"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="title"
       />
+      {errors.title && <Text>Title is required</Text>}
+
       <Text>Message</Text>
-      <TextInput
-        onChangeText={setText}
-        value={text}
-        placeholder="Write a message"
-        multiline
+      <Controller
+        control={control}
+        rules={{
+          required: true,
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            style={styles.input}
+            placeholder="Write a message"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+        name="text"
+      />
+      {errors.text && <Text>Text is required.</Text>}
+      {/* <TextInput
+      /> */}
       />
       <Button
         title="Post a message"
