@@ -14,8 +14,8 @@ import { getEventById } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
 
 export default function EventScreen({ route, navigation }) {
-  const { event_id } = route.params;
-  console.log(event_id);
+  const { eventId, choirId } = route.params;
+
   const [event, setEvent] = useState({
     date: "",
     comments: [],
@@ -25,7 +25,7 @@ export default function EventScreen({ route, navigation }) {
   // if object empty then null, or do use effect
   // useFocusEffect(
   useEffect(() => {
-    getEventById(event_id)
+    getEventById(eventId)
       .then((event) => {
         setEvent(event);
       })

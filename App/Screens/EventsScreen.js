@@ -9,9 +9,8 @@ import {
 import ChoirSummary from "../components/ChoirSummary";
 import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
 
-export default function EventsScreen({ navigation, choirId }) {
-  //const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
-  console.log(choirId, "Choir Id inside EventsScreen");
+export default function EventsScreen({ navigation, route }) {
+  const { choirId } = route.params;
 
   return (
     <ImageBackground

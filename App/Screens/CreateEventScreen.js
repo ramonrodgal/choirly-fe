@@ -13,8 +13,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { postEventByChoir } from "../utils/api";
 
-export default function CreateEventScreen() {
-  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+export default function CreateEventScreen({ route }) {
+  const { choirId } = route.params;
   const choirName = "African Children's Choir"; // hardcoded for now
 
   const [date, setDate] = useState(new Date());

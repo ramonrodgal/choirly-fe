@@ -10,16 +10,14 @@ import { auth } from "../../firebase";
 import { useForm, Controller } from "react-hook-form";
 
 //WE SHOULD PASS THE ID OF THE GROUP
-export default function CreateMessageScreen() {
+export default function CreateMessageScreen({ route }) {
+  const { choirId } = route.params;
+
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [members, setMembers] = useState([]);
   const [choirName, setChoirName] = useState("");
   const [leader, setLeader] = useState("");
-
-  const choir_id = "61b0c4c065064fdfb889a148"; //HARDCODED
-
-  console.log(props.choirID, "Choir Id inside createMessageScreen");
 
   const {
     control,
@@ -73,7 +71,7 @@ export default function CreateMessageScreen() {
   };
 
   useEffect(() => {
-    getChoirById(choir_id)
+    getChoirById(choirId)
       .then((choir) => {
         setMembers(choir.members);
         setChoirName(choir.name);

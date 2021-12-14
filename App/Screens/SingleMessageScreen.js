@@ -14,14 +14,16 @@ import { auth } from "../../firebase";
 import { TextInput } from "react-native-gesture-handler";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
-export default function SingleMessageScreen({ navigation }) {
+export default function SingleMessageScreen({ navigation, route }) {
+  const { message_id, choirId } = route.params;
+
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState({});
   const [comments, setComments] = useState([]);
-  const [addComment, setAddComment ] = useState(false);  
+  const [addComment, setAddComment] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  let message_id = "61b0c4c065064fdfb889a163"; //HARDCODED
+  // let message_id = "61b0c4c065064fdfb889a163"; //HARDCODED
 
   //WHEN THE PAGE IS OPEN WE NEED TO MAKE A REQUEST TO GET THE MESSAGE
   useEffect(() => {
@@ -55,92 +57,105 @@ export default function SingleMessageScreen({ navigation }) {
   };
 
   if (isLoading) {
-    return <Image style={styles.loading} source={{ uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif"}} />
-  } 
+    return (
+      <Image
+        style={styles.loading}
+        source={{
+          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
+        }}
+      />
+    );
+  }
   return (
     <ImageBackground
       style={styles.background}
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-
-{/* //---------------------------------------------------------TOP CONTAINER */}
+        {/* //---------------------------------------------------------TOP CONTAINER */}
         <View style={styles.topContainer}>
-          <Image style={styles.arrow} onPress={() => navigation.goBack()} source={require('../assets/left-arrow.png')} />
+          <Image
+            style={styles.arrow}
+            onPress={() => navigation.goBack()}
+            source={require("../assets/left-arrow.png")}
+          />
         </View>
 
-{/* //---------------------------------------------------------TITLE */}
+        {/* //---------------------------------------------------------TITLE */}
         <View style={styles.messageContainer}>
-
           <View style={styles.titleContainer}>
-          <Text style={styles.postedBy}>Posted by {message.author}</Text>
-          <Text style={styles.messageTitleText}>{message.title}</Text>
+            <Text style={styles.postedBy}>Posted by {message.author}</Text>
+            <Text style={styles.messageTitleText}>{message.title}</Text>
           </View>
 
-{/* //---------------------------------------------------------MESSAGE BODY */}
+          {/* //---------------------------------------------------------MESSAGE BODY */}
 
-        <View style={styles.bodyContainer}>
-          <Text style={styles.messageBody}>{message.body}</Text>
-        </View>
+          <View style={styles.bodyContainer}>
+            <Text style={styles.messageBody}>{message.body}</Text>
+          </View>
         </View>
 
-      
-{/* //--------------------------------------------------ADD COMMENTS MENU CONTAINER */}
+        {/* //--------------------------------------------------ADD COMMENTS MENU CONTAINER */}
         <View style={styles.addCommentContainer}>
-
-        <FontAwesome
-              name="thumbs-up"
-              style={styles.icon}
-              size={20}
-              color="black"
-              onPress={() => console.log("liked placeholder")}
-            /><Text>Like</Text>
-        <FontAwesome
-              name="comment"
-              style={styles.iconCom}
-              size={20}
-              color="black"
-              onPress={() => console.log("liked placeholder")}
-            /><Text onPress={() => {
-              setAddComment(true)
-            }}>Comment</Text>
-
-
+          <FontAwesome
+            name="thumbs-up"
+            style={styles.icon}
+            size={20}
+            color="black"
+            onPress={() => console.log("liked placeholder")}
+          />
+          <Text>Like</Text>
+          <FontAwesome
+            name="comment"
+            style={styles.iconCom}
+            size={20}
+            color="black"
+            onPress={() => console.log("liked placeholder")}
+          />
+          <Text
+            onPress={() => {
+              setAddComment(true);
+            }}
+          >
+            Comment
+          </Text>
         </View>
-        {(addComment) ? 
-        <View style={styles.newCommentContainer}>
-          <TextInput style={styles.input}
+        {addComment ? (
+          <View style={styles.newCommentContainer}>
+            <TextInput
+              style={styles.input}
               onChangeText={setComment}
               value={comment}
               placeholder="Add a comment..."
-            ></TextInput> 
+            ></TextInput>
             <TouchableOpacity
               onPress={() => handlePostComment()}
               style={styles.button}
             >
               <Text style={styles.buttonText}>Send</Text>
             </TouchableOpacity>
-            </View>
-            : <Text></Text>}
+          </View>
+        ) : (
+          <Text></Text>
+        )}
 
         <ScrollView>
-        {comments.map((comment) => {
-          return (
-            <View style={styles.commentCard}>
-              <Text style={styles.author}>{comment.author}</Text>
-              <Text>{comment.body}</Text>
-              <Text style={styles.date}>{Date(comment.created_at).toString().slice(0, -15)}</Text>
-            </View>
-          );
-        })}
+          {comments.map((comment) => {
+            return (
+              <View style={styles.commentCard}>
+                <Text style={styles.author}>{comment.author}</Text>
+                <Text>{comment.body}</Text>
+                <Text style={styles.date}>
+                  {Date(comment.created_at).toString().slice(0, -15)}
+                </Text>
+              </View>
+            );
+          })}
         </ScrollView>
-
-
       </View>
     </ImageBackground>
   );
 }
-
 
 const styles = StyleSheet.create({
   // CONTAINER AND BACKGROUND
@@ -160,16 +175,15 @@ const styles = StyleSheet.create({
   topContainer: {
     // borderWidth: 1,
     // borderColor: 'green',
-    flexDirection: 'row',
+    flexDirection: "row",
     flexWrap: "wrap",
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
     marginTop: 5,
-
   },
   arrow: {
     width: 30,
     height: 30,
-    alignSelf: 'flex-start'
+    alignSelf: "flex-start",
   },
   avatar: {
     width: 30,
@@ -182,8 +196,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   titleContainer: {
-  backgroundColor: '#B2DED9',
-  padding: 8,
+    backgroundColor: "#B2DED9",
+    padding: 8,
   },
   messageTitleText: {
     fontWeight: "700",
@@ -191,11 +205,11 @@ const styles = StyleSheet.create({
   },
   postedBy: {
     fontSize: 10,
-    color: 'black',
+    color: "black",
     marginBottom: 10,
   },
   bodyContainer: {
-    backgroundColor: '#EBE2D8',
+    backgroundColor: "#EBE2D8",
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     padding: 8,
@@ -205,17 +219,16 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-// -------------------MENU
+  // -------------------MENU
   addCommentContainer: {
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: '#CBCBCB',
+    borderColor: "#CBCBCB",
     marginVertical: 10,
     marginHorizontal: 15,
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 10,
-    justifyContent: 'center'
-
+    justifyContent: "center",
   },
   icon: {
     marginRight: 3,
@@ -225,20 +238,19 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
 
-// -------------------NEW COMMENT CONTTAINER
+  // -------------------NEW COMMENT CONTTAINER
   newCommentContainer: {
     // borderWidth: 1,
     // borderColor: 'green',
-    alignItems: 'center',
-
+    alignItems: "center",
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     width: 340,
     height: 100,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: "black",
     padding: 8,
   },
   button: {
@@ -256,11 +268,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-//---------------------------------COMMENT CARD
+  //---------------------------------COMMENT CARD
   commentCard: {
     // borderWidth: 1,
     // borderColor: 'red',
-    backgroundColor: '#EBE2D8',
+    backgroundColor: "#EBE2D8",
     marginBottom: 10,
     borderRadius: 8,
     padding: 5,
@@ -269,10 +281,10 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   author: {
-    color: '#2F4550',
+    color: "#2F4550",
     fontWeight: "700",
   },
   date: {
     fontSize: 10,
-  }
+  },
 });

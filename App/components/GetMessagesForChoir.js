@@ -47,7 +47,12 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
             <View key={message._id}>
               <TouchableWithoutFeedback
                 style={styles.messageCard}
-                onPress={() => navigation.navigate("SingleMessage")}
+                onPress={() =>
+                  navigation.navigate("SingleMessage", {
+                    message_id: message._id,
+                    choirId: choirId,
+                  })
+                }
               >
                 <View>
                   <View style={styles.messageTitle}>
