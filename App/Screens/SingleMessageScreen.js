@@ -54,27 +54,36 @@ export default function SingleMessageScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/white-background.png")}
     >
-      <View style={styles.messagesContainer}>
-        <View
-          style={styles.messageCard}
-          onPress={() => navigation.navigate("SingleMessage")}
-        >
-          <View style={styles.messageTitle}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.messageTitleText}>{message.title}</Text>
-              <FontAwesome
-                name="thumbs-up"
-                size={20}
-                color="black"
-                onPress={() => console.log("liked placeholder")}
-              />
-            </View>
-          </View>
-          <View style={styles.messageContainer}>
-            <Text style={styles.messageBody}>{message.body}</Text>
-          </View>
+      <View style={styles.container}>
+
+{/* //---------------------------------------------------------TOP CONTAINER */}
+        <View style={styles.topContainer}>
+          <Image style={styles.arrow} source={require('../assets/left-arrow.png')} />
+          <Image style={styles.avatar} source={{ uri: "https://i.pinimg.com/originals/ef/0b/32/ef0b32277c967ebe67e66c606a0080ed.gif"}}/>  
         </View>
 
+{/* //---------------------------------------------------------TITLE */}
+        <View style={styles.messageContainer}>
+
+          <View style={styles.titleContainer}>
+            <Text style={styles.messageTitleText}>{message.title}</Text>
+            {/* <FontAwesome
+              name="thumbs-up"
+              size={20}
+              color="black"
+              onPress={() => console.log("liked placeholder")}
+            /> */}
+          </View>
+
+{/* //---------------------------------------------------------MESSAGE BODY */}
+
+        <View style={styles.bodyContainer}>
+          <Text style={styles.messageBody}>{message.body}</Text>
+        </View>
+        </View>
+
+
+{/* //-------------------------------------------------------ADD COMMENTS MENU CONTAINER */}
         <View style={styles.addCommentContainer}>
           <View style={styles.commentBoxContainer}>
             <TextInput
@@ -93,59 +102,55 @@ export default function SingleMessageScreen({ navigation }) {
           </View>
         </View>
 
+        <ScrollView>
         {comments.map((comment) => {
           return (
-            <View>
+            <View style={styles.commentCard}>
               <Text>{comment.author}</Text>
               <Text>{comment.body}</Text>
               <Text>{Date(comment.created_at).toString().slice(0, -15)}</Text>
             </View>
           );
         })}
+        </ScrollView>
       </View>
     </ImageBackground>
   );
 }
 
-//COMMENT STYLE BUT I COULDN'T POPULATED IT
-{
-  /* <View>
-      <ScrollView>
-        <View>
-          <View>
-            <View>
-              <Image
-                style={styles.icon}
-                source={require("../assets/concertIcon.png")} // to be replaced with user image
-              />
-            </View>
-            <View style={styles.commentContainer}>
-              <Text style={styles.commentTitleText}>{comment.author}</Text>
-            </View>
-          </View>
-          <View style={styles.commentContainer}>
-            <Text style={styles.commentBody}>{comment.body}</Text>
-            <Text style={styles.commentDate}>
-              {Date(comment.created_at).toString()}
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
-    </View> */
-}
 
 const styles = StyleSheet.create({
   // CONTAINER AND BACKGROUND
   container: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    padding: 15,
+    // alignItems: "center",
+    // padding: 15,
     paddingTop: 0,
+    borderWidth: 1,
+    borderColor: 'pink',
   },
   background: {
     flex: 1,
     alignItems: "center",
+  },
+  topContainer: {
+    borderWidth: 1,
+    borderColor: 'green',
+    flexDirection: 'row',
+    flexWrap: "wrap",
+    alignItems: 'flex-start',
+
+  },
+  arrow: {
+    width: 30,
+    height: 30,
+    alignSelf: 'flex-start'
+  },
+  avatar: {
+    width: 30,
+    height: 30,
+    borderRadius: 75,
   },
 
   // MESSAGE
@@ -153,24 +158,22 @@ const styles = StyleSheet.create({
     flex: 4,
     padding: 10,
     paddingTop: 5,
+    borderWidth: 1,
+    borderColor: 'purple',
   },
-  messageCard: {
-    marginTop: 10,
-    backgroundColor: "#EDE5DA",
-    borderRadius: 15,
-  },
-  messageTitle: {
-    height: 35,
-    backgroundColor: "#B2DED9",
-    flexDirection: "row",
+  titleContainer: {
+    borderWidth: 1,
+    borderColor: 'purple',
+    backgroundColor: 'yellow',
   },
   messageTitleText: {
     fontWeight: "700",
     color: "black",
   },
-  messageContainer: {
-    paddingLeft: 40,
-    justifyContent: "flex-start",
+  bodyContainer: {
+    borderWidth: 1,
+    borderColor: 'purple',
+    backgroundColor: 'orange',
   },
   messageBody: {
     color: "black",
@@ -180,6 +183,8 @@ const styles = StyleSheet.create({
     width: "10%",
     alignItems: "center",
     justifyContent: "center",
+    borderWidth: 1,
+    borderColor: 'blue',
   },
   icon: {
     height: 30,
@@ -189,67 +194,12 @@ const styles = StyleSheet.create({
     width: "90%",
     justifyContent: "center",
     paddingLeft: 5,
-  },
-
-  // ADD COMMENT
-  addCommentContainer: {
-    flex: 1,
-    paddingTop: 5,
-  },
-  commentBoxContainer: {
-    flex: 0.5,
-    backgroundColor: "white",
-  },
-  buttonContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "#BC9C22",
-    width: "40%",
-    padding: 4,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 12,
-  },
-
-  // COMMENTS
-  commentsContainer: {
-    flex: 3,
-    paddingTop: 5,
+    borderWidth: 1,
+    borderColor: 'yellow',
   },
   commentCard: {
-    marginTop: 10,
-    backgroundColor: "#EDE5DA",
-    borderRadius: 15,
-  },
-  commentTitle: {
-    height: 35,
-    backgroundColor: "#B2DED9",
-    flexDirection: "row",
-  },
-
-  commentTitleText: {
-    fontWeight: "700",
-    color: "black",
-  },
-
-  commentContainer: {
-    paddingLeft: 40,
-    justifyContent: "flex-start",
-  },
-  commentBody: {
-    color: "black",
-    fontSize: 12,
-  },
-  commentDate: {
-    color: "black",
-    fontSize: 10,
-    fontStyle: "italic",
-  },
+    borderWidth: 1,
+    borderColor: 'red',
+    backgroundColor: 'grey'
+,  }
 });
