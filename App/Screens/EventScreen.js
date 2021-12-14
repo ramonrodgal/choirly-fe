@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,22 +11,26 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import { getEventById } from "../utils/api";
+import { useFocusEffect } from "@react-navigation/core";
 
 export default function EventScreen({ route, navigation }) {
   const { event_id } = route.params;
 
   const [event, setEvent] = useState({});
 
-  useEffect(() => {
-    getEventById(event_id)
-      .then((event) => {
-        setEvent(event);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getEventById(event_id)
+        .then((event) => {
+          setEvent(event);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, [])
+  );
   console.log(event);
+
   return (
     <ImageBackground
       style={styles.background}
