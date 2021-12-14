@@ -14,9 +14,11 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { postChoir } from "../utils/api";
 import Swal from "sweetalert2";
+import { auth } from "../../firebase";
 
 export default function CreateChoirScreen() {
   const [charCount, setCharCount] = useState(0);
+  const leader = auth.currentUser.email; // this may change to displayName
 
   const {
     control,
@@ -31,13 +33,16 @@ export default function CreateChoirScreen() {
     },
   }); // all this is from useForm which is imported from react-hook-form
   const onSubmit = (data) => {
-    console.log(data); // on submit the data is logged
     const newChoir = {
       name: data.choirName,
       location: data.location,
       description: data.description,
-      leader: "test_user", // NEED TO GET USER FROM AUTH AND SWITCH IN
-      avatar_url: data.avatarUrl,
+      leader,
+      // sets default picture
+      avatar_url:
+        data.avatarUrl === ""
+          ? "https://images.pexels.com/photos/104084/pexels-photo-104084.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+          : data.avatarUrl,
     };
     postChoir(newChoir)
       .then(() => console.log("choir created"))
@@ -120,7 +125,7 @@ export default function CreateChoirScreen() {
             <Controller
               control={control}
               rules={{
-                required: true,
+                required: false,
               }}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
