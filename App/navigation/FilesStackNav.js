@@ -6,8 +6,8 @@ import AllMembersScreen from "../Screens/AllMembersScreen.js";
 
 const Stack = createStackNavigator();
 
-const FilesStackNav = ({ choirId }) => {
-  console.log(choirId, "Choir ID inside FileStackNav");
+const FilesStackNav = ({ route }) => {
+  const { choirId } = route.params;
 
   return (
     <Stack.Navigator
@@ -16,10 +16,14 @@ const FilesStackNav = ({ choirId }) => {
     >
       <Stack.Screen
         name="Files"
-        children={() => <FilesScreen choirId={choirId} />}
-        //component={FilesScreen}
+        component={FilesScreen}
+        initialParams={{ choirId: choirId }}
       />
-      <Stack.Screen name="AllMembers" component={AllMembersScreen} />
+      <Stack.Screen
+        name="AllMembers"
+        component={AllMembersScreen}
+        initialParams={{ choirId: choirId }}
+      />
     </Stack.Navigator>
   );
 };
