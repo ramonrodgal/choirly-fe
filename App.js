@@ -34,7 +34,7 @@ function LogoTitle() {
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Home");
+        navigation.navigate("All choirs");
       }}
     >
       <Image
