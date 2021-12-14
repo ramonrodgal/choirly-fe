@@ -15,9 +15,11 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { patchUser } from "../utils/api";
 
+
 export default function EditProfileScreen({ navigation, route }) {
   const { username, firstName, lastName, avatar } = route.params;
   const [confirmation, setConfirmation] = useState('');
+
 
   const {
     control,
@@ -186,9 +188,9 @@ export default function EditProfileScreen({ navigation, route }) {
       <Text>{confirmation}</Text>
       <TouchableOpacity
       style={styles.blueButton}
-      onPress={() => { navigation.navigate("Home")}}
+      onPress={() => { navigation.goBack()}}
       >
-          <Text style={styles.buttonText}>Home</Text>
+          <Text style={styles.buttonText}>See profile</Text>
       </TouchableOpacity>
       </View> : 
       <View style={styles.buttonContainer}>
@@ -261,6 +263,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 8,
     borderRadius: 25,
+    marginBottom: 8,
     alignItems: "center",
   },
   buttonText: {
@@ -273,6 +276,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 25,
     alignItems: "center",
+    marginBottom: 8,
     marginTop: 10,
   },
   basicInfo: {
