@@ -15,12 +15,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { patchUser } from "../utils/api";
 
 export default function EditProfileScreen({ navigation, route }) {
-  const { username, firstName, lastName, avatar } = route.params;
+  const { username, firstName, lastName, avatar, about, number } = route.params;
   const [confirmation, setConfirmation] = useState("");
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -36,15 +37,16 @@ export default function EditProfileScreen({ navigation, route }) {
   const onSubmit = (data) => {
     const body = {
       username: username,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      phone_number: data.phone_number,
-      about_me: data.about_me,
-      avatar_url: data.avatar_url,
+      first_name: data.first_name === "" ? firstName : data.first_name,
+      last_name: data.last_name === "" ? lastName : data.last_name,
+      phone_number: data.phone_number === "" ? number : data.phone_number,
+      about_me: data.about_me === "" ? about : data.about_me,
+      avatar_url: data.avatar_url === "" ? avatar : data.avatar_url,
     };
     patchUser(username, body)
       .then((user) => {
         setConfirmation("Your profile has been updated");
+        reset();
         console.log("done");
       })
       .catch((err) => {
@@ -56,7 +58,7 @@ export default function EditProfileScreen({ navigation, route }) {
     <View style={styles.container}>
       {/* //--------------------------------------------------------------TOP NAME */}
       <View style={styles.topName}>
-        <Text style={styles.title}>{username}</Text>
+        <Text style={styles.title}>Username: {username}</Text>
       </View>
 
       {/* //-------------------------------------------------------------AVATAR */}
@@ -141,7 +143,7 @@ export default function EditProfileScreen({ navigation, route }) {
         </View>
 
         <View style={styles.basicInfo}>
-          <Text style={styles.label}>About me</Text>
+          <Text style={styles.label}>About me: {about}</Text>
           <Controller
             control={control}
             rules={{
@@ -161,7 +163,7 @@ export default function EditProfileScreen({ navigation, route }) {
         </View>
 
         <View style={styles.basicInfo}>
-          <Text style={styles.label}>Phone number</Text>
+          <Text style={styles.label}>Phone number: {number}</Text>
           <Controller
             control={control}
             rules={{

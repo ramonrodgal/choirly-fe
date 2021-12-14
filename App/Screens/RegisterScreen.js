@@ -19,6 +19,7 @@ export default function RegisterScreen({ navigation }) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -41,6 +42,7 @@ export default function RegisterScreen({ navigation }) {
       .then((user) => {
         auth.currentUser.updateProfile({ displayName: user.username });
         setConfirmation("Your profile has been created");
+        reset();
       })
       .catch((err) => {
         console.log(err.response.data);
