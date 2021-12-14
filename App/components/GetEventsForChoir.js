@@ -38,46 +38,60 @@ export default function GetEvents({ choirId }) {
     );
   }
 
-  return (
-    <View style={styles.eventsContainer}>
-      <ScrollView>
-        {events.map((event) => {
-          return (
-            <View key={event._id} style={styles.eventCard}>
-              <View style={styles.eventTitle}>
-                <View style={styles.iconContainer}>
-                  {event.type === "Concert" ? (
-                    <Image
-                      style={styles.icon}
-                      source={require("../assets/concertIcon.png")}
-                    />
-                  ) : (
-                    <Image
-                      style={styles.icon}
-                      source={require("../assets/choir-icon.jpg")}
-                    />
-                  )}
+
+  if (events.length === 0) {
+    return (
+      <View style={styles.eventsContainer}>
+        <Text>There are currently no events scheduled.</Text>
+      </View>
+    );
+  } else {
+    return (
+      <View style={styles.eventsContainer}>
+        <ScrollView>
+          {events.map((event) => {
+            return (
+              <View key={event._id} style={styles.eventCard}>
+                <View style={styles.eventTitle}>
+                  <View style={styles.iconContainer}>
+                    {event.type === "Performance" ? (
+                      <Image
+                        style={styles.icon}
+                        source={require("../assets/concertIcon.png")}
+                      />
+                    ) : (
+                      <Image
+                        style={styles.icon}
+                        source={require("../assets/choir-icon.jpg")}
+                      />
+                    )}
+                  </View>
+                  <View style={styles.titleContainer}>
+                    <Text style={styles.eventTitleText}>{event.title} </Text>
+                  </View>
                 </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.eventTitleText}>{event.title} </Text>
+                <View style={styles.eventContainer}>
+                  <Text style={styles.eventBody}>
+                    Location: {event.location}
+                  </Text>
+                  <Text style={styles.eventBody}>
+                    Date: {event.date.slice(0, 10)}
+                  </Text>
+                  <Text style={styles.eventBody}>
+                    Time: {event.date.slice(11, 16)}
+                  </Text>
+                  <Text style={styles.eventBody}>
+                    Duration: {event.duration}
+                  </Text>
                 </View>
               </View>
-              <View style={styles.eventContainer}>
-                <Text style={styles.eventBody}>Location: {event.location}</Text>
-                <Text style={styles.eventBody}>
-                  Date: {event.date.slice(0, 10)}
-                </Text>
-                <Text style={styles.eventBody}>
-                  Time: {event.date.slice(11, 16)}
-                </Text>
-                <Text style={styles.eventBody}>Duration: {event.duration}</Text>
-              </View>
-            </View>
-          );
-        })}
-      </ScrollView>
-    </View>
-  );
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({

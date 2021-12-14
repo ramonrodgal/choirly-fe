@@ -12,11 +12,12 @@ import {
   ScrollView,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import Swal from 'sweetalert2';
+import { postChoir } from "../utils/api";
+import Swal from "sweetalert2";
 
 export default function CreateChoirScreen() {
   const [charCount, setCharCount] = useState(0);
-  
+
   const {
     control,
     handleSubmit,
@@ -29,104 +30,121 @@ export default function CreateChoirScreen() {
       avatarUrl: "",
     },
   }); // all this is from useForm which is imported from react-hook-form
-  const onSubmit = (data) => console.log(data); // on submit the data is logged
+  const onSubmit = (data) => {
+    console.log(data); // on submit the data is logged
+    const newChoir = {
+      name: data.choirName,
+      location: data.location,
+      description: data.description,
+      leader: "test_user", // NEED TO GET USER FROM AUTH AND SWITCH IN
+      avatar_url: data.avatarUrl,
+    };
+    postChoir(newChoir)
+      .then(() => console.log("choir created"))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <ImageBackground
-    style={styles.background}
-    source={require("../assets/white-background.png")}
-  >
-    <View style={styles.container}>
-    <ScrollView>
-      <View style={styles.titleContainer}>
-          <Text style={styles.title}>Create a choir group</Text>
+      style={styles.background}
+      source={require("../assets/white-background.png")}
+    >
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>Create a choir group</Text>
+          </View>
+
+          <View style={styles.formContainer}>
+            <Text style={styles.label}>Choir name:</Text>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter a choir group name here"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="choirName"
+            />
+            {errors.choirName && <Text>A choir name is required.</Text>}
+
+            <Text style={styles.label}>Location:</Text>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter a location here"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="location"
+            />
+            {errors.location && <Text>A location is required.</Text>}
+
+            <Text style={styles.label}>Description:</Text>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.inputDesc}
+                  placeholder="Enter a description here"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="description"
+            />
+            {errors.description && <Text>A description is required.</Text>}
+            <Text style={styles.chars}>Remaining characters: 400</Text>
+
+            <Text style={styles.label}>Image URL:</Text>
+            <Controller
+              control={control}
+              rules={{
+                required: true,
+              }}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <TextInput
+                  style={styles.input}
+                  placeholder="Enter an image url here"
+                  onBlur={onBlur}
+                  onChangeText={onChange}
+                  value={value}
+                />
+              )}
+              name="avatarUrl"
+            />
+          </View>
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleSubmit(onSubmit)}
+            >
+              <Text style={styles.buttonText}>Create a choir group</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
       </View>
-
-      <View style={styles.formContainer}>
-      <Text style={styles.label}>Choir name:</Text>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Enter a choir group name here"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="choirName"
-      />
-      {errors.choirName && <Text>A choir name is required.</Text>}
-
-      <Text style={styles.label}>Location:</Text>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Enter a location here"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="location"
-      />
-      {errors.location && <Text>A location is required.</Text>}
-
-      <Text style={styles.label}>Description:</Text>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.inputDesc}
-            placeholder="Enter a description here"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="description"
-      />
-      {errors.description && <Text>A description is required.</Text>}
-      <Text style={styles.chars}>Remaining characters: 400</Text>
-
-      <Text style={styles.label}>Image URL:</Text>
-      <Controller
-        control={control}
-        rules={{
-          required: true,
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Enter an image url here"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-        name="avatarUrl"
-      />
-      </View>
-      
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Create a choir group</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-    </View>
     </ImageBackground>
   );
 }
@@ -148,7 +166,7 @@ const styles = StyleSheet.create({
   titleContainer: {
     marginTop: 10,
     flex: 0.5,
-    width: '100%',
+    width: "100%",
     // borderWidth: 1,
     // borderColor: 'red',
     alignItems: "center",
@@ -157,10 +175,10 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "700",
     fontSize: 16,
-    color: '#BD7D1E',
+    color: "#BD7D1E",
   },
 
-//----------------------------FORM CONTAINER
+  //----------------------------FORM CONTAINER
 
   formContainer: {
     flex: 8,
@@ -199,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
 
-//------------------------------BUTTON
+  //------------------------------BUTTON
   buttonContainer: {
     flex: 1,
     // borderWidth: 1,
