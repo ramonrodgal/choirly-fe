@@ -16,7 +16,7 @@ import { getUserByUsername } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
 
 export default function UserProfileScreen({ navigation, route }) {
-  const username = auth.currentUser.email;
+  const username = auth.currentUser.displayName;
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
 
