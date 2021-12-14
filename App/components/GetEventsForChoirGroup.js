@@ -61,7 +61,8 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
                 >
                   <View style={styles.eventTitle}>
                     <View style={styles.iconContainer}>
-                      {event.type === "Performance" ? (
+                      {event.type === "performance" ||
+                      event.type === "Concert" ? (
                         <Image
                           style={styles.icon}
                           source={require("../assets/concertIcon.png")}
