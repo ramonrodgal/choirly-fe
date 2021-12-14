@@ -1,30 +1,20 @@
 import React from "react";
 import { StyleSheet, Image } from "react-native";
-import { useNavigation } from "@react-navigation/core";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
+import { useNavigation } from "@react-navigation/core";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import HomeScreen from "./App/Screens/HomeScreen";
-import UserProfileScreen from "./App/Screens/UserProfileScreen";
-import AllMembersScreen from "./App/Screens/AllMembersScreen";
-import ChoirScreen from "./App/Screens/ChoirScreen";
-import CreateChoirScreen from "./App/Screens/CreateChoirScreen";
-import CreateEventScreen from "./App/Screens/CreateEventScreen";
-import EditProfileScreen from "./App/Screens/EditProfileScreen";
-import EventScreen from "./App/Screens/EventScreen";
-import JoiningScreen from "./App/Screens/JoiningScreen";
 import LoginScreen from "./App/Screens/LoginScreen";
-import NotificationsScreen from "./App/Screens/NotificationsScreen";
+import { HomeStackNav } from "./App/navigation/HomeStackNav";
 import RegisterScreen from "./App/Screens/RegisterScreen";
-import SingleMessageScreen from "./App/Screens/SingleMessageScreen";
+import { UserProfileStackNav } from "./App/navigation/UserProfileStackNav";
 import ChoirGroubTabs from "./App/navigation/ChoirGroupTabNav";
+import NotificationsScreen from "./App/Screens/NotificationsScreen";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { UserProfileStackNav } from "./App/navigation/UserProfileStackNav";
-import { HomeStackNav } from "./App/navigation/HomeStackNav";
 
 const Drawer = createDrawerNavigator();
 // const Stack = createStackNavigator();
@@ -71,30 +61,19 @@ export default function App() {
         }}
       >
         <Drawer.Screen
-          options={{ headerShown: true }} // need to change this - like this so we can nav out of login when user logged in
+          options={{ headerShown: true }} // need to change this to not show
           name="Login"
           component={LoginScreen}
         />
-        <Drawer.Screen
-          name="Home"
-          component={HomeStackNav}
-          // options={{ title: "Home page" }}
-        />
+        <Drawer.Screen name="Home" component={HomeStackNav} />
         <Drawer.Screen name="Register" component={RegisterScreen} />
         <Drawer.Screen name="Profile" component={UserProfileStackNav} />
-
-        {/* <Drawer.Screen name="AllMembers" component={AllMembersScreen} /> */}
-        {/* <Drawer.Screen name="Choir" component={ChoirScreen} /> */}
-
-        <Drawer.Screen name="ChoirGroup" component={ChoirGroubTabs} />
-        {/* <Drawer.Screen name="CreateChoir" component={CreateChoirScreen} /> */}
-        {/* <Drawer.Screen name="CreateEvent" component={CreateEventScreen} /> */}
-        {/* <Drawer.Screen name="EditProfile" component={EditProfileScreen} /> */}
-        {/* <Drawer.Screen name="Event" component={EventScreen} /> */}
-        {/* <Drawer.Screen name="Joining" component={JoiningScreen} /> */}
+        <Drawer.Screen
+          name="ChoirGroup"
+          component={ChoirGroubTabs}
+          options={{ title: "Choir Group" }}
+        />
         <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-
-        {/* <Drawer.Screen name="SingleMessage" component={SingleMessageScreen} /> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );
