@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { getEventsByChoir } from "../utils/api";
 import {
   StyleSheet,
@@ -10,23 +10,26 @@ import {
   ScrollView,
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useFocusEffect } from "@react-navigation/core";
 
 export default function GetEventsForChoirGroup({ choirId, navigation }) {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getEventsByChoir(choirId)
-      .then((events) => {
-        setEvents(events);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
-  }, [choirId]);
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      getEventsByChoir(choirId)
+        .then((events) => {
+          setEvents(events);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        });
+    }, [choirId])
+  );
 
   if (isLoading) {
     return (
@@ -58,7 +61,7 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
                 >
                   <View style={styles.eventTitle}>
                     <View style={styles.iconContainer}>
-                      {event.type === "Concert" ? (
+                      {event.type === "Performance" ? (
                         <Image
                           style={styles.icon}
                           source={require("../assets/concertIcon.png")}
@@ -85,7 +88,7 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
                       Time: {event.date.slice(11, 16)}
                     </Text>
                     <Text style={styles.eventBody}>
-                      Duration: {event.duration} hr
+                      Duration: {event.duration}
                     </Text>
                   </View>
                 </TouchableWithoutFeedback>
