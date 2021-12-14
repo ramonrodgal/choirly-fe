@@ -13,11 +13,10 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ChoirSummary from "../components/ChoirSummary";
 import GetMessagesForChoir from "../components/GetMessagesForChoir";
 
-export default function MessagesScreen({ navigation, choirId }) {
+export default function MessagesScreen({ navigation, route }) {
   const username = "genie"; // hardcoded for now
-  //const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
 
-  console.log(choirId, "Choir Id inside MessagesScreen");
+  const { choirId } = route.params;
 
   return (
     <ImageBackground
