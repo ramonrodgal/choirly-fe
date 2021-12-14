@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,6 +12,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
+import { useFocusEffect } from "@react-navigation/core";
 
 export default function HomeScreen({ navigation }) {
   const capitalizeFirstLetter = (
@@ -23,19 +24,20 @@ export default function HomeScreen({ navigation }) {
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getChoirs(location)
-      .then((choirs) => {
-        setChoirs(choirs);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
-  }, [location]);
-
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      getChoirs(location)
+        .then((choirs) => {
+          setChoirs(choirs);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        });
+    }, [location])
+  );
   // const handleSignOut = () => {
   //   auth
   //     .signOut()
