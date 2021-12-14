@@ -16,6 +16,8 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log(choirId, "ChoirId inside GetEventsForChoirGroup");
+
   useFocusEffect(
     useCallback(() => {
       setIsLoading(true);

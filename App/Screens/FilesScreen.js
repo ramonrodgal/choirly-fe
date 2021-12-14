@@ -13,8 +13,10 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ChoirSummary from "../components/ChoirSummary";
 import GetFilesForChoir from "../components/GetFilesForChoir";
 
-export default function FilesScreen({ navigation }) {
-  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+export default function FilesScreen({ navigation, choirId }) {
+  //const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+
+  console.log(choirId, "choirId inside FileScreen");
 
   return (
     <ImageBackground

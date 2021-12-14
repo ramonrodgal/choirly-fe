@@ -6,13 +6,19 @@ import AllMembersScreen from "../Screens/AllMembersScreen.js";
 
 const Stack = createStackNavigator();
 
-const FilesStackNav = () => {
+const FilesStackNav = ({ choirId }) => {
+  console.log(choirId, "Choir ID inside FileStackNav");
+
   return (
     <Stack.Navigator
       initialRoute="Files"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name="Files" component={FilesScreen} />
+      <Stack.Screen
+        name="Files"
+        children={() => <FilesScreen choirId={choirId} />}
+        //component={FilesScreen}
+      />
       <Stack.Screen name="AllMembers" component={AllMembersScreen} />
     </Stack.Navigator>
   );

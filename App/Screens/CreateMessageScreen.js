@@ -13,11 +13,13 @@ import { useForm, Controller } from "react-hook-form";
 export default function CreateMessageScreen() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-    const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState([]);
   const [choirName, setChoirName] = useState("");
   const [leader, setLeader] = useState("");
-  
+
   const choir_id = "61b0c4c065064fdfb889a148"; //HARDCODED
+
+  console.log(props.choirID, "Choir Id inside createMessageScreen");
 
   const {
     control,
@@ -36,7 +38,7 @@ export default function CreateMessageScreen() {
       return;
     }
 
-const body = {
+    const body = {
       choir: choirName,
       title: title,
       body: text,
@@ -69,7 +71,7 @@ const body = {
         console.log(err.response.data);
       });
   };
-  
+
   useEffect(() => {
     getChoirById(choir_id)
       .then((choir) => {
@@ -102,7 +104,6 @@ const body = {
         name="title"
       />
       {errors.title && <Text>Title is required</Text>}
-
       <Text>Message</Text>
       <Controller
         control={control}
@@ -121,9 +122,6 @@ const body = {
         name="text"
       />
       {errors.text && <Text>Text is required.</Text>}
-      {/* <TextInput
-      /> */}
-      />
       <Button
         title="Post a message"
         onPress={() => handlePostMessage()}
