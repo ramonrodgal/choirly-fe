@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ChoirSummary from "../components/ChoirSummary";
-import GetEventsForChoir from "../components/GetEventsForChoir";
+import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
 
 export default function EventsScreen({ navigation }) {
   const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
@@ -23,7 +23,7 @@ export default function EventsScreen({ navigation }) {
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
 
-          <GetEventsForChoir choirId={choirId} />
+          <GetEventsForChoirGroup choirId={choirId} navigation={navigation} />
         </View>
 
         <View style={styles.buttonContainer}>
@@ -33,7 +33,7 @@ export default function EventsScreen({ navigation }) {
               navigation.navigate("CreateEvent");
             }}
           >
-            <Text stlye={styles.buttonText}>Create an event</Text>
+            <Text style={styles.buttonText}>Create an event</Text>
           </TouchableOpacity>
         </View>
       </View>

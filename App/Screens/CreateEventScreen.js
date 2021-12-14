@@ -11,8 +11,12 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
+import { postEventByChoir } from "../utils/api";
 
 export default function CreateEventScreen() {
+  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+  const choirName = "African Children's Choir"; // hardcoded for now
+
   const [date, setDate] = useState(new Date());
 
   const [startTime, setStartTime] = useState(date);
@@ -59,11 +63,14 @@ export default function CreateEventScreen() {
       m = "";
     }
 
+    // combining the date with the start time
+    const dateString = date.toISOString().slice(0, 11);
+    const timeString = startTime.toISOString().slice(11);
+    const finalDate = new Date(`${dateString}${timeString}`);
+
+    setDate(finalDate);
     setDuration(`${h}${m}`);
   }, [startTime, endTime]);
-
-  // at the moment the start and end times are on the current date
-  // this is fine to get duration but not perfect
 
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -94,7 +101,16 @@ export default function CreateEventScreen() {
   });
 
   const onSubmit = (data) => {
-    const eventPost = { ...data, duration, date, type };
+    const eventPost = { ...data, duration, date, type, choir: choirName };
+    console.log(eventPost);
+
+    postEventByChoir(choirId, eventPost)
+      .then(() => {
+        console.log("event sent");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // this is where the post request would go - choir id needs to be added
   };
 
@@ -158,6 +174,7 @@ export default function CreateEventScreen() {
           display="default"
           onChange={startTimeChange}
           mode="time"
+          minuteInterval="5"
         />
       </View>
 
@@ -171,6 +188,7 @@ export default function CreateEventScreen() {
           onChange={endTimeChange}
           mode="time"
           minimumDate={startTime}
+          minuteInterval="5"
         />
       </View>
 
