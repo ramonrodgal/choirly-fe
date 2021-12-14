@@ -14,12 +14,14 @@ import {
 import { auth } from "../../firebase";
 import { getUserByUsername } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
+import GetChoirNameById from "../components/GetChoirNameById";
 
 export default function UserProfileScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
+  // const username = "korus76"; // for testing
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
-
+  console.log(user);
   const handleSignOut = () => {
     auth
       .signOut()
@@ -107,6 +109,8 @@ export default function UserProfileScreen({ navigation, route }) {
               firstName: user.first_name,
               lastName: user.last_name,
               avatar: user.avatar_url,
+              about: user.about_me,
+              number: user.phone_number,
             })
           }
           title="Edit Profile"
@@ -123,14 +127,21 @@ export default function UserProfileScreen({ navigation, route }) {
           <Text style={styles.about}>{user.about_me}</Text>
         </View>
 
-        <Text style={styles.titleInfo}>VOICE</Text>
+        {/* <Text style={styles.titleInfo}>VOICE</Text>
         <View style={styles.voice}>
           <Text style={styles.about}>{user.voice}</Text>
-        </View>
+        </View> */}
+        {/* commented out as nowhere to edit */}
 
-        <Text style={styles.titleInfo}>I'M A MEMBER OF</Text>
+        <Text style={styles.titleInfo}>CHOIR GROUPS</Text>
         <View style={styles.basicInfo}>
-          <Text style={styles.about}>{user.groups}</Text>
+          {user.groups.length === 0 ? (
+            <Text>You are not part of any choir groups yet.</Text>
+          ) : (
+            user.groups.map((group) => {
+              return <GetChoirNameById choirId={group} />;
+            })
+          )}
         </View>
 
         <Text style={styles.titleInfo}>find me on</Text>
