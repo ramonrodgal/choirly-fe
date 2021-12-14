@@ -18,14 +18,14 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("Home");
-      }
-    });
-    return unsubscribe;
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigation.navigate("Home");
+  //     }
+  //   });
+  //   return unsubscribe;
+  // }, []);
 
   const handleSignUp = () => {
     auth
@@ -33,6 +33,7 @@ export default function LoginScreen() {
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Registered with: ", user.email);
+        navigation.navigate("Register"); // change this to nested
       })
       .catch((error) => alert(error.message));
   };
@@ -43,10 +44,11 @@ export default function LoginScreen() {
       .then((userCredentials) => {
         const user = userCredentials.user;
         console.log("Logged in with: ", user.email);
+        navigation.navigate("drawer", { screen: "Home" }); // change this to nested
       })
       .catch((error) => alert(error.message));
   };
-  
+
   return (
     <KeyboardAvoidingView style={styles.container} behaviour="padding">
       <ImageBackground
