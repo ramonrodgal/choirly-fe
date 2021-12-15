@@ -29,8 +29,8 @@ export default function FilesScreen({ navigation, route }) {
           <GetFilesForChoir choirId={choirId} />
         </View>
 
-        <TouchableOpacity>
-          <Text>Upload here</Text>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText} >Upload here</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -81,19 +81,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  button: {
-    backgroundColor: "#BC9C22",
-    width: "60%",
-    padding: 4,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 12,
-  },
 
   iconContainer: {
     width: "10%",
@@ -113,11 +100,28 @@ const styles = StyleSheet.create({
   filesContainer: {
     flex: 4,
     paddingTop: 5,
-    borderColor: "black",
-    borderWidth: 1,
+    // borderColor: "red",
+    // borderWidth: 1,
+    width: 360,
+    marginTop: 20,
   },
   fileContainer: {
     flexDirection: "row",
     width: "100%",
+
   },
+  button: {
+    backgroundColor: "#BD7D1E",
+    // width: "60%",
+    padding: 10,
+    borderRadius: 25,
+    alignItems: "center",
+    margin: 5,
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 14,
+  },
+
 });

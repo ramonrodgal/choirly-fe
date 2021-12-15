@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
+import { Text, View, Button, StyleSheet, TouchableOpacity } from "react-native";
 import {
   updateNotificationById,
   postNotificationByUsername,
@@ -7,7 +7,9 @@ import {
 } from "../utils/api";
 
 export default function Notification({ notification }) {
+
   const [notificationObj, setNotificationObj] = useState(notification);
+  const choirId = "61b9c9f3696b1d23594c6d1b";   //need to delete this later!
 
   useEffect(() => {
     const body = {
@@ -33,7 +35,8 @@ export default function Notification({ notification }) {
 
         return addMemberToChoir(
           notificationObj.author,
-          notificationObj.choir_id
+          choirId       //neew to delete this and change it to actual choir ID
+          // notificationObj.choir_id
         ).then((choir) => {
           console.log("The user joined the group");
         });
@@ -56,7 +59,7 @@ export default function Notification({ notification }) {
         console.log(err.response.data);
       });
   };
-
+console.log(notificationObj, '<<<<<<notification object does it have choir id?')
   const handleReject = (notificationId) => {
     updateNotificationById(notificationId, { rejected: true })
       .then((notification) => {
@@ -87,27 +90,29 @@ export default function Notification({ notification }) {
       notificationObj.rejected === false
     ) {
       return (
-        <View key={notification._id}>
+        <View>
           <Text>
             {notificationObj.author} wants to join {notificationObj.choir}
           </Text>
           <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
-          <Button
+          <TouchableOpacity 
+            style={styles.buttonAccept}
             title="Accept"
             onPress={() => handleAccept(notification._id)}
-          ></Button>
-          <Button
+          ><Text style={{ color: 'black',  fontWeight: '700'}}>ACCEPT</Text></TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.buttonReject}
             title="Reject"
             onPress={() => handleReject(notification._id)}
-          ></Button>
+          ><Text style={{ color: 'black',  fontWeight: '700'}}>REJECT</Text></TouchableOpacity>
         </View>
       );
     } else {
       if (notificationObj.rejected === true) {
         return (
-          <View key={notification._id}>
+          <View>
             <Text>
-              You rejected {notificationObj.username} to join{" "}
+              You rejected {notificationObj.author} to join{" "}
               {notificationObj.choir}
             </Text>
             <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
@@ -115,9 +120,9 @@ export default function Notification({ notification }) {
         );
       } else {
         return (
-          <View key={notification._id}>
+          <View>
             <Text>
-              You accepted {notificationObj.username} to join{" "}
+              You accepted {notificationObj.author} to join{" "}
               {notificationObj.choir}
             </Text>
             <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
@@ -129,7 +134,7 @@ export default function Notification({ notification }) {
 
   if (notification.type === "message") {
     return (
-      <View key={notification._id}>
+      <View>
         <Text>You have a new message in {notificationObj.choir}</Text>
         <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
       </View>
@@ -138,7 +143,7 @@ export default function Notification({ notification }) {
 
   if (notification.type === "accept") {
     return (
-      <View key={notification._id}>
+      <View>
         <Text>
           {notification.accepted
             ? `You have been accepted to ${notification.choir}`
@@ -152,7 +157,32 @@ export default function Notification({ notification }) {
 
 const styles = StyleSheet.create({
   date: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#586F7C',
+  },
+  buttonAccept: {
+    borderRadius: 25,
+    backgroundColor: '#BC9C22',
+    color: 'black',
+    margin: 10,
+    padding: 8,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 250,
+    alignSelf: 'center'
+  },
+  buttonReject: {
+    borderRadius: 25,
+    backgroundColor: '#BD611E',
+    color: 'black',
+    margin: 10,
+    padding: 8,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: '700',
+    width: 250,
+    alignSelf: 'center'
   }
 })
