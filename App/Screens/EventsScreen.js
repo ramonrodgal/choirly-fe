@@ -18,7 +18,7 @@ export default function EventsScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} />
+        <ChoirSummary navigation={navigation} choirId={choirId}/>
 
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
@@ -87,21 +87,28 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "60%",
     padding: 4,
     borderRadius: 50,
-    alignItems: "center",
+    alignContent: "center",
+    justifyContent: 'center',
+    width: 140,
     marginTop: 10,
   },
   buttonText: {
     color: "black",
     fontWeight: "700",
     fontSize: 12,
+    padding: 10,
+
+    alignSelf: 'center',
   },
 
   eventsContainer: {
-    flex: 4,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    flex: 6,
     paddingTop: 5,
+    marginTop: 40,
   },
   eventCard: {
     marginTop: 10,

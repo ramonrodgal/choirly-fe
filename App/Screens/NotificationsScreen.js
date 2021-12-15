@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import Notification from "../components/Notification";
 import { getNotificationByUsername } from "../utils/api";
+import { auth } from "../../firebase";
 
 export default function NotificationsScreen() {
   const [notifications, setNotifications] = useState([]);
+  const username = auth.currentUser.displayName;
 
   useEffect(() => {
-    getNotificationByUsername("cakevealbladerunner").then((notifications) => {
+    getNotificationByUsername(username).then((notifications) => {
       setNotifications(notifications);
     });
   }, []);
@@ -25,7 +27,7 @@ export default function NotificationsScreen() {
       <View style={styles.mainContainer}>
         {notifications.map((notification) => {
           return (
-            <View style={styles.cardContainer}>
+            <View key={notification._id} style={styles.cardContainer}>
               <Notification key={notification._id} notification={notification} />
             </View>
           );
@@ -74,5 +76,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 8,
     fontSize: 12,
+    width: 360,
   }
 });

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { getChoirById } from "../utils/api";
 
-export default function ChoirSummary({ navigation }) {
-  const choirId = "61b0c4c065064fdfb889a148"; // hardcoded for now
+export default function ChoirSummary({ navigation, choirId }) {
+  // const choirId = route.params; // hardcoded for now
 
   const [choir, setChoir] = useState({});
   const [isLoading, setIsLoading] = useState(true);

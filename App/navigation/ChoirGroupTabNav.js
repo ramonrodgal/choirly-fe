@@ -8,8 +8,8 @@ import { FilesStackNav } from "./FilesStackNav";
 
 const Tab = createBottomTabNavigator();
 
+
 export default function ChoirGroubTabs({ route }) {
-  // const choirId = "61b0c4c065064fdfb889a148"; //HARDCODED - this needs a get request
 
   const { choirId } = route.params;
   const choirName = route.name;
@@ -31,7 +31,7 @@ export default function ChoirGroubTabs({ route }) {
 
           return <FontAwesome name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
+        tabBarActiveTintColor: "#BD5C1E",
         tabBarInactiveTintColor: "gray",
       })}
     >

@@ -16,9 +16,10 @@ import { postChoir } from "../utils/api";
 import Swal from "sweetalert2";
 import { auth } from "../../firebase";
 
-export default function CreateChoirScreen() {
+export default function CreateChoirScreen({ navigation }) {
   const [charCount, setCharCount] = useState(0);
-  const leader = auth.currentUser.email; // this may change to displayName
+  const leader = auth.currentUser.displayName; // this may change to displayName
+  const [confirmation, setConfirmation] = useState("");
 
   const {
     control,
@@ -37,7 +38,7 @@ export default function CreateChoirScreen() {
       name: data.choirName,
       location: data.location,
       description: data.description,
-      leader,
+      leader: leader,
       // sets default picture
       avatar_url:
         data.avatarUrl === ""
@@ -45,7 +46,10 @@ export default function CreateChoirScreen() {
           : data.avatarUrl,
     };
     postChoir(newChoir)
-      .then(() => console.log("choir created"))
+      .then(() => {
+        console.log("choir created")
+        setConfirmation("Choir has been created");
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -141,12 +145,30 @@ export default function CreateChoirScreen() {
           </View>
 
           <View style={styles.buttonContainer}>
+
+            {confirmation ? (
+              <View>
+              <Text>{confirmation}</Text>
+              <TouchableOpacity
+                style={styles.blueButton}
+                onPress={() => {
+                  navigation.goBack();
+                }}
+              >
+                <Text style={styles.buttonText}>Go back</Text>
+              </TouchableOpacity>
+              </View>
+            ) : (
+            <View style={styles.buttonContainer}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={handleSubmit(onSubmit)}
-            >
-              <Text style={styles.buttonText}>Create a choir group</Text>
-            </TouchableOpacity>
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={styles.buttonText}>Create a choir group</Text>
+          </TouchableOpacity>
+          </View>
+          )}
+            
           </View>
         </ScrollView>
       </View>
@@ -231,7 +253,6 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "60%",
     padding: 15,
     borderRadius: 25,
     alignItems: "center",
@@ -241,5 +262,13 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "700",
     fontSize: 16,
+  },
+  blueButton: {
+    backgroundColor: "#B2DED9",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+    marginBottom: 8,
+    marginTop: 10,
   },
 });
