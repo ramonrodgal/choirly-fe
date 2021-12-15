@@ -8,8 +8,8 @@ import NotificationsScreen from "../Screens/NotificationsScreen";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import { LogoTitle } from "../../App";
-import { NotificationBell } from "../../App";
+import { LogoTitle } from "../components/LogoTitle";
+import { NotificationBell } from "../components/NotificationBell";
 
 const Drawer = createDrawerNavigator();
 
