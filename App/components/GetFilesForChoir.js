@@ -33,21 +33,25 @@ export default function GetFilesForChoir({ choirId }) {
 
   return (
     <ScrollView>
-      <View style={styles.fileContainer}>
+      <View style={styles.filesContainer}>
         {files.map((file) => {
           return (
-            <View key={file._id}>
+            <View key={file._id} style={styles.fileContainer}>
               <View style={styles.iconContainer}>
+                {(file.type === 'song') ?  <FontAwesome name="music" size={15} color="black" /> : <></>}
+                {(file.type === 'document') ?  <FontAwesome name="file" size={15} color="black" /> : <></>}
+                {(file.type === 'image') ?  <FontAwesome name="image" size={15} color="black" /> : <></>}
                 {/* could add in some if statements to change icon based on doc type */}
-                <FontAwesome name="music" size={15} color="black" />
               </View>
               <Text>{file.filename}</Text>
+              <View style={styles.downloadContainer}>
               <FontAwesome
                 name="download"
                 size={20}
                 color="black"
                 onPress={() => console.log(`download ${file.filename}`)}
               />
+              </View>
             </View>
           );
         })}
@@ -68,75 +72,39 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  topContainer: {
-    marginTop: 10,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-  imageContainer: {
-    width: "40%",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  choirLogo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  infoContainer: {
-    width: "60%",
-    flexDirection: "column",
-  },
-  title: {
-    fontWeight: "700",
-    color: "#BD7D1E",
-  },
-  choirInfo: {
-    color: "black",
-    fontSize: 13,
-  },
-  buttonContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "#BC9C22",
-    width: "60%",
-    padding: 4,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 12,
-  },
 
   iconContainer: {
-    width: "10%",
+    width: 35,
     alignItems: "center",
     justifyContent: "center",
+    alignContent: 'center',
+    // borderWidth: 1,
+    // borderColor: 'yellow',
   },
   icon: {
     height: 30,
     width: 30,
   },
-  titleContainer: {
-    width: "90%",
-    justifyContent: "center",
-    paddingLeft: 5,
-  },
 
   filesContainer: {
-    flex: 4,
     paddingTop: 5,
-    borderColor: "black",
-    borderWidth: 1,
+    // borderColor: "black",
+    // borderWidth: 1,
+    width: "100%",
   },
   fileContainer: {
     flexDirection: "row",
     width: "100%",
+    // borderColor: "blue",
+    backgroundColor: '#B8DBD9',
+    // borderWidth: 1,
+    marginVertical: 10,
+    padding: 8,
+    borderTopEndRadius: 15,
+    borderBottomEndRadius: 15,
   },
+  downloadContainer: {
+    alignSelf: 'flex-end',
+    marginLeft: 10,
+  }
 });
