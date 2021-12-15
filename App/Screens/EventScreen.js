@@ -18,26 +18,28 @@ export default function EventScreen({ route, navigation }) {
   const { eventId, choirId } = route.params;
   const username = auth.currentUser.displayName;
 
-  const [going, setGoing] = useState(false); // on reload of page it becomes false again - how to stop this happening?
   const [event, setEvent] = useState({
-    // need to use useEffect
     date: "",
     comments: [],
     going: [],
     not_going: [],
   });
+  const [going, setGoing] = useState();
+
   console.log(going);
-  useFocusEffect(
-    useCallback(() => {
-      getEventById(eventId)
-        .then((event) => {
-          setEvent(event);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }, [going])
-  );
+  console.log("going:", event.going);
+  console.log("not going:", event.not_going);
+
+  useEffect(() => {
+    getEventById(eventId)
+      .then((event) => {
+        setEvent(event);
+        setGoing(event.going.includes(username));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [going]);
 
   function handleGoing() {
     const body = { username, going: true };
