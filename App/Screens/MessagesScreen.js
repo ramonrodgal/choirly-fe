@@ -52,7 +52,7 @@ export default function MessagesScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} />
+        <ChoirSummary navigation={navigation} choirId={choirId}/>
 
         <View style={styles.messagesContainer}>
 
@@ -60,14 +60,21 @@ export default function MessagesScreen({ navigation, route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+
+        {(username === choir.leader) ? 
+        
+        <TouchableOpacity
             style={styles.button}
             onPress={() => {
               navigation.navigate("CreateMessage");
             }}
           >
-            <Text stlye={styles.buttonTextMsg}>Post a message</Text>
+            <Text stlye={styles.buttonTextMsg}>Create a post</Text>
           </TouchableOpacity>
+        
+        : <Text></Text>}
+
+          
         </View>
       </View>
     </ImageBackground>
@@ -121,6 +128,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#BC9C22",
     padding: 8,
+    paddingHorizontal: 15,
     borderRadius: 50,
     alignItems: "center",
     marginTop: 10,
@@ -132,8 +140,8 @@ const styles = StyleSheet.create({
   },
 
   messagesContainer: {
-    flex: 4,
-    paddingTop: 5,
+    flex: 7,
+    paddingTop: 30,
   },
   // messageCard: {
   //   marginTop: 10,

@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: "center",
     margin: 5,
+    width: 200,
   },
   buttonText: {
     color: "black",

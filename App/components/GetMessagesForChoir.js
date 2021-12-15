@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -10,12 +10,14 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { getMessageByChoirId } from "../utils/api";
+import { useFocusEffect } from "@react-navigation/core";
 
 export default function GetMessagesForChoir({ choirId, navigation }) {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  useFocusEffect(
+  useCallback(() => {
     setIsLoading(true);
     getMessageByChoirId(choirId)
       .then((messages) => {
@@ -26,7 +28,8 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
         console.log(err);
         setIsLoading(false);
       });
-  }, []);
+  }, [])
+  );
 
   if (isLoading) {
     return (
@@ -38,6 +41,7 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
       />
     );
   }
+
 
   return (
     <View style={styles.messagesContainer}>
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: 'red',
     marginTop: 25,
-    width: 350,
+    width: 360,
   },
   messageCard: {
     marginTop: 10,
@@ -171,7 +175,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    alignContent: 'center'
+    // alignContent: 'center'
   },
   messageTitleText: {
     fontWeight: "700",
@@ -199,6 +203,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginLeft: 20,
-    alignSelf: 'center'
+    marginTop: 7,
+    // alignSelf: 'center'
   },
 });
