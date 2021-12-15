@@ -9,14 +9,42 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { auth } from "../../firebase";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ChoirSummary from "../components/ChoirSummary";
+import { getChoirById } from "../utils/api";
 import GetMessagesForChoir from "../components/GetMessagesForChoir";
 
 export default function MessagesScreen({ navigation, route }) {
-  const username = "genie"; // hardcoded for now
+  const username = auth.currentUser.displayName;
+  const [isLoading, setIsLoading] = useState(true);
+  const [choir, setChoir] = useState({});
 
   const { choirId } = route.params;
+
+  useEffect(() => {
+    setIsLoading(true);
+    getChoirById(choirId)
+      .then((choir) => {
+        setChoir(choir);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [choirId]);
+
+  if (isLoading) {
+    return (
+      <Image
+        style={styles.loading}
+        source={{
+          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
+        }}
+      />
+    );
+  }
 
   return (
     <ImageBackground

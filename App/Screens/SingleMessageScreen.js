@@ -151,7 +151,15 @@ export default function SingleMessageScreen({ navigation, route }) {
             return (
               <View style={styles.commentCard} key={comment._id} >
                 <Text style={styles.author}>{comment.author}</Text>
-                <Text>{comment.body}</Text>
+                <View style={styles.body}>
+                    <Text>{comment.body}</Text>
+                    <FontAwesome
+                    name="trash"
+                    style={styles.iconTrash}
+                    size={18}
+                    color="black"
+                    />
+                </View>
                 <Text style={styles.date}>
                   {Date(comment.created_at).toString().slice(0, -15)}
                 </Text>
@@ -295,4 +303,13 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 10,
   },
+  body: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+
+  },
+  iconTrash: {
+    marginRight: 15,
+  }
 });
