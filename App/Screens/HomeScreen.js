@@ -7,8 +7,8 @@ import {
   View,
   ImageBackground,
   Image,
-  Picker,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
@@ -66,6 +66,8 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.dropdown}>
             <Picker
               selectedValue={location}
+              itemStyle={{ height: 40, fontSize: 14 }}
+              textStyle={{ fontSize: 2 }}
               style={{ height: 50, width: 150 }}
               onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}
             >
@@ -203,7 +205,7 @@ const styles = StyleSheet.create({
   card: {
     height: 100,
     width: 330,
-    alignSelf: 'center',
+    alignSelf: "center",
     backgroundColor: "white",
     padding: 5,
     borderRadius: 5,
