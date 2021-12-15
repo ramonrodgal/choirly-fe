@@ -21,6 +21,7 @@ export default function UserProfileScreen({ navigation, route }) {
   // const username = "korus76"; // for testing
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
+  
   const handleSignOut = () => {
     auth
       .signOut()
