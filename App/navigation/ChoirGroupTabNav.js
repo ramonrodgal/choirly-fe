@@ -11,6 +11,7 @@ const Tab = createBottomTabNavigator();
 export default function ChoirGroubTabs({ route }) {
   const choirId = "61b0c4c065064fdfb889a148"; //HARDCODED - this needs a get request
 
+  // const {choirId} = route.params;
   // we will receive the choir id as a prop (or route.param) which we can then pass through
 
   console.log(route);
