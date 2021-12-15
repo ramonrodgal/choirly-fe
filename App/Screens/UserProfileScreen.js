@@ -71,9 +71,9 @@ export default function UserProfileScreen({ navigation, route }) {
       {/* //-------------------------------------------------------------AVATAR */}
       <ImageBackground
         style={styles.avatar}
-        imageStyle={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+        imageStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
         source={{
-          uri: "https://images.unsplash.com/photo-1516528387618-afa90b13e000?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8anVuZ2xlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
+          uri: "https://img.youtube.com/vi/2Gg6Seob5Mg/maxresdefault.jpg",
         }}
       >
         {user.avatar_url ? (
@@ -123,7 +123,7 @@ export default function UserProfileScreen({ navigation, route }) {
       {/* //------------------------------------------------------------------ INFO */}
       <ScrollView>
         <Text style={styles.titleInfo}>ABOUT</Text>
-        <View style={styles.basicInfo}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.about}>{user.about_me}</Text>
         </View>
 
@@ -134,7 +134,7 @@ export default function UserProfileScreen({ navigation, route }) {
         {/* commented out as nowhere to edit */}
 
         <Text style={styles.titleInfo}>CHOIR GROUPS</Text>
-        <View style={styles.basicInfo}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           {user.groups.length === 0 ? (
             <Text>You are not part of any choir groups yet.</Text>
           ) : (
@@ -198,12 +198,13 @@ const styles = StyleSheet.create({
     // alignContent: 'flex-start',
     // position: 'absolute',
     justifyContent: "flex-start",
+    marginTop: 5,
     // borderWidth: 1,
     // borderColor: 'red',
   },
-  // nameTitle: {
-  //   fontWeight: "bold",
-  // },
+  title: {
+    fontWeight: "bold",
+  },
   //--------------------------------AVATAR
   avatar: {
     // flex: 2,
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
   titleInfo: {
     fontWeight: "bold",
     alignSelf: "center",
-    marginTop: 8,
+    marginTop: 15,
   },
 
   //--------------------------------NAME AND SURNAME
@@ -272,13 +273,16 @@ const styles = StyleSheet.create({
   // ----------------------------------------INFO
   basicInfo: {
     // flex: 3,
-    // borderWidth: 1,
-    backgroundColor: "#DBDBDB",
-    // borderColor: 'red',
+    borderTopWidth: 2,
+    backgroundColor: "#EBE2D8",
+    borderColor: '#A6A19A',
     minHeight: 50,
     fontSize: 14,
-    padding: 5,
-    borderRadius: 6,
+    padding: 8,
+    width: 330,
+    alignSelf: 'center',
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
   },
   voice: {
     // borderWidth: 1,
@@ -299,7 +303,13 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 5,
   },
-
+  shadowProp: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.5,
+    elevation: 6,
+  },
   singOutButtonContainer: {
     marginTop: 5,
     justifyContent: "center",

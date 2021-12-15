@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     fontSize: 10,
-        borderWidth: 1,
-    borderColor: 'green',
+    //     borderWidth: 1,
+    // borderColor: 'green',
   }
 });

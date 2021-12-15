@@ -142,7 +142,7 @@ export default function SingleMessageScreen({ navigation, route }) {
         <ScrollView>
           {comments.map((comment) => {
             return (
-              <View style={styles.commentCard}>
+              <View style={styles.commentCard} key={comment._id} >
                 <Text style={styles.author}>{comment.author}</Text>
                 <Text>{comment.body}</Text>
                 <Text style={styles.date}>
@@ -163,10 +163,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     // alignItems: "center",
-    // padding: 15,
+    padding: 15,
     paddingTop: 0,
     // borderWidth: 1,
     // borderColor: 'pink',
+    width: '100%',
   },
   background: {
     flex: 1,

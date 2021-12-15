@@ -58,18 +58,18 @@ export default function EditProfileScreen({ navigation, route }) {
     <View style={styles.container}>
       {/* //--------------------------------------------------------------TOP NAME */}
       <View style={styles.topName}>
-        <Text style={styles.title}>Username: {username}</Text>
+        <Text style={styles.title}>Hello {username}</Text>
       </View>
 
       {/* //-------------------------------------------------------------AVATAR */}
       <View style={styles.avatar}>
-        {avatar ? (
+        {(avatar) ? 
           <Image
             style={styles.image}
             source={{ uri: avatar }}
             alt="Profile Image"
           />
-        ) : (
+        : 
           <Image
             style={styles.imageRandom}
             source={{
@@ -77,12 +77,13 @@ export default function EditProfileScreen({ navigation, route }) {
             }}
             alt="Profile Image"
           />
-        )}
+        }
       </View>
+      <Text>Uptade your details here:</Text>
 
       {/* //------------------------------------------------------------------ INFO */}
       <ScrollView>
-        <View style={styles.basicInfo}>
+      <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.label}>First name: {firstName}</Text>
           <Controller
             control={control}
@@ -102,7 +103,7 @@ export default function EditProfileScreen({ navigation, route }) {
           />
         </View>
 
-        <View style={styles.basicInfo}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.label}>Last name: {lastName}</Text>
           <Controller
             control={control}
@@ -122,7 +123,7 @@ export default function EditProfileScreen({ navigation, route }) {
           />
         </View>
 
-        <View style={styles.basicInfo}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.label}>Avatar url</Text>
           <Controller
             control={control}
@@ -142,7 +143,7 @@ export default function EditProfileScreen({ navigation, route }) {
           />
         </View>
 
-        <View style={styles.basicInfo}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.label}>About me: {about}</Text>
           <Controller
             control={control}
@@ -162,7 +163,7 @@ export default function EditProfileScreen({ navigation, route }) {
           />
         </View>
 
-        <View style={styles.basicInfo}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.label}>Phone number: {number}</Text>
           <Controller
             control={control}
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   avatar: {
     // flex: 2,
     // borderWidth: 1,
-    height: 150,
+    height: 100,
     // borderColor: 'blue',
     marginTop: 5,
     alignItems: "center",
@@ -250,8 +251,8 @@ const styles = StyleSheet.create({
     // padding: 10,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 90,
+    height: 90,
     borderRadius: 75,
     marginTop: 5,
   },
@@ -289,14 +290,25 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   basicInfo: {
-    // borderWidth: 1,
-    backgroundColor: "#DBDBDB",
+    borderTopWidth: 2,
+    backgroundColor: "#EBE2D8",
+    borderColor: '#A6A19A',
     // borderColor: 'blue',
     // minHeight: 50,
     fontSize: 14,
+    width: 330,
+    alignSelf: 'center',
     padding: 5,
-    borderRadius: 6,
-    marginTop: 10,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    marginTop: 20,
+  },
+  shadowProp: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.5,
+    elevation: 6,
   },
   test: {
     backgroundColor: "white",

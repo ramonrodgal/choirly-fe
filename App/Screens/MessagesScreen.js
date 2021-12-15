@@ -27,7 +27,7 @@ export default function MessagesScreen({ navigation, route }) {
         <ChoirSummary navigation={navigation} />
 
         <View style={styles.messagesContainer}>
-          <Text style={styles.title}>Messages:</Text>
+          {/* <Text style={styles.title}>Messages:</Text> */}
 
           <GetMessagesForChoir choirId={choirId} navigation={navigation} />
         </View>
@@ -39,7 +39,7 @@ export default function MessagesScreen({ navigation, route }) {
               navigation.navigate("CreateMessage");
             }}
           >
-            <Text stlye={styles.buttonText}>Post a message</Text>
+            <Text stlye={styles.buttonTextMsg}>Post a message</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 15,
-    paddingTop: 0,
+    paddingTop: 5,
   },
   background: {
     flex: 1,
@@ -93,13 +93,12 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "60%",
-    padding: 4,
+    padding: 8,
     borderRadius: 50,
     alignItems: "center",
     marginTop: 10,
   },
-  buttonText: {
+  buttonTextMsg: {
     color: "black",
     fontWeight: "700",
     fontSize: 12,
@@ -109,41 +108,41 @@ const styles = StyleSheet.create({
     flex: 4,
     paddingTop: 5,
   },
-  messageCard: {
-    marginTop: 10,
-    backgroundColor: "#EDE5DA",
-    borderRadius: 15,
-  },
-  messageTitle: {
-    height: 35,
-    backgroundColor: "#B2DED9",
-    flexDirection: "row",
-  },
-  messageTitleText: {
-    fontWeight: "700",
-    color: "black",
-  },
-  messageContainer: {
-    paddingLeft: 40,
-    justifyContent: "flex-start",
-  },
-  messageBody: {
-    color: "black",
-    fontSize: 12,
-  },
+  // messageCard: {
+  //   marginTop: 10,
+  //   backgroundColor: "#EDE5DA",
+  //   borderRadius: 15,
+  // },
+  // messageTitle: {
+  //   height: 35,
+  //   backgroundColor: "#B2DED9",
+  //   flexDirection: "row",
+  // },
+  // messageTitleText: {
+  //   fontWeight: "700",
+  //   color: "black",
+  // },
+  // messageContainer: {
+  //   paddingLeft: 40,
+  //   justifyContent: "flex-start",
+  // },
+  // messageBody: {
+  //   color: "black",
+  //   fontSize: 12,
+  // },
 
-  iconContainer: {
-    width: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  icon: {
-    height: 30,
-    width: 30,
-  },
-  titleContainer: {
-    width: "90%",
-    justifyContent: "center",
-    paddingLeft: 5,
-  },
+  // iconContainer: {
+  //   width: "10%",
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
+  // icon: {
+  //   height: 30,
+  //   width: 30,
+  // },
+  // titleContainer: {
+  //   width: "90%",
+  //   justifyContent: "center",
+  //   paddingLeft: 5,
+  // },
 });

@@ -44,7 +44,7 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
       <ScrollView>
         {messages.map((message) => {
           return (
-            <View key={message._id}>
+            <View style={styles.messageCard} key={message._id}>
               <TouchableWithoutFeedback
                 style={styles.messageCard}
                 onPress={() =>
@@ -55,24 +55,24 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
                 }
               >
                 <View>
-                  <View style={styles.messageTitle}>
-                    <View style={styles.titleContainer}>
+
+                  <View style={styles.titleContainer}>
                       <Text style={styles.messageTitleText}>
                         {message.title}
                       </Text>
                       <FontAwesome
-                        name="thumbs-up"
-                        size={20}
-                        color="black"
-                        onPress={() => console.log("liked placeholder")}
-                      />
-                    </View>
+            name="thumbs-up"
+            style={styles.icon}
+            size={20}
+            color="black"
+            onPress={() => console.log("liked placeholder")}
+          />
                   </View>
                   <View style={styles.messageContainer}>
                     <Text style={styles.messageBody}>{message.body}</Text>
                   </View>
-                  <View>
-                    <TouchableOpacity
+
+                    <TouchableOpacity style={styles.comments}
                       onPress={() => {
                         navigation.navigate("SingleMessage");
                       }}
@@ -81,7 +81,7 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
                         See comments ({message.comments.length})
                       </Text>
                     </TouchableOpacity>
-                  </View>
+
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 15,
+    // padding: 15,
     paddingTop: 0,
   },
   background: {
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   },
   topContainer: {
     marginTop: 10,
-    flex: 1,
     flexDirection: "row",
     justifyContent: "flex-start",
   },
@@ -133,12 +132,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   buttonContainer: {
-    flex: 1,
     alignItems: "center",
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "60%",
     padding: 4,
     borderRadius: 50,
     alignItems: "center",
@@ -150,45 +147,56 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
+
+
   messagesContainer: {
-    flex: 4,
-    paddingTop: 5,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    marginTop: 25,
+    width: 350,
   },
   messageCard: {
     marginTop: 10,
     backgroundColor: "#EDE5DA",
     borderRadius: 15,
+    // borderWidth: 1,
+    // borderColor: 'blue',
   },
-  messageTitle: {
-    height: 35,
+  titleContainer: {
     backgroundColor: "#B2DED9",
     flexDirection: "row",
+    // borderWidth: 1,
+    // borderColor: 'green',
+    padding: 5,
+    paddingLeft: 10,
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
   messageTitleText: {
     fontWeight: "700",
     color: "black",
   },
   messageContainer: {
-    paddingLeft: 40,
     justifyContent: "flex-start",
+    // borderWidth: 1,
+    // borderColor: 'orange',
+    padding: 10,
   },
   messageBody: {
     color: "black",
     fontSize: 12,
+    // borderWidth: 1,
+    // borderColor: 'yellow',
+    backgroundColor: '#EBE2D8',
   },
-
-  iconContainer: {
-    width: "10%",
-    alignItems: "center",
-    justifyContent: "center",
+  comments: {
+    fontSize: 12,
+    padding: 5,
+    paddingLeft: 10,
   },
   icon: {
     height: 30,
     width: 30,
-  },
-  titleContainer: {
-    width: "90%",
-    justifyContent: "center",
-    paddingLeft: 5,
+    marginLeft: 20,
   },
 });

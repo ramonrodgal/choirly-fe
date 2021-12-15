@@ -7,14 +7,18 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
+  Button,
+  Image
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 export default function RegisterScreen({ navigation }) {
   const [confirmation, setConfirmation] = useState("");
   const email = auth.currentUser.email;
+  const [imageUri, setImageUri] = useState('')
 
   const {
     control,
@@ -48,6 +52,32 @@ export default function RegisterScreen({ navigation }) {
         console.log(err.response.data);
       });
   };
+
+  choosePhoto = () => {
+    let options={
+      storageOptions: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+      includeBase64: true,
+    };
+
+    launchImageLibrary(options, response => {
+      console.log('Response = ', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log( 'User tapped custom button: ', response.customButton);
+      } else {
+        // you can display an image using data:
+        const source = {uri: 'data:image/jpeg;base64,' + response.base64};
+        setImageUri(source);
+      }
+    })
+  }
+
   return (
     <ImageBackground
       style={styles.background}
@@ -58,6 +88,21 @@ export default function RegisterScreen({ navigation }) {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Add more details</Text>
           </View>
+
+{/* //----------------------------------------------------------------------CAMERA */}
+          <View style={{ alignItems: 'center'}}>
+          <TouchableOpacity
+                  title="Submit"
+                  onPress={() => {
+                    choosePhoto()
+                  }}
+                  style={styles.photoButton}
+                >
+                  <Text style={styles.buttonText}>Choose a photo</Text>
+                </TouchableOpacity>
+            <Image source={imageUri} style={{ height: 80, width: 80, borderRadius: 75 }} />
+          </View>
+
 
           <View style={styles.formContainer}>
             <Text style={styles.label}>Username *</Text>
@@ -77,7 +122,7 @@ export default function RegisterScreen({ navigation }) {
               )}
               name="username"
             />
-            {errors.username && <Text>Please enter a username.</Text>}
+            {errors.username && <Text style={styles.warning} >Username is required.</Text>}
 
             <Text style={styles.label}>First name *</Text>
             <Controller
@@ -96,7 +141,7 @@ export default function RegisterScreen({ navigation }) {
               )}
               name="first_name"
             />
-            {errors.first_name && <Text>First name is required.</Text>}
+            {errors.first_name && <Text style={styles.warning}>First name is required.</Text>}
 
             <Text style={styles.label}>Last name *</Text>
             <Controller
@@ -115,7 +160,7 @@ export default function RegisterScreen({ navigation }) {
               )}
               name="last_name"
             />
-            {errors.last_name && <Text>Last name is required.</Text>}
+            {errors.last_name && <Text style={styles.warning}>Last name is required.</Text>}
 
             <Text style={styles.label}>
               Phone number (don't worry, we won't make it publically visible)
@@ -143,7 +188,7 @@ export default function RegisterScreen({ navigation }) {
               <View>
                 <Text>{confirmation}</Text>
                 <TouchableOpacity
-                  style={styles.blueButton}
+                  style={styles.yellowButton}
                   onPress={() => {
                     navigation.navigate("drawer", { screen: "Profile" });
                   }}
@@ -184,7 +229,7 @@ const styles = StyleSheet.create({
 
   //-------------------------TITLE
   titleContainer: {
-    marginTop: 10,
+    marginTop: 100,
     flex: 0.5,
     width: "100%",
     // borderWidth: 1,
@@ -235,6 +280,10 @@ const styles = StyleSheet.create({
   chars: {
     fontSize: 10,
   },
+  warning: {
+    fontSize: 12, 
+    color: 'red'
+  },
 
   //------------------------------BUTTON
   buttonContainer: {
@@ -251,13 +300,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
+  photoButton: {
+    backgroundColor: "#B8DBD9",
+    width: "60%",
+    padding: 15,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 10,
+  },
   buttonText: {
     color: "black",
     fontWeight: "700",
     fontSize: 16,
   },
-  blueButton: {
-    backgroundColor: "#B2DED9",
+  yellowButton: {
+    backgroundColor: "#BC9C22",
     padding: 15,
     borderRadius: 25,
     alignItems: "center",

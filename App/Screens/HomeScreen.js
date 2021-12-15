@@ -38,14 +38,6 @@ export default function HomeScreen({ navigation }) {
         });
     }, [location])
   );
-  // const handleSignOut = () => {
-  //   auth
-  //     .signOut()
-  //     .then(() => {
-  //       navigation.navigate("Login");
-  //     })
-  //     .catch((error) => alert(error.message));
-  // };
 
   if (isLoading) {
     return (
@@ -84,11 +76,6 @@ export default function HomeScreen({ navigation }) {
             </Picker>
           </View>
         </View>
-        {/* <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSearch} style={styles.button}>
-            <Text style={styles.buttonText}>Search</Text>
-          </TouchableOpacity>
-        </View> */}
 
         <View style={styles.choirCardsContainer}>
           <ScrollView>
@@ -193,19 +180,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  button: {
-    backgroundColor: "#B2DED9",
-    width: "50%",
-    padding: 10,
-    borderRadius: 25,
-    alignItems: "center",
-    margin: 5,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 14,
-  },
   loading: {
     marginTop: 200,
     width: 100,
@@ -219,7 +193,7 @@ const styles = StyleSheet.create({
   choirCardsContainer: {
     flex: 10,
     // borderWidth: 1,
-    width: 360,
+    width: 380,
     // borderColor: 'green',
     alignItems: "center",
     // justifyContent: 'center',
@@ -228,7 +202,8 @@ const styles = StyleSheet.create({
   },
   card: {
     height: 100,
-    // width: 350,
+    width: 330,
+    alignSelf: 'center',
     backgroundColor: "white",
     padding: 5,
     borderRadius: 5,
@@ -236,10 +211,10 @@ const styles = StyleSheet.create({
   },
   shadowProp: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.5,
+    elevation: 6,
   },
   loc: {
     fontWeight: "700",
@@ -272,15 +247,15 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "60%",
-    padding: 15,
+    // width: "60%",
+    padding: 10,
     borderRadius: 25,
     alignItems: "center",
-    marginTop: 10,
+    margin: 5,
   },
   buttonText: {
     color: "black",
     fontWeight: "700",
-    fontSize: 16,
+    fontSize: 14,
   },
 });

@@ -87,11 +87,11 @@ export default function Notification({ notification }) {
       notificationObj.rejected === false
     ) {
       return (
-        <View>
+        <View key={notification._id}>
           <Text>
             {notificationObj.author} wants to join {notificationObj.choir}
           </Text>
-          <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+          <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
           <Button
             title="Accept"
             onPress={() => handleAccept(notification._id)}
@@ -105,22 +105,22 @@ export default function Notification({ notification }) {
     } else {
       if (notificationObj.rejected === true) {
         return (
-          <View>
+          <View key={notification._id}>
             <Text>
               You rejected {notificationObj.username} to join{" "}
               {notificationObj.choir}
             </Text>
-            <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+            <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
           </View>
         );
       } else {
         return (
-          <View>
+          <View key={notification._id}>
             <Text>
               You accepted {notificationObj.username} to join{" "}
               {notificationObj.choir}
             </Text>
-            <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+            <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
           </View>
         );
       }
@@ -129,16 +129,16 @@ export default function Notification({ notification }) {
 
   if (notification.type === "message") {
     return (
-      <View>
+      <View key={notification._id}>
         <Text>You have a new message in {notificationObj.choir}</Text>
-        <Text>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
+        <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
       </View>
     );
   }
 
   if (notification.type === "accept") {
     return (
-      <View>
+      <View key={notification._id}>
         <Text>
           {notification.accepted
             ? `You have been accepted to ${notification.choir}`
@@ -151,5 +151,8 @@ export default function Notification({ notification }) {
 }
 
 const styles = StyleSheet.create({
-  
+  date: {
+    fontSize: 10,
+    color: '#586F7C',
+  }
 })

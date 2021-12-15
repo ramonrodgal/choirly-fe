@@ -31,7 +31,7 @@ export function LogoTitle() {
       }}
     >
       <Image
-        style={{ width: 60, height: 60 }}
+        style={{ width: 60, height: 60, marginBottom: 15}}
         source={require("./App/assets/logo.png")}
       />
     </TouchableOpacity>
