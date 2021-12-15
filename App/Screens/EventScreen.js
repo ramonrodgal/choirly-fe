@@ -10,31 +10,58 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
-import { getEventById } from "../utils/api";
+import { addUserToEvent, getEventById } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
+import { auth } from "../../firebase";
 
 export default function EventScreen({ route, navigation }) {
   const { eventId, choirId } = route.params;
+  const username = auth.currentUser.displayName;
 
   const [event, setEvent] = useState({
     date: "",
     comments: [],
-    // going: [],
-    // not_going: [],
+    going: [],
+    not_going: [],
   });
-  // if object empty then null, or do use effect
-  // useFocusEffect(
+  const [going, setGoing] = useState();
+
+  console.log(going);
+  console.log("going:", event.going);
+  console.log("not going:", event.not_going);
+
   useEffect(() => {
     getEventById(eventId)
       .then((event) => {
         setEvent(event);
+        setGoing(event.going.includes(username));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  // );
-  console.log(event);
+  }, [going]);
+
+  function handleGoing() {
+    const body = { username, going: true };
+    addUserToEvent(eventId, body)
+      .then((event) => {
+        setGoing(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleNotGoing() {
+    const body = { username, going: false };
+    addUserToEvent(eventId, body)
+      .then((event) => {
+        setGoing(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <ImageBackground
@@ -74,9 +101,10 @@ export default function EventScreen({ route, navigation }) {
           <TouchableOpacity
             style={styles.goingButton}
             onPress={() => {
-              console.log("going placeholder");
+              handleGoing();
             }}
           >
+            
             <Text style={styles.buttonText}>Going</Text>
             <FontAwesome
               name="check"
@@ -85,13 +113,16 @@ export default function EventScreen({ route, navigation }) {
               style={{marginLeft: 15}}
               onPress={() => console.log("liked placeholder")}
             />
+            
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.notGoingButton}
             onPress={() => {
-              console.log("not going placeholder");
+              handleNotGoing();
             }}
           >
+            
             <Text style={styles.buttonText}>Not Going</Text>
             <FontAwesome
               name="close"
@@ -101,6 +132,15 @@ export default function EventScreen({ route, navigation }) {
               onPress={() => console.log("liked placeholder")}
             />
           </TouchableOpacity>
+        </View>
+
+        <View>
+          <Text>{event.going.length} people are going to this event.</Text>
+          {event.going.includes(username) ? (
+            <Text>You're going to this event</Text>
+          ) : (
+            <Text>You're not going to this event</Text>
+          )}
         </View>
 
         <View style={styles.addCommentContainer}>
