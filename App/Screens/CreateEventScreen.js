@@ -7,22 +7,28 @@ import {
   Alert,
   StyleSheet,
   SafeAreaView,
+  Platform,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { postEventByChoir } from "../utils/api";
+import { NavigationContainer } from "@react-navigation/native";
 
-export default function CreateEventScreen({ route }) {
+export default function CreateEventScreen({ navigation, route }) {
   const { choirId } = route.params;
   const choirName = "African Children's Choir"; // hardcoded for now
 
+  // dates
   const [date, setDate] = useState(new Date());
-
   const [startTime, setStartTime] = useState(date);
   const [endTime, setEndTime] = useState(date);
+  const [duration, setDuration] = useState("");
 
-  const [duration, setDuration] = useState(null);
+  // android date picker states
+  const [startTimeOpen, setStartTimeOpen] = useState(false);
+  const [endTimeOpen, setEndTimeOpen] = useState(false);
+  const [dateOpen, setDateOpen] = useState(false);
 
   // event type
   const [open, setOpen] = useState(false);
@@ -32,6 +38,9 @@ export default function CreateEventScreen({ route }) {
     { label: "Performance", value: "performance" },
     { label: "Other", value: "other" },
   ]);
+
+  // submitted state
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const durationMilliseconds = endTime - startTime;
@@ -75,16 +84,19 @@ export default function CreateEventScreen({ route }) {
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
+    setDateOpen(false);
   };
 
   const startTimeChange = (event, selectedDate) => {
     const currentTime = selectedDate || date;
     setStartTime(currentTime);
+    setStartTimeOpen(false);
   };
 
   const endTimeChange = (event, selectedDate) => {
     const currentTime = selectedDate || date;
     setEndTime(currentTime);
+    setEndTimeOpen(false);
   };
 
   // from react-hook-form
@@ -107,11 +119,11 @@ export default function CreateEventScreen({ route }) {
     postEventByChoir(choirId, eventPost)
       .then(() => {
         console.log("event sent");
+        setSubmitted(true);
       })
       .catch((err) => {
         console.log(err);
       });
-    // this is where the post request would go - choir id needs to be added
   };
 
   return (
@@ -155,42 +167,73 @@ export default function CreateEventScreen({ route }) {
       />
       {errors.location && <Text>A location is required.</Text>}
 
-      <Text style={styles.label}>Date:</Text>
-      <View style={styles.date}>
-        <DateTimePicker
-          value={date}
-          display="default"
-          onChange={dateChange}
-          mode="date"
+      <Text style={styles.label}>Date: {date.toString().slice(0, 15)}</Text>
+      {Platform.OS === "ios" || dateOpen ? (
+        <View style={styles.date}>
+          <DateTimePicker
+            value={date}
+            display="default"
+            onChange={dateChange}
+            mode="date"
+          />
+        </View>
+      ) : (
+        <Button
+          title="Choose a date"
+          onPress={() => {
+            setDateOpen(true);
+          }}
         />
-      </View>
+      )}
 
-      <Text style={styles.label}>Start time:</Text>
-      <View style={styles.date}>
-        <DateTimePicker
-          value={startTime}
-          onDateChange={setStartTime}
-          is24Hour={true}
-          display="default"
-          onChange={startTimeChange}
-          mode="time"
-          minuteInterval="5"
+      <Text style={styles.label}>
+        Start time: {startTime.toString().slice(16, 21)}
+      </Text>
+      {Platform.OS === "ios" || startTimeOpen ? (
+        <View style={styles.date}>
+          <DateTimePicker
+            value={startTime}
+            onDateChange={setStartTime}
+            // is24Hour={true}
+            display="default"
+            onChange={startTimeChange}
+            mode="time"
+            // minuteInterval="5"
+          />
+        </View>
+      ) : (
+        <Button
+          title="Choose a start time"
+          onPress={() => {
+            setStartTimeOpen(true);
+          }}
         />
-      </View>
+      )}
 
-      <Text style={styles.label}>End time:</Text>
-      <View style={styles.date}>
-        <DateTimePicker
-          value={endTime}
-          onDateChange={setEndTime}
-          is24Hour={true}
-          display="default"
-          onChange={endTimeChange}
-          mode="time"
-          minimumDate={startTime}
-          minuteInterval="5"
+      <Text style={styles.label}>
+        End time: {endTime.toString().slice(16, 21)}
+      </Text>
+      {Platform.OS === "ios" || endTimeOpen ? (
+        <View style={styles.date}>
+          <DateTimePicker
+            value={endTime}
+            onDateChange={setEndTime}
+            // is24Hour={true}
+            display="default"
+            onChange={endTimeChange}
+            mode="time"
+            minimumDate={startTime}
+            // minuteInterval="5"
+          />
+        </View>
+      ) : (
+        <Button
+          title="Choose an end time"
+          onPress={() => {
+            setEndTimeOpen(true);
+          }}
         />
-      </View>
+      )}
 
       <Text>Duration: {duration}</Text>
 
@@ -225,7 +268,19 @@ export default function CreateEventScreen({ route }) {
       {errors.details && <Text>Details about the event are required.</Text>}
 
       <View style={styles.button}>
-        <Button title="Create an event" onPress={handleSubmit(onSubmit)} />
+        {submitted ? (
+          <View>
+            <Text>Your event has been created</Text>
+            <Button
+              title="Back to events"
+              onPress={() => {
+                navigation.navigate("Events");
+              }}
+            />
+          </View>
+        ) : (
+          <Button title="Create an event" onPress={handleSubmit(onSubmit)} />
+        )}
       </View>
     </SafeAreaView>
   );
