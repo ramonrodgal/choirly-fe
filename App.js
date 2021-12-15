@@ -1,7 +1,10 @@
 import React from "react";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, LogBox } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { NotificationBell } from "./App/components/NotificationBell";
+import { LogoTitle } from "./App/components/LogoTitle";
 import { useNavigation } from "@react-navigation/core";
 import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -19,38 +22,12 @@ import NotificationsScreen from "./App/Screens/NotificationsScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DrawerNav from "./App/navigation/DrawerNav";
 
+LogBox.ignoreLogs([
+  "Warning: Async Storage has been extracted from react-native core",
+]);
+
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
-
-export function LogoTitle() {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("All choirs");
-      }}
-    >
-      <Image
-        style={{ width: 60, height: 60, marginBottom: 15}}
-        source={require("./App/assets/logo.png")}
-      />
-    </TouchableOpacity>
-  );
-}
-
-export function NotificationBell() {
-  const navigation = useNavigation();
-  return (
-    <TouchableOpacity
-      style={{ paddingRight: 20 }}
-      onPress={() => {
-        navigation.navigate("Notifications");
-      }}
-    >
-      <MaterialCommunityIcons name="bell" size={24} color="black" />
-    </TouchableOpacity>
-  );
-}
 
 export default function App() {
   // if email/user is defined then show drawer
