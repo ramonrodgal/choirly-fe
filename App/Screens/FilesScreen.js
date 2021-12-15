@@ -22,7 +22,7 @@ export default function FilesScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} />
+        <ChoirSummary navigation={navigation} choirId={choirId}/>
 
         <View style={styles.filesContainer}>
           <Text style={styles.title}>Recordings and Songsheets:</Text>

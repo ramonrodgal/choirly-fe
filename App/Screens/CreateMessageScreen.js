@@ -13,14 +13,16 @@ import { useForm, Controller } from "react-hook-form";
 //WE SHOULD PASS THE ID OF THE GROUP
 export default function CreateMessageScreen({ route }) {
   const { choirId } = route.params;
-  const username = auth.currentUser.displayName;
+
+  const currentUser = auth.currentUser.displayName;
   const [user, setUser] = useState({});
 
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [text, setText] = useState("");
   const [members, setMembers] = useState([]);
   const [choirName, setChoirName] = useState("");
-  const [leader, setLeader] = useState("");
+  const [confirmation, setConfirmation] = useState("");
+
 
   const {
     control,
@@ -33,32 +35,35 @@ export default function CreateMessageScreen({ route }) {
     },
   });
 
-  const handlePostMessage = () => {
-    if (title === "" || text === "") {
-      console.log("Invalid");
-      return;
-    }
 
+  const onSubmit = (data) => {
+    // if (title === "" || text === "") {
+    //   console.log("Invalid");
+    //   return;
+    // }
+    console.log(data, '<<<,data')
     const body = {
       choir: choirName,
-      title: title,
-      body: text,
-      author: leader,
+      title: data.title,
+      body: data.text,
+      author: currentUser,
     };
     postMessage(body)
       .then((message) => {
+        console.log(message, '<<<,message')
         //RETURN TO PREVIUS PAGE
-
-        members.forEach((username) => {
+        setConfirmation("Your post has been created");
+        members.forEach((member) => {
+          console.log(member, '<<<<<<<<<<<<,,member')
           const body = {
-            username: username,
+            username: member,
             choir: choirName,
             type: "message",
-            message: text,
-            author: leader,
+            message: message.body,
+            author: currentUser,
           };
 
-          postNotificationByUsername(username, body)
+          postNotificationByUsername(member, body)
             .then((notification) => {
               console.log(notification);
             })
@@ -69,7 +74,7 @@ export default function CreateMessageScreen({ route }) {
         console.log(message);
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
@@ -78,7 +83,7 @@ export default function CreateMessageScreen({ route }) {
       .then((choir) => {
         setMembers(choir.members);
         setChoirName(choir.name);
-        setLeader(choir.leader);
+
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +91,7 @@ export default function CreateMessageScreen({ route }) {
   }, []);
 
   useEffect(() => {
-    getUserByUsername(username)
+    getUserByUsername(currentUser)
       .then((user) => {
         setUser(user);
       })
@@ -109,9 +114,17 @@ export default function CreateMessageScreen({ route }) {
           <TouchableOpacity
           style={styles.postButton}
           title="Post a message"
-          onPress={() => handlePostMessage()}
+          onPress={handleSubmit(onSubmit)}
+          // onPress={() => handlePostMessage()}
           ><Text style={styles.postButtonText}>Post</Text></TouchableOpacity>
         </View>
+
+{/* //---------------------------------------CONFIRMATION */}
+<View style={styles.confirmContainer}>
+      {(confirmation) ? 
+        <Text style={{ fontSize: 16, fontWeight: '700'}}>{confirmation}</Text> : <></>
+      }
+    </View>
 
 
  {/* //---------------------------------------------------------AVATAR CONTAINER */}
@@ -169,6 +182,7 @@ export default function CreateMessageScreen({ route }) {
 
 
     </View>
+
 
     </View>
     </ImageBackground>
@@ -258,4 +272,12 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     overflow: "scroll"
   },
+  confirmContainer: {
+    alignContent: 'center',
+    backgroundColor: 'white',
+    width: '100%',
+    paddingVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

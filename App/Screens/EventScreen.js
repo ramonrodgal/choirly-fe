@@ -69,20 +69,18 @@ export default function EventScreen({ route, navigation }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <View style={styles.eventsContainer}>
-          <View style={styles.eventCard}>
-            <View>
+
+        <View style={styles.eventCard}>
+            
               <View style={styles.eventTitle}>
-                <View style={styles.iconContainer}>
+                
                   <Image
                     style={styles.icon}
                     source={require("../assets/concertIcon.png")}
                   />
-                </View>
-
-                <View style={styles.titleContainer}>
+                
                   <Text style={styles.eventTitleText}>{event.title}</Text>
-                </View>
+                
               </View>
 
               <View style={styles.eventContainer}>
@@ -96,8 +94,7 @@ export default function EventScreen({ route, navigation }) {
                 <Text style={styles.eventTitleText}>Details:</Text>
                 <Text style={styles.eventBody}>{event.details}</Text>
               </View>
-            </View>
-          </View>
+            
         </View>
 
         <View style={styles.responseButtonContainer}>
@@ -107,8 +104,16 @@ export default function EventScreen({ route, navigation }) {
               handleGoing();
             }}
           >
-            <Text>Going</Text>
-            <FontAwesome name="check" size={15} color="black" />
+            
+            <Text style={styles.buttonText}>Going</Text>
+            <FontAwesome
+              name="check"
+              size={15}
+              color="black"
+              style={{marginLeft: 15}}
+              onPress={() => console.log("liked placeholder")}
+            />
+            
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -117,8 +122,15 @@ export default function EventScreen({ route, navigation }) {
               handleNotGoing();
             }}
           >
-            <Text>Not Going</Text>
-            <FontAwesome name="close" size={15} color="black" />
+            
+            <Text style={styles.buttonText}>Not Going</Text>
+            <FontAwesome
+              name="close"
+              style={{marginLeft: 15}}
+              size={15}
+              color="black"
+              onPress={() => console.log("liked placeholder")}
+            />
           </TouchableOpacity>
         </View>
 
@@ -132,7 +144,9 @@ export default function EventScreen({ route, navigation }) {
         </View>
 
         <View style={styles.addCommentContainer}>
+        <Text style={styles.title}>Add comment</Text>
           <View style={styles.commentBoxContainer}>
+      
             <TextInput placeholder="Add a comment..."></TextInput>
           </View>
           <View style={styles.buttonContainer}>
@@ -140,9 +154,9 @@ export default function EventScreen({ route, navigation }) {
               onPress={() => {
                 console.log("placeholder for posting comment");
               }}
-              style={styles.button}
+              style={styles.goingButton}
             >
-              <Text style={styles.buttonText}>Add comment</Text>
+              <Text style={styles.buttonText}>Send</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -151,21 +165,20 @@ export default function EventScreen({ route, navigation }) {
           <ScrollView>
             {event.comments.map((comment) => {
               return (
-                <View style={styles.commentCard} key={comment._id}>
-                  <View style={styles.commentTitle}>
-                    <View style={styles.commentContainer}>
-                      <Text style={styles.commentTitleText}>
-                        {comment.author}
-                      </Text>
-                    </View>
+                <View style={styles.commentCard} key={comment._id} >
+                  <Text style={styles.author}>{comment.author}</Text>
+                  <View style={styles.body}>
+                      <Text>{comment.body}</Text>
+                      <FontAwesome
+                      name="trash"
+                      style={styles.iconTrash}
+                      size={18}
+                      color="black"
+                      />
                   </View>
-                  <View style={styles.commentContainer}>
-                    <Text style={styles.commentBody}>{comment.body}</Text>
-                    <Text style={styles.commentDate}>
-                      Posted at {comment.created_at.slice(11, 16)} on
-                      {comment.created_at.slice(0, 10)}
-                    </Text>
-                  </View>
+                  <Text style={styles.date}>
+                    {Date(comment.created_at).toString().slice(0, -15)}
+                  </Text>
                 </View>
               );
             })}
@@ -180,7 +193,6 @@ const styles = StyleSheet.create({
   // CONTAINER AND BACKGROUND
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     padding: 15,
     paddingTop: 0,
@@ -190,130 +202,167 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  // EVENT
-  eventsContainer: {
-    flex: 1,
-    padding: 10,
-    paddingTop: 5,
-  },
   eventCard: {
     marginTop: 10,
     backgroundColor: "#EDE5DA",
-    borderRadius: 15,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    width: 360,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15,
   },
   eventTitle: {
-    height: 35,
     backgroundColor: "#B2DED9",
     flexDirection: "row",
+    paddingLeft: 10,
+    alignItems: 'center'
   },
   eventTitleText: {
     fontWeight: "700",
     color: "black",
   },
   eventContainer: {
-    paddingLeft: 40,
-    justifyContent: "flex-start",
+    backgroundColor: "#EDE5DA",
+    padding: 10,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15,
   },
   eventBody: {
     color: "black",
     fontSize: 12,
   },
-  iconContainer: {
-    width: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   icon: {
     height: 30,
     width: 30,
-  },
-  titleContainer: {
-    width: "90%",
-    justifyContent: "center",
-    paddingLeft: 5,
+    marginRight: 20,
   },
 
   // RESPONSE BUTTONS
   responseButtonContainer: {
-    flex: 1,
     alignItems: "center",
-  },
-  goingButton: {
-    backgroundColor: "green",
-    borderRadius: 2,
-    padding: 5,
-    alignItems: "center",
-    width: "50%",
-    marginTop: 10,
-  },
-  notGoingButton: {
-    backgroundColor: "red",
-    borderRadius: 2,
-    padding: 5,
-    alignItems: "center",
-    width: "50%",
-    marginTop: 10,
+    flexDirection: 'row',
   },
 
-  // ADD COMMENT
-  addCommentContainer: {
-    flex: 1,
-    paddingTop: 5,
-  },
-  commentBoxContainer: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  buttonContainer: {
-    flex: 1,
+  notGoingButton: {
+    backgroundColor: "#C25527",
+    padding: 10,
+    borderRadius: 25,
     alignItems: "center",
+    flexDirection: 'row',
+    width: 120,
+    alignContent: "center",
+    justifyContent: 'center',
+    margin: 10,
+    marginTop: 20,
   },
-  button: {
+  goingButton: {
     backgroundColor: "#BC9C22",
-    width: "100%",
-    padding: 6,
-    borderRadius: 50,
+    padding: 10,
+    borderRadius: 25,
     alignItems: "center",
-    marginTop: 10,
+    flexDirection: 'row',
+    width: 120,
+    alignContent: "center",
+    justifyContent: 'center',
+    margin: 10,
+    marginTop: 20,
   },
   buttonText: {
     color: "black",
     fontWeight: "700",
-    fontSize: 12,
+    fontSize: 16,
+  },
+
+
+  // ADD COMMENT
+  addCommentContainer: {
+    // borderWidth: 1,
+    // borderColor: 'orange',
+    width: 360,
+    marginTop: 20,
+  },
+  commentBoxContainer: {
+    backgroundColor: "white",
+    height: 100,
+    borderRadius: 10,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: '#EBE2D8',
+  },
+  buttonContainer: {
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "700",
+    fontSize: 16,
   },
 
   // COMMENTS
   commentsContainer: {
-    flex: 3,
     paddingTop: 5,
+
   },
+  // commentCard: {
+  //   backgroundColor: "#EDE5DA",
+  //   borderRadius: 15,
+
+  // },
+  // commentTitle: {
+  //   backgroundColor: "#B2DED9",
+  //   flexDirection: "row",
+  // },
+
+  // commentTitleText: {
+  //   fontWeight: "700",
+  //   color: "black",
+  // },
+  // title: {
+  //   fontWeight: "700",
+  //   color: "#BD7D1E",
+  //   alignSelf: 'center'
+  // },
+  // commentContainer: {
+  //   justifyContent: "flex-start",
+  // },
+  // commentBody: {
+  //   color: "black",
+  //   fontSize: 12,
+  // },
+  // commentDate: {
+  //   color: "black",
+  //   fontSize: 10,
+  //   fontStyle: "italic",
+  // },
+
+
+
   commentCard: {
-    marginTop: 10,
-    backgroundColor: "#EDE5DA",
-    borderRadius: 15,
+    // borderWidth: 1,
+    // borderColor: 'red',
+    backgroundColor: "#EBE2D8",
+    marginBottom: 10,
+    borderRadius: 8,
+    padding: 5,
+    width: 360,
   },
-  commentTitle: {
-    height: 35,
-    backgroundColor: "#B2DED9",
-    flexDirection: "row",
+  menuIcons: {
+    margin: 5,
   },
-
-  commentTitleText: {
+  author: {
+    color: "#2F4550",
     fontWeight: "700",
-    color: "black",
   },
-
-  commentContainer: {
-    paddingLeft: 40,
-    justifyContent: "flex-start",
-  },
-  commentBody: {
-    color: "black",
-    fontSize: 12,
-  },
-  commentDate: {
-    color: "black",
+  date: {
     fontSize: 10,
-    fontStyle: "italic",
   },
+  body: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    justifyContent: 'space-between',
+
+  },
+  iconTrash: {
+    marginRight: 15,
+  }
 });

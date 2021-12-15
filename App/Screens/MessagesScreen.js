@@ -9,14 +9,42 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { auth } from "../../firebase";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ChoirSummary from "../components/ChoirSummary";
+import { getChoirById } from "../utils/api";
 import GetMessagesForChoir from "../components/GetMessagesForChoir";
 
 export default function MessagesScreen({ navigation, route }) {
-  const username = "genie"; // hardcoded for now
+  const username = auth.currentUser.displayName;
+  const [isLoading, setIsLoading] = useState(true);
+  const [choir, setChoir] = useState({});
 
   const { choirId } = route.params;
+
+  useEffect(() => {
+    setIsLoading(true);
+    getChoirById(choirId)
+      .then((choir) => {
+        setChoir(choir);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [choirId]);
+
+  if (isLoading) {
+    return (
+      <Image
+        style={styles.loading}
+        source={{
+          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
+        }}
+      />
+    );
+  }
 
   return (
     <ImageBackground
@@ -24,7 +52,7 @@ export default function MessagesScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} />
+        <ChoirSummary navigation={navigation} choirId={choirId}/>
 
         <View style={styles.messagesContainer}>
 
@@ -32,14 +60,21 @@ export default function MessagesScreen({ navigation, route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
+
+        {(username === choir.leader) ? 
+        
+        <TouchableOpacity
             style={styles.button}
             onPress={() => {
               navigation.navigate("CreateMessage");
             }}
           >
-            <Text stlye={styles.buttonTextMsg}>Post a message</Text>
+            <Text stlye={styles.buttonTextMsg}>Create a post</Text>
           </TouchableOpacity>
+        
+        : <Text></Text>}
+
+          
         </View>
       </View>
     </ImageBackground>
@@ -93,6 +128,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "#BC9C22",
     padding: 8,
+    paddingHorizontal: 15,
     borderRadius: 50,
     alignItems: "center",
     marginTop: 10,
@@ -104,8 +140,8 @@ const styles = StyleSheet.create({
   },
 
   messagesContainer: {
-    flex: 4,
-    paddingTop: 5,
+    flex: 7,
+    paddingTop: 30,
   },
   // messageCard: {
   //   marginTop: 10,
