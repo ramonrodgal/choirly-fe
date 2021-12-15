@@ -90,7 +90,7 @@ console.log(notificationObj, '<<<<<<notification object does it have choir id?')
       notificationObj.rejected === false
     ) {
       return (
-        <View key={notification._id}>
+        <View>
           <Text>
             {notificationObj.author} wants to join {notificationObj.choir}
           </Text>
@@ -110,7 +110,7 @@ console.log(notificationObj, '<<<<<<notification object does it have choir id?')
     } else {
       if (notificationObj.rejected === true) {
         return (
-          <View key={notification._id}>
+          <View>
             <Text>
               You rejected {notificationObj.author} to join{" "}
               {notificationObj.choir}
@@ -120,7 +120,7 @@ console.log(notificationObj, '<<<<<<notification object does it have choir id?')
         );
       } else {
         return (
-          <View key={notification._id}>
+          <View>
             <Text>
               You accepted {notificationObj.author} to join{" "}
               {notificationObj.choir}
@@ -134,7 +134,7 @@ console.log(notificationObj, '<<<<<<notification object does it have choir id?')
 
   if (notification.type === "message") {
     return (
-      <View key={notification._id}>
+      <View>
         <Text>You have a new message in {notificationObj.choir}</Text>
         <Text style={styles.date}>{Date(notificationObj.date).toString().slice(0, -15)}</Text>
       </View>
@@ -143,7 +143,7 @@ console.log(notificationObj, '<<<<<<notification object does it have choir id?')
 
   if (notification.type === "accept") {
     return (
-      <View key={notification._id}>
+      <View>
         <Text>
           {notification.accepted
             ? `You have been accepted to ${notification.choir}`
