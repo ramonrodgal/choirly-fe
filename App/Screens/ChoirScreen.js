@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
 
   descriptionContainer: {
-    marginTop: 15,
+    marginTop: 25,
     flex: 2,
   },
   description: {

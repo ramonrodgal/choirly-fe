@@ -10,10 +10,12 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { auth } from "../../firebase";
 import { useForm, Controller } from "react-hook-form";
 import { postNotificationByUsername } from "../utils/api";
 
 export default function JoiningScreen({ route, navigation }) {
+  const username = auth.currentUser.displayName;
   const { choirId, avatar, choirName, choirLeader } = route.params;
   const [confirmation, setConfirmation] = useState('');
 
@@ -30,12 +32,14 @@ export default function JoiningScreen({ route, navigation }) {
     const body = {
       "username": choirLeader,
       "choir": choirName,
-      "author": "placeholder",
-      "type": "message",
+      "author": username,
+      "type": "join",
       "message": data.message,
     }
     postNotificationByUsername(choirLeader, body).then((res) => {
       setConfirmation("Your request has been sent")
+    }).catch((err) => {
+      console.log(err)
     })
     // navigation.navigate("All choirs");
   }; // on submit the data is logged
