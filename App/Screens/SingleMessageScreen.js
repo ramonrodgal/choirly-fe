@@ -292,6 +292,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 8,
     padding: 5,
+    width: 360,
   },
   menuIcons: {
     margin: 5,
