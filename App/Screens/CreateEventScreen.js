@@ -15,9 +15,9 @@ import DropDownPicker from "react-native-dropdown-picker";
 import { postEventByChoir } from "../utils/api";
 import { NavigationContainer } from "@react-navigation/native";
 
-export default function CreateEventScreen({ navigation, route }) {
-  const { choirId } = route.params;
-  const choirName = "African Children's Choir"; // hardcoded for now
+
+export default function CreateEventScreen({ route }) {
+  const { choirId, choirName } = route.params;
 
   // dates
   const [date, setDate] = useState(new Date());

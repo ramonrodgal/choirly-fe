@@ -1,7 +1,6 @@
 import React from "react";
-import { StyleSheet, Image, LogBox } from "react-native";
+import { StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { NotificationBell } from "./App/components/NotificationBell";
 import { LogoTitle } from "./App/components/LogoTitle";
@@ -22,24 +21,19 @@ import NotificationsScreen from "./App/Screens/NotificationsScreen";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DrawerNav from "./App/navigation/DrawerNav";
 
-LogBox.ignoreLogs([
-  "Warning: Async Storage has been extracted from react-native core",
-]);
-
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
 export default function App() {
   // if email/user is defined then show drawer
   // if user is not logged in show the login
-
   const user = auth.currentUser;
-  // .currentUser.email
-  // console.log(auth);
+
   if (user !== null) {
     return (
       <NavigationContainer>
-        <Drawer.Navigator
+        <DrawerNav />
+        {/* <Drawer.Navigator
           screenOptions={{
             headerTintColor: "black", // this changes the hamburger colour
             headerTitle: () => <LogoTitle />,
@@ -47,13 +41,7 @@ export default function App() {
             headerRight: () => <NotificationBell />,
           }}
         >
-          {/* <Drawer.Screen
-          options={{ headerShown: true }} // need to change this to not show
-          name="Login"
-          component={LoginScreen}
-        /> */}
           <Drawer.Screen name="Home" component={HomeStackNav} />
-          {/* <Drawer.Screen name="Register" component={RegisterScreen} /> */}
           <Drawer.Screen name="Profile" component={UserProfileStackNav} />
           <Drawer.Screen
             name="ChoirGroup"
@@ -61,7 +49,7 @@ export default function App() {
             options={{ title: "Choir Group" }}
           />
           <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-        </Drawer.Navigator>
+        </Drawer.Navigator> */}
       </NavigationContainer>
     );
   } else {
