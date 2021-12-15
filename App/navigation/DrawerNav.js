@@ -12,47 +12,36 @@ import { LogoTitle } from "../components/LogoTitle";
 import { NotificationBell } from "../components/NotificationBell";
 import { auth } from "../../firebase";
 import { getChoirs, getUserByUsername } from "../utils/api";
-import { GetChoirNameByIdLabel } from "../components/GetChoirNameByIdLabel";
-import { getChoirById } from "../utils/api";
 
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNav() {
   const username = auth.currentUser.displayName;
-  // const username = "genie"; // HARDCODED FOR NOW
 
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState({});
   const [choirIds, setChoirIds] = useState([]);
-  const [groups, setGroups] = useState([]);
+  const [allChoirs, setAllChoirs] = useState([]);
 
-  // useFocusEffect(
-  useEffect(() => {
-    setIsLoading(true);
-    getUserByUsername(username)
-      .then((user) => {
-        setUser(user);
-        setChoirIds(user.groups);
-        setIsLoading(false);
-      })
-      .then(() => {
-        return getChoirs();
-      })
-      .then((choirs) => {
-        const myChoirs = choirs.filter((choir) => {
-          return choirIds.includes(choir._id);
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      getUserByUsername(username)
+        .then((user) => {
+          setChoirIds(user.groups);
+          setIsLoading(false);
+        })
+        .then(() => {
+          return getChoirs();
+        })
+        .then((choirs) => {
+          setAllChoirs(choirs);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
         });
-        const myChoirs2 = myChoirs.map((choir) => {
-          return { choirName: choir.name, choirId: choir._id };
-        });
-        setGroups(myChoirs2);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
-  }, [username]);
-  // );
+    }, [])
+  );
 
   if (isLoading) {
     return (
@@ -65,12 +54,13 @@ export default function DrawerNav() {
     );
   }
 
-  console.log(groups);
-  // access username here from auth - done
-  // get request user by username which includes groups with choir ids - done
-  // map through choir ids to get choir name
-  // display the name as the drawer nav title and pass the choir id through to the screen
-  // get choir names by username
+  const groups = allChoirs
+    .filter((choir) => {
+      return choirIds.includes(choir._id);
+    })
+    .map((choir) => {
+      return { choirName: choir.name, choirId: choir._id };
+    });
 
   return (
     <Drawer.Navigator
@@ -84,7 +74,6 @@ export default function DrawerNav() {
       <Drawer.Screen name="Home" component={HomeStackNav} />
       <Drawer.Screen name="Profile" component={UserProfileStackNav} />
 
-      {/* this works!! */}
       {groups.map((group) => {
         return (
           <Drawer.Screen
