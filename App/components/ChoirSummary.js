@@ -54,7 +54,7 @@ export default function ChoirSummary({ navigation }) {
           {capitalizeFirstLetter(choir.location)}
         </Text>
         <Text style={styles.choirInfo}>Leader: {choir.leader} </Text>
-        <Text style={styles.choirInfo}>Mambers: {choir.members.length}</Text>
+        <Text style={styles.choirInfo}>Members: {choir.members.length}</Text>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   buttonContainer: {
-    flex: 1,
-    alignItems: "center",
+    // flex: 1,
+    // alignItems: "flex-start",
   },
   button: {
     backgroundColor: "#BC9C22",
