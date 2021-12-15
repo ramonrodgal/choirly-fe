@@ -46,7 +46,7 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
           return (
             <View style={styles.messageCard} key={message._id}>
               <TouchableWithoutFeedback
-                style={styles.messageCard}
+                // style={styles.messageCard}
                 onPress={() =>
                   navigation.navigate("SingleMessage", {
                     message_id: message._id,
@@ -65,7 +65,7 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
             style={styles.icon}
             size={20}
             color="black"
-            onPress={() => console.log("liked placeholder")}
+            onPress={() => handleLikePost()}
           />
                   </View>
                   <View style={styles.messageContainer}>
@@ -170,7 +170,8 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 10,
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    alignContent: 'center'
   },
   messageTitleText: {
     fontWeight: "700",
@@ -198,5 +199,6 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     marginLeft: 20,
+    alignSelf: 'center'
   },
 });
