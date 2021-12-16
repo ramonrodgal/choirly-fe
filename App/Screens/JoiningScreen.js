@@ -17,7 +17,7 @@ import { postNotificationByUsername } from "../utils/api";
 export default function JoiningScreen({ route, navigation }) {
   const username = auth.currentUser.displayName;
   const { choirId, avatar, choirName, choirLeader } = route.params;
-  const [confirmation, setConfirmation] = useState('');
+  const [confirmation, setConfirmation] = useState("");
 
   const {
     control,
@@ -30,18 +30,21 @@ export default function JoiningScreen({ route, navigation }) {
   }); // all this is from useForm which is imported from react-hook-form
   const onSubmit = (data) => {
     const body = {
-      "username": choirLeader,
-      "choir": choirName,
-      "choirId": choirId,
-      "author": username,
-      "type": "join",
-      "message": data.message,
-    }
-    postNotificationByUsername(choirLeader, body).then((res) => {
-      setConfirmation("Your request has been sent")
-    }).catch((err) => {
-      console.log(err)
-    })
+      username: choirLeader,
+      choir: choirName,
+      choir_id: choirId,
+      author: username,
+      type: "join",
+      message: data.message,
+    };
+    postNotificationByUsername(choirLeader, body)
+      .then((res) => {
+        console.log(res, "<<response");
+        setConfirmation("Your request has been sent");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // navigation.navigate("All choirs");
   }; // on submit the data is logged
   // this submit function needs to change - might need separate for each button
@@ -56,7 +59,9 @@ export default function JoiningScreen({ route, navigation }) {
       </View>
 
       <View style={styles.messageContainer}>
-        <Text style={styles.title}>Send message to the leader of {choirName}</Text>
+        <Text style={styles.title}>
+          Send message to the leader of {choirName}
+        </Text>
         <Controller
           control={control}
           rules={{
@@ -81,28 +86,28 @@ export default function JoiningScreen({ route, navigation }) {
         </TouchableOpacity> */}
       </View>
 
-
-        {confirmation ? 
-            <View style={styles.confirmation}>
-              <Text>{confirmation}</Text>
-              <TouchableOpacity
-              style={styles.blueButton}
-              onPress={() => { navigation.navigate("All choirs")}}
-              >
-                <Text style={styles.buttonText}>Go back to home screen</Text>
-              </TouchableOpacity>
-            </View> : 
-            <View style={styles.requestContainer}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={handleSubmit(onSubmit)}
-            >
-              <Text style={styles.buttonText}>Send and request to join</Text>
-            </TouchableOpacity>
-            </View>
-        }
-          
-
+      {confirmation ? (
+        <View style={styles.confirmation}>
+          <Text>{confirmation}</Text>
+          <TouchableOpacity
+            style={styles.blueButton}
+            onPress={() => {
+              navigation.navigate("All choirs");
+            }}
+          >
+            <Text style={styles.buttonText}>Go back to home screen</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.requestContainer}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={handleSubmit(onSubmit)}
+          >
+            <Text style={styles.buttonText}>Send and request to join</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </ImageBackground>
   );
 }
@@ -194,5 +199,5 @@ const styles = StyleSheet.create({
     fontSize: 10,
     //     borderWidth: 1,
     // borderColor: 'green',
-  }
+  },
 });

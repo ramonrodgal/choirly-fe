@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -19,20 +18,7 @@ export function NotificationBell() {
 
   const navigation = useNavigation();
 
-
-  if(notifications.some(notification => notification.read === false)) {
-    return (
-      <TouchableOpacity
-        style={{ paddingRight: 20 }}
-        onPress={() => {
-          navigation.navigate("Notifications");
-        }}
-      >
-        <MaterialCommunityIcons name="bell" size={24} color="red" />
-      </TouchableOpacity>
-    )
-  } else {
-    return (
+  return (
     <TouchableOpacity
       style={{ paddingRight: 20 }}
       onPress={() => {
@@ -41,9 +27,5 @@ export function NotificationBell() {
     >
       <MaterialCommunityIcons name="bell" size={24} color="black" />
     </TouchableOpacity>
-    )
-  }
-  
-
-  
+  );
 }

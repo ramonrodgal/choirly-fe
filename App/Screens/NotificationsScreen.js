@@ -19,11 +19,7 @@ export default function NotificationsScreen() {
       setNotifications(notifications);
     });
   }, []);
-  console.log(
-    "NOTIFICATIONS>>>>>>>>>>>>>>>>",
-    notifications,
-    "<<<<<<<,notifications"
-  );
+
   return (
     <ImageBackground
       style={styles.background}
