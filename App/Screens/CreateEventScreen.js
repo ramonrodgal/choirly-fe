@@ -23,7 +23,7 @@ import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
 
 export default function CreateEventScreen({ navigation, route }) {
   const { choirId, choirName } = route.params;
-  const [choirName, setChoirName] = useState('')
+  // const [choirName, setChoirName] = useState('')
   const [confirmation, setConfirmation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -91,18 +91,18 @@ export default function CreateEventScreen({ navigation, route }) {
     setDuration(`${h}${m}`);
   }, [startTime, endTime]);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getChoirById(choirId)
-      .then((choir) => {
-        setChoirName(choir.name);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
-  }, [choirId]);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getChoirById(choirId)
+  //     .then((choir) => {
+  //       setChoirName(choir.name);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((err) => {
+  //       setIsLoading(false);
+  //       console.log(err);
+  //     });
+  // }, [choirId]);
 
 
 

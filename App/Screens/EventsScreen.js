@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   ImageBackground,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import ChoirSummary from "../components/ChoirSummary";
 import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
+import { auth } from "../../firebase";
+import { getChoirById } from "../utils/api";
 
 export default function EventsScreen({ navigation, route }) {
+  const username = auth.currentUser.displayName;
   const { choirId } = route.params;
+  const [isLoading, setIsLoading] = useState(true);
+  const [choir, setChoir] = useState({});
+
+  useEffect(() => {
+    setIsLoading(true);
+    getChoirById(choirId)
+      .then((choir) => {
+        setChoir(choir);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [choirId]);
+
+  if (isLoading) {
+    return (
+      <Image
+        style={styles.loading}
+        source={{
+          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
+        }}
+      />
+    );
+  }
 
   return (
     <ImageBackground
@@ -27,6 +57,8 @@ export default function EventsScreen({ navigation, route }) {
         </View>
 
         <View style={styles.buttonContainer}>
+
+        {(username === choir.leader) ? 
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
@@ -34,7 +66,8 @@ export default function EventsScreen({ navigation, route }) {
             }}
           >
             <Text style={styles.buttonText}>Create an event</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> : <></>}
+
         </View>
       </View>
     </ImageBackground>
