@@ -7,14 +7,14 @@ import { auth } from "../../firebase";
 import { getNotificationByUsername } from "../utils/api";
 
 export function NotificationBell() {
-  const [notifications, setNotifications] = useState([]);
+  // const [notifications, setNotifications] = useState([]);
   const username = auth.currentUser.displayName;
 
-  useEffect(() => {
-    getNotificationByUsername(username).then((notifications) => {
-      setNotifications(notifications);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getNotificationByUsername(username).then((notifications) => {
+  //     setNotifications(notifications);
+  //   });
+  // }, []);
 
   const navigation = useNavigation();
 
