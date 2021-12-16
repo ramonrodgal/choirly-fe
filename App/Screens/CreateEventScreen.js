@@ -22,10 +22,12 @@ import { getChoirById } from "../utils/api";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
 
 export default function CreateEventScreen({ navigation, route }) {
-  const { choirId } = route.params;
+  const { choirId, choirName } = route.params;
   const [choirName, setChoirName] = useState('')
   const [confirmation, setConfirmation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+
 
   // dates
   const [date, setDate] = useState(new Date());

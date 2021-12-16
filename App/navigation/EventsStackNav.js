@@ -9,7 +9,7 @@ import AllMembersScreen from "../Screens/AllMembersScreen.js";
 const Stack = createStackNavigator();
 
 const EventsStackNav = ({ route }) => {
-  const { choirId } = route.params;
+  const { choirId, choirName } = route.params;
 
   return (
     <Stack.Navigator
@@ -29,7 +29,7 @@ const EventsStackNav = ({ route }) => {
       <Stack.Screen
         name="CreateEvent"
         component={CreateEventScreen}
-        initialParams={{ choirId: choirId }}
+        initialParams={{ choirId: choirId, choirName: choirName }}
       />
       <Stack.Screen
         name="AllMembers"
