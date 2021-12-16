@@ -38,6 +38,7 @@ export default function CreateChoirScreen({ navigation }) {
       location: data.location,
       description: data.description,
       leader: leader,
+      members: [leader],
       // sets default picture
       avatar_url:
         data.avatarUrl === ""
@@ -46,7 +47,7 @@ export default function CreateChoirScreen({ navigation }) {
     };
     postChoir(newChoir)
       .then(() => {
-        console.log("choir created")
+        console.log("choir created");
         setConfirmation("Choir has been created");
       })
       .catch((err) => {
@@ -144,30 +145,28 @@ export default function CreateChoirScreen({ navigation }) {
           </View>
 
           <View style={styles.buttonContainer}>
-
             {confirmation ? (
               <View>
-              <Text>{confirmation}</Text>
-              <TouchableOpacity
-                style={styles.blueButton}
-                onPress={() => {
-                  navigation.goBack();
-                }}
-              >
-                <Text style={styles.buttonText}>Go back</Text>
-              </TouchableOpacity>
+                <Text>{confirmation}</Text>
+                <TouchableOpacity
+                  style={styles.blueButton}
+                  onPress={() => {
+                    navigation.goBack();
+                  }}
+                >
+                  <Text style={styles.buttonText}>Go back</Text>
+                </TouchableOpacity>
               </View>
             ) : (
-            <View style={styles.buttonContainer}>
-            <TouchableOpacity
-            style={styles.button}
-            onPress={handleSubmit(onSubmit)}
-          >
-            <Text style={styles.buttonText}>Create a choir group</Text>
-          </TouchableOpacity>
-          </View>
-          )}
-            
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleSubmit(onSubmit)}
+                >
+                  <Text style={styles.buttonText}>Create a choir group</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </ScrollView>
       </View>
