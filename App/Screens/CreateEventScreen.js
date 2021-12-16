@@ -193,7 +193,7 @@ export default function CreateEventScreen({ navigation, route }) {
               <Text style={styles.buttonText}>
                 {date.toString().slice(0, 15)}
               </Text>
-              <Feather name="calendar" size={24} color="white" />
+              <Feather name="calendar" size={24} color="#586F7C" />
             </View>
           ) : (
             <TouchableOpacity
@@ -206,7 +206,7 @@ export default function CreateEventScreen({ navigation, route }) {
               <Text style={styles.buttonText}>
                 {date.toString().slice(4, 15)}
               </Text>
-              <Feather name="calendar" size={24} color="white" />
+              <Feather name="calendar" size={24} color="#586F7C" />
             </TouchableOpacity>
           )}
 
@@ -227,7 +227,7 @@ export default function CreateEventScreen({ navigation, route }) {
               <Text style={styles.buttonText}>
                 From {startTime.toString().slice(16, 21)}
               </Text>
-              <Feather name="clock" size={24} color="white" />
+              <Feather name="clock" size={24} color="#586F7C" />
             </View>
           ) : (
             <TouchableOpacity
@@ -239,7 +239,7 @@ export default function CreateEventScreen({ navigation, route }) {
               <Text style={styles.buttonText}>
                 From {startTime.toString().slice(16, 21)}
               </Text>
-              <Feather name="clock" size={24} color="white" />
+              <Feather name="clock" size={24} color="#586F7C" />
             </TouchableOpacity>
           )}
 
@@ -261,7 +261,7 @@ export default function CreateEventScreen({ navigation, route }) {
               <Text style={styles.buttonText}>
                 Until {startTime.toString().slice(16, 21)}
               </Text>
-              <Feather name="clock" size={24} color="white" />
+              <Feather name="clock" size={24} color="#586F7C" />
             </View>
           ) : (
             <TouchableOpacity
@@ -273,13 +273,13 @@ export default function CreateEventScreen({ navigation, route }) {
               <Text style={styles.buttonText}>
                 Until {startTime.toString().slice(16, 21)}
               </Text>
-              <Feather name="clock" size={24} color="white" />
+              <Feather name="clock" size={24} color="#586F7C" />
             </TouchableOpacity>
           )}
         </View>
         {/* <Text>Duration: {duration}</Text> */}
         {/* //------------------------------------------------------------TYPE OF EVENT */}
-        <Text style={styles.label}>Type of event:</Text>
+        <Text style={styles.labelType}>Type of event:</Text>
         <DropDownPicker
           style={styles.dropdown}
           open={open}
@@ -329,7 +329,7 @@ export default function CreateEventScreen({ navigation, route }) {
             style={styles.buttonNormal}
             onPress={handleSubmit(onSubmit)}
           >
-            <Text style={styles.buttonText}>Create an event</Text>
+            <Text style={styles.buttonTextLast}>Create an event</Text>
           </TouchableOpacity>
         )}
         {/* </View> */}
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     // borderColor: "black",
     // borderWidth: 1,
     height: 40,
-    width: 380,
+    width: 360,
     borderWidth: 1,
     borderColor: "#586F7C",
     padding: 8,
@@ -368,7 +368,7 @@ const styles = StyleSheet.create({
     // borderColor: "black",
     // borderWidth: 1,
     height: 80,
-    width: 380,
+    width: 360,
     borderWidth: 1,
     borderColor: "#586F7C",
     padding: 10,
@@ -382,6 +382,14 @@ const styles = StyleSheet.create({
     margin: 2,
     marginLeft: 0,
     alignItems: "center",
+  },
+  labelType: {
+    color: "black",
+    padding: 0,
+    margin: 2,
+    marginLeft: 0,
+    alignItems: "center",
+    marginTop: 15,
   },
   labelDetails: {
     color: "black",
@@ -415,6 +423,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: 'red',
     flexDirection: "row",
+    margin: 10,
   },
   // date: {
   //   flex: 1,
@@ -430,7 +439,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: 100,
     height: 100,
-    margin: 6,
+    margin: 15,
   },
   buttonDate: {
     backgroundColor: "#83ADB4",
@@ -442,11 +451,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: 100,
     height: 100,
-    margin: 6,
+    margin: 15,
   },
 
   buttonText: {
-    color: "white",
+    color: "#586F7C",
     fontWeight: "700",
     fontSize: 12,
     marginBottom: 5,
@@ -463,4 +472,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
     padding: 10,
   },
+  buttonTextLast: {
+      color: "black",
+      fontWeight: "700",
+      fontSize: 12,
+    },
 });
