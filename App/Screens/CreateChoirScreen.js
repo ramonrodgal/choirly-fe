@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { postChoir } from "../utils/api";
-import Swal from "sweetalert2";
 import { auth } from "../../firebase";
 
 export default function CreateChoirScreen({ navigation }) {

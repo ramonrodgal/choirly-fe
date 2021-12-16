@@ -64,9 +64,9 @@ export default function UserProfileScreen({ navigation, route }) {
     // >
     <View style={styles.container}>
       {/* //--------------------------------------------------------------TOP NAME */}
-      <View style={styles.topName}>
-        <Text style={styles.title}>{username}</Text>
-      </View>
+      {/* <View style={styles.topName}>
+        <Text style={styles.titleName}>{username}</Text>
+      </View> */}
 
       {/* //-------------------------------------------------------------AVATAR */}
       <ImageBackground
@@ -205,6 +205,11 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
   },
+  titleName: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginLeft: 2,
+  },
   //--------------------------------AVATAR
   avatar: {
     // flex: 2,
@@ -279,7 +284,7 @@ const styles = StyleSheet.create({
     minHeight: 50,
     fontSize: 14,
     padding: 8,
-    width: 330,
+    width: 350,
     alignSelf: 'center',
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
@@ -297,6 +302,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
+    width: '100%',
   },
   icon: {
     width: 30,

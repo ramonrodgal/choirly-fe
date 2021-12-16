@@ -32,6 +32,7 @@ export default function JoiningScreen({ route, navigation }) {
     const body = {
       "username": choirLeader,
       "choir": choirName,
+      "choirId": choirId,
       "author": username,
       "type": "join",
       "message": data.message,

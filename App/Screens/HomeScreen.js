@@ -15,6 +15,7 @@ import { getChoirs } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
 
 export default function HomeScreen({ navigation }) {
+  const currentUser = auth.currentUser.displayName;
   const capitalizeFirstLetter = (
     [first, ...rest],
     locale = navigator.language
@@ -57,6 +58,7 @@ export default function HomeScreen({ navigation }) {
     >
       <View style={styles.container}>
         <View style={styles.titleContainer}>
+        <Text style={styles.titleWelcome}>Hello {currentUser}! </Text>
           <Text style={styles.title}>Find your local choir</Text>
         </View>
         <View style={styles.searchContainer}>
@@ -80,7 +82,8 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         <View style={styles.choirCardsContainer}>
-          <ScrollView>
+        <Image style={{width: 70, height: 70}} source={{ uri: "https://i.pinimg.com/originals/70/22/72/7022729bcf716a1ec717377094161cd4.gif"}} />
+          <ScrollView style={{ margin: 0, padding: 0}}>
             {choirs.map((choir) => {
               return (
                 <View key={choir._id} style={[styles.card, styles.shadowProp]}>
@@ -150,7 +153,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "700",
-    color: "#BD7D1E",
+    color: "#2F4550",
+  },
+  titleWelcome: {
+    fontSize: 16,
+    color: '#BD5C1E',
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 
   //-------------------------SEARCH
@@ -200,7 +209,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // justifyContent: 'center',
     // alignContent: "flex-start",
-    margin: 5,
+    // margin: 5,
   },
   card: {
     height: 100,
@@ -209,7 +218,9 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     padding: 5,
     borderRadius: 5,
-    marginTop: 10,
+    marginBottom: 10,
+    // borderColor: 'red',
+    // borderWidth: 1,
   },
   shadowProp: {
     shadowColor: "#000",

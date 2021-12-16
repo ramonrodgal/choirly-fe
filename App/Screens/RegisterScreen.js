@@ -90,7 +90,7 @@ export default function RegisterScreen({ navigation }) {
           </View>
 
 {/* //----------------------------------------------------------------------CAMERA */}
-          <View style={{ alignItems: 'center'}}>
+          {/* <View style={{ alignItems: 'center'}}>
           <TouchableOpacity
                   title="Submit"
                   onPress={() => {
@@ -101,7 +101,7 @@ export default function RegisterScreen({ navigation }) {
                   <Text style={styles.buttonText}>Choose a photo</Text>
                 </TouchableOpacity>
             <Image source={imageUri} style={{ height: 80, width: 80, borderRadius: 75 }} />
-          </View>
+          </View> */}
 
 
           <View style={styles.formContainer}>
