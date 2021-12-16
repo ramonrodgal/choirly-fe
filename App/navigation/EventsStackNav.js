@@ -29,7 +29,7 @@ const EventsStackNav = ({ route }) => {
       <Stack.Screen
         name="CreateEvent"
         component={CreateEventScreen}
-        initialParams={{ choirId: choirId, choirName: choirName }}
+        // initialParams={{ choirId: choirId, choirName: choirName }}
       />
       <Stack.Screen
         name="AllMembers"
