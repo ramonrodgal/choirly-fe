@@ -133,8 +133,8 @@ export default function UserProfileScreen({ navigation, route }) {
         </View> */}
         {/* commented out as nowhere to edit */}
 
-        <Text style={styles.titleInfo}>CHOIR GROUPS</Text>
-        <View style={[styles.basicInfo, styles.shadowProp]}>
+        {/* <Text style={styles.titleInfo}>CHOIR GROUPS</Text> */}
+        {/* <View style={[styles.basicInfo, styles.shadowProp]}>
           {user.groups.length === 0 ? (
             <Text>You are not part of any choir groups yet.</Text>
           ) : (
@@ -142,7 +142,7 @@ export default function UserProfileScreen({ navigation, route }) {
               return <GetChoirNameById key={group} choirId={group} />;
             })
           )}
-        </View>
+        </View> */}
 
         <Text style={styles.titleInfo}>find me on</Text>
 

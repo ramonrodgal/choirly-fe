@@ -40,7 +40,7 @@ export default function DrawerNav() {
           setIsLoading(false);
           console.log(err);
         });
-    }, [])
+    }, [username])
   );
 
   if (isLoading) {

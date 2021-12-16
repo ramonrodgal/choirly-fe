@@ -259,7 +259,7 @@ export default function CreateEventScreen({ navigation, route }) {
                 // minuteInterval="5"
               />
               <Text style={styles.buttonText}>
-                Until {startTime.toString().slice(16, 21)}
+                Until {endTime.toString().slice(16, 21)}
               </Text>
               <Feather name="clock" size={24} color="#586F7C" />
             </View>
@@ -473,8 +473,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   buttonTextLast: {
-      color: "black",
-      fontWeight: "700",
-      fontSize: 12,
-    },
+    color: "black",
+    fontWeight: "700",
+    fontSize: 12,
+  },
 });
