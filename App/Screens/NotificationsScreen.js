@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  ScrollView,
+} from "react-native";
 import Notification from "../components/Notification";
 import { getNotificationByUsername } from "../utils/api";
 import { auth } from "../../firebase";
@@ -13,29 +19,36 @@ export default function NotificationsScreen() {
       setNotifications(notifications);
     });
   }, []);
-console.log('NOTIFICATIONS>>>>>>>>>>>>>>>>', notifications, '<<<<<<<,notifications')
+  console.log(
+    "NOTIFICATIONS>>>>>>>>>>>>>>>>",
+    notifications,
+    "<<<<<<<,notifications"
+  );
   return (
-  <ImageBackground
-    style={styles.background}
-    source={require("../assets/white-background.png")}
+    <ImageBackground
+      style={styles.background}
+      source={require("../assets/white-background.png")}
     >
-    <View style={styles.container}>
-      <View style={styles.topName}>
-        <Text style={styles.title}>Notifications</Text>
+      <View style={styles.container}>
+        <View style={styles.topName}>
+          <Text style={styles.title}>Notifications</Text>
+        </View>
+        <ScrollView>
+          <View style={styles.mainContainer}>
+            {notifications.map((notification) => {
+              return (
+                <View key={notification._id} style={styles.cardContainer}>
+                  <Notification
+                    key={notification._id}
+                    notification={notification}
+                  />
+                </View>
+              );
+            })}
+          </View>
+        </ScrollView>
       </View>
-
-      <View style={styles.mainContainer}>
-        {notifications.map((notification) => {
-          return (
-            <View key={notification._id} style={styles.cardContainer}>
-              <Notification key={notification._id} notification={notification} />
-            </View>
-          );
-        })}
-      </View>
-
-    </View>
-  </ImageBackground>
+    </ImageBackground>
   );
 }
 
@@ -52,9 +65,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   topName: {
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "flex-start",
     // borderWidth: 1,
     // borderColor: 'red',
     marginTop: 20,
@@ -71,11 +84,11 @@ const styles = StyleSheet.create({
   cardContainer: {
     // borderWidth: 1,
     // borderColor: 'green',
-    backgroundColor: '#EBE2D8',
+    backgroundColor: "#EBE2D8",
     marginVertical: 10,
     borderRadius: 8,
     padding: 8,
     fontSize: 12,
     width: 360,
-  }
+  },
 });

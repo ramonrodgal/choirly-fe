@@ -48,7 +48,7 @@ export default function EventsScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} choirId={choirId}/>
+        <ChoirSummary navigation={navigation} choirId={choirId} />
 
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
@@ -57,17 +57,21 @@ export default function EventsScreen({ navigation, route }) {
         </View>
 
         <View style={styles.buttonContainer}>
-
-        {(username === choir.leader) ? 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("CreateEvent");
-            }}
-          >
-            <Text style={styles.buttonText}>Create an event</Text>
-          </TouchableOpacity> : <></>}
-
+          {username === choir.leader ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("CreateEvent", {
+                  choirId: choirId,
+                  choirName: choir.name,
+                });
+              }}
+            >
+              <Text style={styles.buttonText}>Create an event</Text>
+            </TouchableOpacity>
+          ) : (
+            <></>
+          )}
         </View>
       </View>
     </ImageBackground>
@@ -123,7 +127,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 50,
     alignContent: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     width: 140,
     marginTop: 10,
   },
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     padding: 10,
 
-    alignSelf: 'center',
+    alignSelf: "center",
   },
 
   eventsContainer: {

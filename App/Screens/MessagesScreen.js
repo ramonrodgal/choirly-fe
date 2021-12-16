@@ -52,29 +52,25 @@ export default function MessagesScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} choirId={choirId}/>
+        <ChoirSummary navigation={navigation} choirId={choirId} />
 
         <View style={styles.messagesContainer}>
-
           <GetMessagesForChoir choirId={choirId} navigation={navigation} />
         </View>
 
         <View style={styles.buttonContainer}>
-
-        {(username === choir.leader) ? 
-        
-        <TouchableOpacity
-            style={styles.button}
-            onPress={() => {
-              navigation.navigate("CreateMessage");
-            }}
-          >
-            <Text stlye={styles.buttonTextMsg}>Create a post</Text>
-          </TouchableOpacity>
-        
-        : <Text></Text>}
-
-          
+          {username === choir.leader ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                navigation.navigate("CreateMessage");
+              }}
+            >
+              <Text stlye={styles.buttonTextMsg}>Create a post</Text>
+            </TouchableOpacity>
+          ) : (
+            <Text></Text>
+          )}
         </View>
       </View>
     </ImageBackground>

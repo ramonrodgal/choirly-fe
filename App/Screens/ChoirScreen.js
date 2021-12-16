@@ -85,7 +85,6 @@ export default function ChoirScreen({ route, navigation }) {
           </Text>
         </View>
 
-
         <Text style={styles.eventsTitle}>Upcoming events</Text>
 
         <GetEventsForChoir choirId={choirId} />
@@ -102,12 +101,17 @@ export default function ChoirScreen({ route, navigation }) {
             }}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>Reguest to join</Text>
+            <Text style={styles.buttonText}>Request to join</Text>
           </TouchableOpacity>
-        <TouchableOpacity onPress={() => { navigation.goBack() }} style={styles.button}>
-          <Text style={styles.buttonText} >See all choirs</Text>
-        </TouchableOpacity>
-  </View> 
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>See all choirs</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </ImageBackground>
   );

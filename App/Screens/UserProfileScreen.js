@@ -21,7 +21,7 @@ export default function UserProfileScreen({ navigation, route }) {
   // const username = "korus76"; // for testing
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
-  
+
   const handleSignOut = () => {
     auth
       .signOut()
@@ -139,7 +139,7 @@ export default function UserProfileScreen({ navigation, route }) {
             <Text>You are not part of any choir groups yet.</Text>
           ) : (
             user.groups.map((group) => {
-              return <GetChoirNameById choirId={group} />;
+              return <GetChoirNameById key={group} choirId={group} />;
             })
           )}
         </View>
@@ -280,12 +280,12 @@ const styles = StyleSheet.create({
     // flex: 3,
     borderTopWidth: 2,
     backgroundColor: "#EBE2D8",
-    borderColor: '#A6A19A',
+    borderColor: "#A6A19A",
     minHeight: 50,
     fontSize: 14,
     padding: 8,
     width: 350,
-    alignSelf: 'center',
+    alignSelf: "center",
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
   },
@@ -302,7 +302,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignContent: "center",
     justifyContent: "center",
-    width: '100%',
+    width: "100%",
   },
   icon: {
     width: 30,
