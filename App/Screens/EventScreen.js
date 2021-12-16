@@ -134,12 +134,13 @@ export default function EventScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View>
-          <Text>{event.going.length} people are going to this event.</Text>
+        <View style={{ alignItems: 'center'}}>
+          {(event.going.length === 1) ? <Text>{event.going.length} person is going to this event.</Text> :  <Text>{event.going.length} people are going to this event.</Text>}
+          
           {event.going.includes(username) ? (
-            <Text>You're going to this event</Text>
+            <Text>You're going to this event too!</Text>
           ) : (
-            <Text>You're not going to this event</Text>
+            <Text>You're not going to this event.</Text>
           )}
         </View>
 

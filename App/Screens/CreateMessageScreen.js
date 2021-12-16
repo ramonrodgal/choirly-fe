@@ -37,11 +37,7 @@ export default function CreateMessageScreen({ route }) {
 
 
   const onSubmit = (data) => {
-    // if (title === "" || text === "") {
-    //   console.log("Invalid");
-    //   return;
-    // }
-    console.log(data, '<<<,data')
+
     const body = {
       choir: choirName,
       title: data.title,
