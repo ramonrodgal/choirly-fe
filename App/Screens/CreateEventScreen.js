@@ -24,9 +24,6 @@ import { useFocusEffect } from "@react-navigation/core";
 
 export default function CreateEventScreen({ navigation, route }) {
   const { choirId, choirName } = route.params;
-  // const [choirName, setChoirName] = useState('')
-  const [confirmation, setConfirmation] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
 
   // dates
   const [date, setDate] = useState(new Date());
@@ -92,19 +89,6 @@ export default function CreateEventScreen({ navigation, route }) {
     }, [startTime, endTime])
   );
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   getChoirById(choirId)
-  //     .then((choir) => {
-  //       setChoirName(choir.name);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((err) => {
-  //       setIsLoading(false);
-  //       console.log(err);
-  //     });
-  // }, [choirId]);
-
   const dateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setDate(currentDate);
@@ -149,17 +133,6 @@ export default function CreateEventScreen({ navigation, route }) {
         console.log(err);
       });
   };
-
-  if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
-  }
 
   return (
     <ImageBackground
