@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image } from "react-native";
+import LoadingWheel from "./LoadingWhell";
 
 import { getChoirById } from "../utils/api";
 
@@ -22,24 +23,17 @@ export default function GetChoirById({ choirId }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   return (
     <View key={choirId}>
       <Text
         style={styles.choirTitle}
-        onPress={() =>
-          navigation.navigate("Choir", { choirId: choir._id })
-        }
-      >{choirName}</Text>
+        onPress={() => navigation.navigate("Choir", { choirId: choir._id })}
+      >
+        {choirName}
+      </Text>
     </View>
   );
 }
