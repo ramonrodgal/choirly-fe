@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import {
-  StyleSheet,
   Text,
   View,
   Image,
@@ -13,6 +12,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { patchUser } from "../utils/api";
+import styles from "../styles/editProfile.styles";
 
 export default function EditProfileScreen({ navigation, route }) {
   const { username, firstName, lastName, avatar, about, number } = route.params;
@@ -63,13 +63,13 @@ export default function EditProfileScreen({ navigation, route }) {
 
       {/* //-------------------------------------------------------------AVATAR */}
       <View style={styles.avatar}>
-        {(avatar) ? 
+        {avatar ? (
           <Image
             style={styles.image}
             source={{ uri: avatar }}
             alt="Profile Image"
           />
-        : 
+        ) : (
           <Image
             style={styles.imageRandom}
             source={{
@@ -77,13 +77,13 @@ export default function EditProfileScreen({ navigation, route }) {
             }}
             alt="Profile Image"
           />
-        }
+        )}
       </View>
       <Text>Uptade your details here:</Text>
 
       {/* //------------------------------------------------------------------ INFO */}
       <ScrollView>
-      <View style={[styles.basicInfo, styles.shadowProp]}>
+        <View style={[styles.basicInfo, styles.shadowProp]}>
           <Text style={styles.label}>First name: {firstName}</Text>
           <Controller
             control={control}
@@ -212,105 +212,3 @@ export default function EditProfileScreen({ navigation, route }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignContent: "center",
-    padding: 15,
-    paddingTop: 0,
-    backgroundColor: "white",
-  },
-  background: {
-    flex: 1,
-    // alignItems: "center",
-  },
-
-  // -------------------------------- top name
-  topName: {
-    // flex: 1,
-    // alignContent: 'flex-start',
-    // position: 'absolute',
-    justifyContent: "flex-start",
-    // borderWidth: 1,
-    // borderColor: 'red',
-  },
-  // nameTitle: {
-  //   fontWeight: "bold",
-  // },
-
-  //--------------------------------AVATAR
-  avatar: {
-    // flex: 2,
-    // borderWidth: 1,
-    height: 100,
-    // borderColor: 'blue',
-    marginTop: 5,
-    alignItems: "center",
-    // backgroundColor: '#586F7C',
-    // padding: 10,
-  },
-  image: {
-    width: 90,
-    height: 90,
-    borderRadius: 75,
-    marginTop: 5,
-  },
-  title: {
-    fontWeight: "bold",
-  },
-  buttonContainer: {
-    // flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 0,
-    // borderWidth: 1,
-    // borderColor: 'orange',
-    marginTop: 10,
-  },
-  button: {
-    backgroundColor: "#B2DED9",
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 25,
-    marginBottom: 8,
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  blueButton: {
-    backgroundColor: "#B2DED9",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    marginBottom: 8,
-    marginTop: 10,
-  },
-  basicInfo: {
-    borderTopWidth: 2,
-    backgroundColor: "#EBE2D8",
-    borderColor: '#A6A19A',
-    // borderColor: 'blue',
-    // minHeight: 50,
-    fontSize: 14,
-    width: 330,
-    alignSelf: 'center',
-    padding: 5,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    marginTop: 20,
-  },
-  shadowProp: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.5,
-    elevation: 6,
-  },
-  test: {
-    backgroundColor: "white",
-  },
-});

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
@@ -8,17 +7,18 @@ import {
   TouchableOpacity,
   TextInput,
   Button,
-  Image
+  Image,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import styles from "../styles/register.styles";
+import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export default function RegisterScreen({ navigation }) {
   const [confirmation, setConfirmation] = useState("");
   const email = auth.currentUser.email;
-  const [imageUri, setImageUri] = useState('')
+  const [imageUri, setImageUri] = useState("");
 
   const {
     control,
@@ -54,29 +54,29 @@ export default function RegisterScreen({ navigation }) {
   };
 
   choosePhoto = () => {
-    let options={
+    let options = {
       storageOptions: {
-        path: 'images',
-        mediaType: 'photo',
+        path: "images",
+        mediaType: "photo",
       },
       includeBase64: true,
     };
 
-    launchImageLibrary(options, response => {
-      console.log('Response = ', response);
+    launchImageLibrary(options, (response) => {
+      console.log("Response = ", response);
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        console.log("User cancelled image picker");
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        console.log("ImagePicker Error: ", response.error);
       } else if (response.customButton) {
-        console.log( 'User tapped custom button: ', response.customButton);
+        console.log("User tapped custom button: ", response.customButton);
       } else {
         // you can display an image using data:
-        const source = {uri: 'data:image/jpeg;base64,' + response.base64};
+        const source = { uri: "data:image/jpeg;base64," + response.base64 };
         setImageUri(source);
       }
-    })
-  }
+    });
+  };
 
   return (
     <ImageBackground
@@ -89,7 +89,7 @@ export default function RegisterScreen({ navigation }) {
             <Text style={styles.title}>Add more details</Text>
           </View>
 
-{/* //----------------------------------------------------------------------CAMERA */}
+          {/* //----------------------------------------------------------------------CAMERA */}
           {/* <View style={{ alignItems: 'center'}}>
           <TouchableOpacity
                   title="Submit"
@@ -102,7 +102,6 @@ export default function RegisterScreen({ navigation }) {
                 </TouchableOpacity>
             <Image source={imageUri} style={{ height: 80, width: 80, borderRadius: 75 }} />
           </View> */}
-
 
           <View style={styles.formContainer}>
             <Text style={styles.label}>Username *</Text>
@@ -122,7 +121,9 @@ export default function RegisterScreen({ navigation }) {
               )}
               name="username"
             />
-            {errors.username && <Text style={styles.warning} >Username is required.</Text>}
+            {errors.username && (
+              <Text style={styles.warning}>Username is required.</Text>
+            )}
 
             <Text style={styles.label}>First name *</Text>
             <Controller
@@ -141,7 +142,9 @@ export default function RegisterScreen({ navigation }) {
               )}
               name="first_name"
             />
-            {errors.first_name && <Text style={styles.warning}>First name is required.</Text>}
+            {errors.first_name && (
+              <Text style={styles.warning}>First name is required.</Text>
+            )}
 
             <Text style={styles.label}>Last name *</Text>
             <Controller
@@ -160,7 +163,9 @@ export default function RegisterScreen({ navigation }) {
               )}
               name="last_name"
             />
-            {errors.last_name && <Text style={styles.warning}>Last name is required.</Text>}
+            {errors.last_name && (
+              <Text style={styles.warning}>Last name is required.</Text>
+            )}
 
             <Text style={styles.label}>
               Phone number (don't worry, we won't make it publically visible)
@@ -213,118 +218,3 @@ export default function RegisterScreen({ navigation }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 15,
-    paddingTop: 0,
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
-
-  //-------------------------TITLE
-  titleContainer: {
-    marginTop: 100,
-    flex: 0.5,
-    width: "100%",
-    // borderWidth: 1,
-    // borderColor: 'red',
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontWeight: "700",
-    fontSize: 16,
-    color: "#BD7D1E",
-  },
-  //----------------------------FORM CONTAINER
-
-  formContainer: {
-    flex: 8,
-    alignItems: "center",
-    // borderWidth: 1,
-    // borderColor: 'green',
-  },
-
-  input: {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 1,
-    height: 30,
-    width: 280,
-    padding: 8,
-    borderRadius: 5,
-  },
-  inputDesc: {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 1,
-    height: 150,
-    width: 280,
-    padding: 8,
-    borderRadius: 5,
-  },
-  label: {
-    color: "black",
-    padding: 0,
-    marginTop: 20,
-    fontSize: 12,
-    fontWeight: "600",
-    alignItems: "center",
-  },
-  chars: {
-    fontSize: 10,
-  },
-  warning: {
-    fontSize: 12, 
-    color: 'red'
-  },
-
-  //------------------------------BUTTON
-  buttonContainer: {
-    flex: 1,
-    // borderWidth: 1,
-    // borderColor: 'blue',
-    alignItems: "center",
-  },
-  button: {
-    backgroundColor: "#BC9C22",
-    width: "60%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  photoButton: {
-    backgroundColor: "#B8DBD9",
-    width: "60%",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 16,
-  },
-  yellowButton: {
-    backgroundColor: "#BC9C22",
-    padding: 15,
-    borderRadius: 25,
-    alignItems: "center",
-    marginTop: 10,
-  },
-
-  requestContainer: {
-    flex: 1,
-    // borderWidth: 1,
-    // borderColor: 'blue',
-    alignItems: "center",
-  },
-});
