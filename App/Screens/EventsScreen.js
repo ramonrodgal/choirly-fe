@@ -11,6 +11,7 @@ import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
 import { auth } from "../../firebase";
 import { getChoirById } from "../utils/api";
 import styles from "../styles/events.styles";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function EventsScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
@@ -32,14 +33,7 @@ export default function EventsScreen({ navigation, route }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   return (

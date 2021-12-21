@@ -11,6 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { getChoirById } from "../utils/api";
 import GetEventsForChoir from "../components/GetEventsForChoir";
 import styles from "../styles/choirScreen.styles";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function ChoirScreen({ route, navigation }) {
   const { choirId } = route.params;
@@ -37,14 +38,7 @@ export default function ChoirScreen({ route, navigation }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   return (

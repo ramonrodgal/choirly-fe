@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet } from "react-native";
 
-export default function LoadingWhell() {
+export default function LoadingWheel() {
   return (
     <Image
       style={styles.loading}
@@ -14,7 +14,7 @@ export default function LoadingWhell() {
 
 const styles = StyleSheet.create({
   loading: {
-    marginTop: 200,
+    marginTop: 50,
     width: 100,
     height: 100,
     alignSelf: "center",

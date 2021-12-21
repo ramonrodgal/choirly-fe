@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import LoadingWheel from "./LoadingWheel";
 
 export default function GetEvents({ choirId }) {
   const [events, setEvents] = useState([]);
@@ -28,14 +29,7 @@ export default function GetEvents({ choirId }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   if (events.length === 0) {

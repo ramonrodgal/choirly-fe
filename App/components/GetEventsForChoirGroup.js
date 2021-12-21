@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/core";
+import LoadingWheel from "./LoadingWheel";
 
 export default function GetEventsForChoirGroup({ choirId, navigation }) {
   const [events, setEvents] = useState([]);
@@ -32,14 +33,7 @@ export default function GetEventsForChoirGroup({ choirId, navigation }) {
   );
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
   if (events.length === 0) {
     return (

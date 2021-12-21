@@ -13,6 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { TextInput } from "react-native-gesture-handler";
 import styles from "../styles/singleMessage.styles";
+import LoadingWheel from "../components/LoadingWheel";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
 export default function SingleMessageScreen({ navigation, route }) {
@@ -61,14 +62,7 @@ export default function SingleMessageScreen({ navigation, route }) {
   };
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
   return (
     <ImageBackground

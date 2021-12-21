@@ -13,7 +13,7 @@ import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/home.styles";
-import LoadingWheel from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function HomeScreen({ navigation }) {
   const currentUser = auth.currentUser.displayName;

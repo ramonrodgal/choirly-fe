@@ -11,37 +11,30 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { getMessageByChoirId } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
+import LoadingWheel from "./LoadingWheel";
 
 export default function GetMessagesForChoir({ choirId, navigation }) {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useFocusEffect(
-  useCallback(() => {
-    setIsLoading(true);
-    getMessageByChoirId(choirId)
-      .then((messages) => {
-        setMessages(messages);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
-  }, [])
+    useCallback(() => {
+      setIsLoading(true);
+      getMessageByChoirId(choirId)
+        .then((messages) => {
+          setMessages(messages);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setIsLoading(false);
+        });
+    }, [])
   );
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
-
 
   return (
     <View style={styles.messagesContainer}>
@@ -59,33 +52,30 @@ export default function GetMessagesForChoir({ choirId, navigation }) {
                 }
               >
                 <View>
-
                   <View style={styles.titleContainer}>
-                      <Text style={styles.messageTitleText}>
-                        {message.title}
-                      </Text>
-                      <FontAwesome
-            name="thumbs-up"
-            style={styles.icon}
-            size={20}
-            color="black"
-            onPress={() => handleLikePost()}
-          />
+                    <Text style={styles.messageTitleText}>{message.title}</Text>
+                    <FontAwesome
+                      name="thumbs-up"
+                      style={styles.icon}
+                      size={20}
+                      color="black"
+                      onPress={() => handleLikePost()}
+                    />
                   </View>
                   <View style={styles.messageContainer}>
                     <Text style={styles.messageBody}>{message.body}</Text>
                   </View>
 
-                    <TouchableOpacity style={styles.comments}
-                      onPress={() => {
-                        navigation.navigate("SingleMessage");
-                      }}
-                    >
-                      <Text style={styles.buttonText}>
-                        See comments ({message.comments.length})
-                      </Text>
-                    </TouchableOpacity>
-
+                  <TouchableOpacity
+                    style={styles.comments}
+                    onPress={() => {
+                      navigation.navigate("SingleMessage");
+                    }}
+                  >
+                    <Text style={styles.buttonText}>
+                      See comments ({message.comments.length})
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -151,8 +141,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 
-
-
   messagesContainer: {
     // borderWidth: 1,
     // borderColor: 'red',
@@ -173,8 +161,8 @@ const styles = StyleSheet.create({
     // borderColor: 'green',
     padding: 5,
     paddingLeft: 10,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
     // alignContent: 'center'
   },
   messageTitleText: {
@@ -192,7 +180,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     // borderWidth: 1,
     // borderColor: 'yellow',
-    backgroundColor: '#EBE2D8',
+    backgroundColor: "#EBE2D8",
   },
   comments: {
     fontSize: 12,

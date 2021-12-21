@@ -15,6 +15,7 @@ import { getUserByUsername } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
 import GetChoirNameById from "../components/GetChoirNameById";
 import styles from "../styles/userProfile.styles";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function UserProfileScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
@@ -46,14 +47,7 @@ export default function UserProfileScreen({ navigation, route }) {
   );
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   return (

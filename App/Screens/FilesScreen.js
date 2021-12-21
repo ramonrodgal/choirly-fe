@@ -14,6 +14,7 @@ import GetFilesForChoir from "../components/GetFilesForChoir";
 import { auth } from "../../firebase";
 import { getChoirById } from "../utils/api";
 import styles from "../styles/files.styles";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function FilesScreen({ navigation, route }) {
   const { choirId } = route.params;
@@ -35,14 +36,7 @@ export default function FilesScreen({ navigation, route }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   return (

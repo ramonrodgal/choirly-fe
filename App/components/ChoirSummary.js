@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { getChoirById } from "../utils/api";
+import LoadingWheel from "./LoadingWheel";
 
 export default function ChoirSummary({ navigation, choirId }) {
   // const choirId = route.params; // hardcoded for now
@@ -27,14 +28,7 @@ export default function ChoirSummary({ navigation, choirId }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   return (

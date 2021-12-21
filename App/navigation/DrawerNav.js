@@ -12,6 +12,7 @@ import { LogoTitle } from "../components/LogoTitle";
 import { NotificationBell } from "../components/NotificationBell";
 import { auth } from "../../firebase";
 import { getChoirs, getUserByUsername } from "../utils/api";
+import LoadingWheel from "../components/LoadingWheel";
 
 const Drawer = createDrawerNavigator();
 
@@ -44,14 +45,7 @@ export default function DrawerNav() {
   );
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWheel />;
   }
 
   const groups = allChoirs
