@@ -15,7 +15,7 @@ import ChoirSummary from "../components/ChoirSummary";
 import { getChoirById } from "../utils/api";
 import GetMessagesForChoir from "../components/GetMessagesForChoir";
 import styles from "../styles/messages.styles";
-import LoadingWhell from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWhell";
 
 export default function MessagesScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
@@ -38,7 +38,7 @@ export default function MessagesScreen({ navigation, route }) {
   }, [choirId]);
 
   if (isLoading) {
-    return <LoadingWhell />;
+    return <LoadingWheel />;
   }
 
   return (
