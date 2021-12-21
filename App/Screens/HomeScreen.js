@@ -1,5 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -11,16 +10,12 @@ import { Picker } from "@react-native-picker/picker";
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
-import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/home.styles";
 import LoadingWheel from "../components/LoadingWheel";
+import ChoirCard from "../components/ChoirCard";
 
 export default function HomeScreen({ navigation }) {
   const currentUser = auth.currentUser.displayName;
-  const capitalizeFirstLetter = (
-    [first, ...rest],
-    locale = navigator.language
-  ) => first.toLocaleUpperCase(locale) + rest.join("");
 
   const [choirs, setChoirs] = useState([]);
   const [location, setLocation] = useState("");
@@ -81,31 +76,7 @@ export default function HomeScreen({ navigation }) {
           />
           <ScrollView style={{ margin: 0, padding: 0 }}>
             {choirs.map((choir) => {
-              return (
-                <View key={choir._id} style={[styles.card, styles.shadowProp]}>
-                  <Text
-                    style={styles.choirTitle}
-                    onPress={() =>
-                      navigation.navigate("Choir", { choirId: choir._id })
-                    }
-                  >
-                    {choir.name}
-                  </Text>
-                  <Text style={styles.loc}>
-                    {capitalizeFirstLetter(choir.location)}
-                  </Text>
-                  <Text
-                    numberOfLines={2}
-                    ellipsizeMode="tail"
-                    style={styles.choirDesc}
-                    onPress={() =>
-                      navigation.navigate("Choir", { choirId: choir._id })
-                    }
-                  >
-                    {choir.description}{" "}
-                  </Text>
-                </View>
-              );
+              return <ChoirCard choir={choir} navigation={navigation} />;
             })}
           </ScrollView>
         </View>
