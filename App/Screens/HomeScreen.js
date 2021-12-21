@@ -70,7 +70,13 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.choirCardsContainer}>
           <ScrollView style={{ margin: 0, padding: 0 }}>
             {choirs.map((choir) => {
-              return <ChoirCard choir={choir} navigation={navigation} />;
+              return (
+                <ChoirCard
+                  key={choir._id}
+                  choir={choir}
+                  navigation={navigation}
+                />
+              );
             })}
           </ScrollView>
         </View>
