@@ -14,7 +14,7 @@ import GetFilesForChoir from "../components/GetFilesForChoir";
 import { auth } from "../../firebase";
 import { getChoirById } from "../utils/api";
 import styles from "../styles/files.styles";
-import LoadingWheel from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function FilesScreen({ navigation, route }) {
   const { choirId } = route.params;

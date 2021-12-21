@@ -13,7 +13,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { TextInput } from "react-native-gesture-handler";
 import styles from "../styles/singleMessage.styles";
-import LoadingWheel from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWheel";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
 export default function SingleMessageScreen({ navigation, route }) {

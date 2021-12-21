@@ -11,7 +11,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { getMessageByChoirId } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
-import LoadingWheel from "./LoadingWhell";
+import LoadingWheel from "./LoadingWheel";
 
 export default function GetMessagesForChoir({ choirId, navigation }) {
   const [messages, setMessages] = useState([]);

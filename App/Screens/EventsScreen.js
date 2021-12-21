@@ -11,7 +11,7 @@ import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
 import { auth } from "../../firebase";
 import { getChoirById } from "../utils/api";
 import styles from "../styles/events.styles";
-import LoadingWheel from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function EventsScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;

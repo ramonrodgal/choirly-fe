@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import LoadingWheel from "./LoadingWhell";
+import LoadingWheel from "./LoadingWheel";
 
 export default function GetEvents({ choirId }) {
   const [events, setEvents] = useState([]);

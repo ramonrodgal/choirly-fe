@@ -11,7 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { getChoirById } from "../utils/api";
 import GetEventsForChoir from "../components/GetEventsForChoir";
 import styles from "../styles/choirScreen.styles";
-import LoadingWheel from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function ChoirScreen({ route, navigation }) {
   const { choirId } = route.params;

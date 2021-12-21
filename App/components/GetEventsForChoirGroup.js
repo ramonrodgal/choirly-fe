@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useFocusEffect } from "@react-navigation/core";
-import LoadingWheel from "./LoadingWhell";
+import LoadingWheel from "./LoadingWheel";
 
 export default function GetEventsForChoirGroup({ choirId, navigation }) {
   const [events, setEvents] = useState([]);

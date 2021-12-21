@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import LoadingWheel from "./LoadingWhell";
+import LoadingWheel from "./LoadingWheel";
 
 import { getChoirById } from "../utils/api";
 

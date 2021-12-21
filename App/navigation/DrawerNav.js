@@ -12,7 +12,7 @@ import { LogoTitle } from "../components/LogoTitle";
 import { NotificationBell } from "../components/NotificationBell";
 import { auth } from "../../firebase";
 import { getChoirs, getUserByUsername } from "../utils/api";
-import LoadingWheel from "../components/LoadingWhell";
+import LoadingWheel from "../components/LoadingWheel";
 
 const Drawer = createDrawerNavigator();
 

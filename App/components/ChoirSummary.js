@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { getChoirById } from "../utils/api";
-import LoadingWheel from "./LoadingWhell";
+import LoadingWheel from "./LoadingWheel";
 
 export default function ChoirSummary({ navigation, choirId }) {
   // const choirId = route.params; // hardcoded for now
