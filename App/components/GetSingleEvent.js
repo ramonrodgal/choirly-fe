@@ -12,7 +12,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 
 export default function GetSingleEvent({ event }) {
-  console.log(event);
   return (
     <View>
       <View style={styles.eventsContainer}>

@@ -33,7 +33,6 @@ export default function LoginScreen() {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log("Registered with: ", user.email);
         navigation.navigate("Register"); // change this to nested
       })
       .catch((error) => alert(error.message));
@@ -44,7 +43,6 @@ export default function LoginScreen() {
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        console.log("Logged in with: ", user.email);
         navigation.navigate("drawer", { screen: "Home" }); // change this to nested
       })
       .catch((error) => alert(error.message));

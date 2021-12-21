@@ -122,11 +122,9 @@ export default function CreateEventScreen({ navigation, route }) {
 
   const onSubmit = (data) => {
     const eventPost = { ...data, duration, date, type, choir: choirName };
-    console.log(eventPost);
 
     postEventByChoir(choirId, eventPost)
       .then(() => {
-        console.log("event sent");
         setSubmitted(true);
       })
       .catch((err) => {

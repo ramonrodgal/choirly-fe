@@ -27,10 +27,6 @@ export default function EventScreen({ route, navigation }) {
   });
   const [going, setGoing] = useState();
 
-  console.log(going);
-  console.log("going:", event.going);
-  console.log("not going:", event.not_going);
-
   useEffect(() => {
     getEventById(eventId)
       .then((event) => {
@@ -79,6 +75,7 @@ export default function EventScreen({ route, navigation }) {
 
             <Text style={styles.eventTitleText}>{event.title}</Text>
           </View>
+
 
           <View style={styles.eventContainer}>
             <Text style={styles.eventBody}>Location: {event.location}</Text>

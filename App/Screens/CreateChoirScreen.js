@@ -48,7 +48,6 @@ export default function CreateChoirScreen({ navigation }) {
     };
     postChoir(newChoir)
       .then(() => {
-        console.log("choir created");
         setConfirmation("Choir has been created");
       })
       .catch((err) => {

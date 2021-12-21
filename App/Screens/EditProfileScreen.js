@@ -47,7 +47,6 @@ export default function EditProfileScreen({ navigation, route }) {
       .then((user) => {
         setConfirmation("Your profile has been updated");
         reset();
-        console.log("done");
       })
       .catch((err) => {
         console.log(err.response.data);

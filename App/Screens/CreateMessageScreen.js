@@ -54,11 +54,11 @@ export default function CreateMessageScreen({ route }) {
     };
     postMessage(body)
       .then((message) => {
-        console.log(message, "<<<,message");
+
         //RETURN TO PREVIUS PAGE
         setConfirmation("Your post has been created");
         members.forEach((member) => {
-          console.log(member, "<<<<<<<<<<<<,,member");
+
           const body = {
             username: member,
             choir: choirName,

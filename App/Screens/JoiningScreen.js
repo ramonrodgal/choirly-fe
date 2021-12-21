@@ -39,7 +39,6 @@ export default function JoiningScreen({ route, navigation }) {
     };
     postNotificationByUsername(choirLeader, body)
       .then((res) => {
-        console.log(res, "<<response");
         setConfirmation("Your request has been sent");
       })
       .catch((err) => {
