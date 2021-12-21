@@ -50,15 +50,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  loading: {
-    marginTop: 200,
-    width: 100,
-    height: 100,
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
   //-------------------------CARDS
   choirCardsContainer: {
     flex: 10,

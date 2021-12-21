@@ -13,6 +13,7 @@ import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/home.styles";
+import LoadingWhell from "../components/LoadingWhell";
 
 export default function HomeScreen({ navigation }) {
   const currentUser = auth.currentUser.displayName;
@@ -38,14 +39,7 @@ export default function HomeScreen({ navigation }) {
   }, [location]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWhell />;
   }
 
   return (
