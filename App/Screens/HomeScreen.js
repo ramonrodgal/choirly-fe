@@ -68,12 +68,6 @@ export default function HomeScreen({ navigation }) {
         </View>
 
         <View style={styles.choirCardsContainer}>
-          <Image
-            style={{ width: 70, height: 70 }}
-            source={{
-              uri: "https://i.pinimg.com/originals/70/22/72/7022729bcf716a1ec717377094161cd4.gif",
-            }}
-          />
           <ScrollView style={{ margin: 0, padding: 0 }}>
             {choirs.map((choir) => {
               return <ChoirCard choir={choir} navigation={navigation} />;
