@@ -15,6 +15,7 @@ import ChoirSummary from "../components/ChoirSummary";
 import { getChoirById } from "../utils/api";
 import GetMessagesForChoir from "../components/GetMessagesForChoir";
 import styles from "../styles/messages.styles";
+import LoadingWhell from "../components/LoadingWhell";
 
 export default function MessagesScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
@@ -37,14 +38,7 @@ export default function MessagesScreen({ navigation, route }) {
   }, [choirId]);
 
   if (isLoading) {
-    return (
-      <Image
-        style={styles.loading}
-        source={{
-          uri: "https://www.teahub.io/photos/full/226-2267889_animated-circle-gif-transparent.gif",
-        }}
-      />
-    );
+    return <LoadingWhell />;
   }
 
   return (
