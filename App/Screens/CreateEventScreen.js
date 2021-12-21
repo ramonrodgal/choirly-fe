@@ -5,7 +5,6 @@ import {
   TextInput,
   Button,
   Alert,
-  StyleSheet,
   SafeAreaView,
   Platform,
   Image,
@@ -21,6 +20,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { getChoirById } from "../utils/api";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/core";
+import styles from "../styles/createEvent.styles";
 
 export default function CreateEventScreen({ navigation, route }) {
   const { choirId, choirName } = route.params;
@@ -335,144 +335,3 @@ export default function CreateEventScreen({ navigation, route }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    // padding: 15,
-    paddingTop: 0,
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
-
-  input: {
-    backgroundColor: "#F0EFEC",
-    // borderColor: "black",
-    // borderWidth: 1,
-    height: 40,
-    width: 360,
-    borderWidth: 1,
-    borderColor: "#586F7C",
-    padding: 8,
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-  inputDetails: {
-    backgroundColor: "#F0EFEC",
-    // borderColor: "black",
-    // borderWidth: 1,
-    height: 80,
-    width: 360,
-    borderWidth: 1,
-    borderColor: "#586F7C",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 15,
-  },
-
-  label: {
-    color: "black",
-    padding: 0,
-    margin: 2,
-    marginLeft: 0,
-    alignItems: "center",
-  },
-  labelType: {
-    color: "black",
-    padding: 0,
-    margin: 2,
-    marginLeft: 0,
-    alignItems: "center",
-    marginTop: 15,
-  },
-  labelDetails: {
-    color: "black",
-    padding: 0,
-    margin: 2,
-    marginLeft: 0,
-    alignItems: "center",
-    marginTop: 15,
-  },
-
-  container: {
-    // flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 2,
-    // backgroundColor: "white",
-  },
-  // button: {
-  //   marginTop: 40,
-  //   color: "white",
-  //   height: 40,
-  //   width: 200,
-  //   backgroundColor: "beige",
-  //   borderRadius: 4,
-  // },
-  title: {
-    fontWeight: "bold",
-    padding: 10,
-  },
-  circles: {
-    // borderWidth: 1,
-    // borderColor: 'red',
-    flexDirection: "row",
-    margin: 10,
-  },
-  // date: {
-  //   flex: 1,
-  //   width: 250,
-  // },
-  button: {
-    backgroundColor: "#A6AB72",
-    padding: 8,
-    borderRadius: 75,
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    marginBottom: 10,
-    width: 100,
-    height: 100,
-    margin: 15,
-  },
-  buttonDate: {
-    backgroundColor: "#83ADB4",
-    padding: 8,
-    borderRadius: 75,
-    alignItems: "center",
-    justifyContent: "center",
-    alignContent: "center",
-    marginBottom: 10,
-    width: 100,
-    height: 100,
-    margin: 15,
-  },
-
-  buttonText: {
-    color: "#586F7C",
-    fontWeight: "700",
-    fontSize: 12,
-    marginBottom: 5,
-  },
-  dropdown: {
-    width: 250,
-    height: 30,
-    alignSelf: "center",
-  },
-  buttonNormal: {
-    backgroundColor: "#BC9C22",
-    borderRadius: 20,
-    alignItems: "center",
-    marginTop: 10,
-    padding: 10,
-  },
-  buttonTextLast: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 12,
-  },
-});

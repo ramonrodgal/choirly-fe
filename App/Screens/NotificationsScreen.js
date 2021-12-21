@@ -9,6 +9,7 @@ import {
 import Notification from "../components/Notification";
 import { getNotificationByUsername } from "../utils/api";
 import { auth } from "../../firebase";
+import styles from "../styles/notifications.styles";
 
 export default function NotificationsScreen() {
   const [notifications, setNotifications] = useState([]);
@@ -47,44 +48,3 @@ export default function NotificationsScreen() {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // justifyContent: "center",
-    alignItems: "center",
-    padding: 15,
-    paddingTop: 0,
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
-  topName: {
-    justifyContent: "center",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    // borderWidth: 1,
-    // borderColor: 'red',
-    marginTop: 20,
-  },
-  title: {
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    fontSize: 18,
-  },
-  mainContainer: {
-    // borderWidth: 1,
-    // borderColor: 'blue',
-  },
-  cardContainer: {
-    // borderWidth: 1,
-    // borderColor: 'green',
-    backgroundColor: "#EBE2D8",
-    marginVertical: 10,
-    borderRadius: 8,
-    padding: 8,
-    fontSize: 12,
-    width: 360,
-  },
-});

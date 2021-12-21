@@ -12,6 +12,7 @@ import { postComment, getMessageById } from "../utils/api";
 import { FontAwesome } from "@expo/vector-icons";
 import { auth } from "../../firebase";
 import { TextInput } from "react-native-gesture-handler";
+import styles from "../styles/singleMessage.styles";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
 export default function SingleMessageScreen({ navigation, route }) {
@@ -23,7 +24,7 @@ export default function SingleMessageScreen({ navigation, route }) {
   const [comments, setComments] = useState([]);
   const [addComment, setAddComment] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [confirmation, setConfirmation] = useState('');
+  const [confirmation, setConfirmation] = useState("");
 
   // let message_id = "61b0c4c065064fdfb889a163"; //HARDCODED
 
@@ -44,7 +45,7 @@ export default function SingleMessageScreen({ navigation, route }) {
 
   const handlePostComment = () => {
     const body = {
-      author: username, 
+      author: username,
       body: comment,
     };
 
@@ -52,7 +53,7 @@ export default function SingleMessageScreen({ navigation, route }) {
       .then((message) => {
         setMessage(message);
         setComments(message.comments);
-        setConfirmation('Your comment has been added');
+        setConfirmation("Your comment has been added");
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -143,22 +144,26 @@ export default function SingleMessageScreen({ navigation, route }) {
         )}
 
         {confirmation ? (
-          <Text style={{ alignSelf: 'center', marginBottom: 15}}>{confirmation}</Text>
-        ) : <></>}
+          <Text style={{ alignSelf: "center", marginBottom: 15 }}>
+            {confirmation}
+          </Text>
+        ) : (
+          <></>
+        )}
 
         <ScrollView>
           {comments.map((comment) => {
             return (
-              <View style={styles.commentCard} key={comment._id} >
+              <View style={styles.commentCard} key={comment._id}>
                 <Text style={styles.author}>{comment.author}</Text>
                 <View style={styles.body}>
-                    <Text>{comment.body}</Text>
-                    <FontAwesome
+                  <Text>{comment.body}</Text>
+                  <FontAwesome
                     name="trash"
                     style={styles.iconTrash}
                     size={18}
                     color="black"
-                    />
+                  />
                 </View>
                 <Text style={styles.date}>
                   {Date(comment.created_at).toString().slice(0, -15)}
@@ -171,146 +176,3 @@ export default function SingleMessageScreen({ navigation, route }) {
     </ImageBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  // CONTAINER AND BACKGROUND
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    // alignItems: "center",
-    padding: 15,
-    paddingTop: 0,
-    // borderWidth: 1,
-    // borderColor: 'pink',
-    width: '100%',
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
-  topContainer: {
-    // borderWidth: 1,
-    // borderColor: 'green',
-    flexDirection: "row",
-    flexWrap: "wrap",
-    alignItems: "flex-start",
-    marginTop: 5,
-  },
-  arrow: {
-    width: 30,
-    height: 30,
-    alignSelf: "flex-start",
-  },
-  avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 75,
-  },
-
-  // MESSAGE
-  messageContainer: {
-    marginTop: 10,
-  },
-  titleContainer: {
-    backgroundColor: "#B2DED9",
-    padding: 8,
-  },
-  messageTitleText: {
-    fontWeight: "700",
-    color: "black",
-  },
-  postedBy: {
-    fontSize: 10,
-    color: "black",
-    marginBottom: 10,
-  },
-  bodyContainer: {
-    backgroundColor: "#EBE2D8",
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    padding: 8,
-  },
-  messageBody: {
-    color: "black",
-    fontSize: 12,
-  },
-
-  // -------------------MENU
-  addCommentContainer: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: "#CBCBCB",
-    marginVertical: 10,
-    marginHorizontal: 15,
-    flexDirection: "row",
-    padding: 10,
-    justifyContent: "center",
-  },
-  icon: {
-    marginRight: 3,
-  },
-  iconCom: {
-    marginRight: 3,
-    marginLeft: 20,
-  },
-
-  // -------------------NEW COMMENT CONTTAINER
-  newCommentContainer: {
-    // borderWidth: 1,
-    // borderColor: 'green',
-    alignItems: "center",
-  },
-  input: {
-    backgroundColor: "white",
-    width: 340,
-    height: 100,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "black",
-    padding: 8,
-  },
-  button: {
-    backgroundColor: "#BC9C22",
-    width: 60,
-    padding: 7,
-    borderRadius: 50,
-    alignItems: "center",
-    marginTop: 10,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: "black",
-    fontWeight: "700",
-    fontSize: 12,
-  },
-
-  //---------------------------------COMMENT CARD
-  commentCard: {
-    // borderWidth: 1,
-    // borderColor: 'red',
-    backgroundColor: "#EBE2D8",
-    marginBottom: 10,
-    borderRadius: 8,
-    padding: 5,
-    width: 360,
-  },
-  menuIcons: {
-    margin: 5,
-  },
-  author: {
-    color: "#2F4550",
-    fontWeight: "700",
-  },
-  date: {
-    fontSize: 10,
-  },
-  body: {
-    flexDirection: 'row',
-    alignItems: 'stretch',
-    justifyContent: 'space-between',
-
-  },
-  iconTrash: {
-    marginRight: 15,
-  }
-});

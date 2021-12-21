@@ -76,6 +76,7 @@ export default function EventScreen({ route, navigation }) {
             <Text style={styles.eventTitleText}>{event.title}</Text>
           </View>
 
+
           <View style={styles.eventContainer}>
             <Text style={styles.eventBody}>Location: {event.location}</Text>
             <Text style={styles.eventBody}>
