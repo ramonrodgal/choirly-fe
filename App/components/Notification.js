@@ -16,7 +16,6 @@ export default function Notification({ notification }) {
     };
     updateNotificationById(notification._id, body)
       .then((notification) => {
-        // console.log(notification);
         setNotificationObj(notification);
       })
       .catch((err) => {
@@ -30,14 +29,10 @@ export default function Notification({ notification }) {
         return setNotificationObj(notification);
       })
       .then(() => {
-        console.log(notificationObj.author);
-
         return addMemberToChoir(
           notificationObj.author,
           notificationObj.choir_id
-        ).then((choir) => {
-          console.log("The user joined the group");
-        });
+        ).then((choir) => {});
       })
       .then(() => {
         const body = {
@@ -48,9 +43,7 @@ export default function Notification({ notification }) {
           author: notificationObj.username,
         };
         return postNotificationByUsername(notificationObj.author, body).then(
-          (notification) => {
-            console.log("Notification send");
-          }
+          (notification) => {}
         );
       })
       .catch((err) => {
@@ -75,9 +68,7 @@ export default function Notification({ notification }) {
           author: notificationObj.username,
         };
         return postNotificationByUsername(notificationObj.author, body).then(
-          (notification) => {
-            console.log("Notification send");
-          }
+          (notification) => {}
         );
       })
       .catch((err) => {
