@@ -25,20 +25,17 @@ export default function HomeScreen({ navigation }) {
   const [location, setLocation] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useFocusEffect(
-    useCallback(() => {
-      setIsLoading(true);
-      getChoirs(location)
-        .then((choirs) => {
-          setChoirs(choirs);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          console.log(err);
-        });
-    }, [location])
-  );
+  useEffect(async () => {
+    setIsLoading(true);
+    try {
+      const choirs = await getChoirs(location);
+      setChoirs(choirs);
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+    }
+  }, [location]);
 
   if (isLoading) {
     return (

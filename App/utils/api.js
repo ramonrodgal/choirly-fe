@@ -4,14 +4,11 @@ const choirlyApi = axios.create({
   baseURL: "https://choirly.herokuapp.com/api",
 });
 
-export const getChoirs = (location) => {
+export const getChoirs = async (location) => {
   let path = `/choirs`;
-
   if (location) path += `?location=${location}`;
-
-  return choirlyApi.get(path).then((res) => {
-    return res.data.choirs;
-  });
+  const response = await choirlyApi.get(path);
+  return response.data.choirs;
 };
 
 export const postChoir = (body) => {
