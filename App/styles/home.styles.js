@@ -56,30 +56,6 @@ const styles = StyleSheet.create({
     width: 380,
     alignItems: "center",
   },
-  card: {
-    height: 100,
-    width: 330,
-    alignSelf: "center",
-    backgroundColor: "white",
-    padding: 5,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  shadowProp: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.5,
-    elevation: 6,
-  },
-  loc: {
-    fontWeight: "700",
-  },
-  choirTitle: {
-    fontWeight: "700",
-    color: "#586F7C",
-  },
-  choirDesc: {},
   seeMore: {
     color: "#BC9C22",
     alignSelf: "flex-start",
