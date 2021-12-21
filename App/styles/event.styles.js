@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  // CONTAINER AND BACKGROUND
   container: {
     flex: 1,
     alignItems: "center",
@@ -12,12 +11,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-
   eventCard: {
     marginTop: 10,
     backgroundColor: "#EDE5DA",
-    // borderWidth: 1,
-    // borderColor: 'red',
     width: 360,
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
@@ -47,13 +43,10 @@ const styles = StyleSheet.create({
     width: 30,
     marginRight: 20,
   },
-
-  // RESPONSE BUTTONS
   responseButtonContainer: {
     alignItems: "center",
     flexDirection: "row",
   },
-
   notGoingButton: {
     backgroundColor: "#C25527",
     padding: 10,
@@ -83,11 +76,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-
-  // ADD COMMENT
   addCommentContainer: {
-    // borderWidth: 1,
-    // borderColor: 'orange',
     width: 360,
     marginTop: 20,
   },
@@ -107,46 +96,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-
-  // COMMENTS
   commentsContainer: {
     paddingTop: 5,
   },
-  // commentCard: {
-  //   backgroundColor: "#EDE5DA",
-  //   borderRadius: 15,
-
-  // },
-  // commentTitle: {
-  //   backgroundColor: "#B2DED9",
-  //   flexDirection: "row",
-  // },
-
-  // commentTitleText: {
-  //   fontWeight: "700",
-  //   color: "black",
-  // },
-  // title: {
-  //   fontWeight: "700",
-  //   color: "#BD7D1E",
-  //   alignSelf: 'center'
-  // },
-  // commentContainer: {
-  //   justifyContent: "flex-start",
-  // },
-  // commentBody: {
-  //   color: "black",
-  //   fontSize: 12,
-  // },
-  // commentDate: {
-  //   color: "black",
-  //   fontSize: 10,
-  //   fontStyle: "italic",
-  // },
-
   commentCard: {
-    // borderWidth: 1,
-    // borderColor: 'red',
     backgroundColor: "#EBE2D8",
     marginBottom: 10,
     borderRadius: 8,
