@@ -21,15 +21,6 @@ export default function LoginScreen() {
 
   const handleSignUp = () => {
     navigation.navigate("Register", { email: email, password: password });
-    /*
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user;
-        navigation.navigate("Register"); // change this to nested
-      })
-      .catch((error) => alert(error.message));
-      */
   };
 
   const handleLogin = () => {
