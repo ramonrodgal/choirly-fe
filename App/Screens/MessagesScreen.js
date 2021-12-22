@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   ImageBackground,
-  Image,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { auth } from "../../firebase";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import ChoirSummary from "../components/ChoirSummary";
-import { getChoirById } from "../utils/api";
-import GetMessagesForChoir from "../components/GetMessagesForChoir";
-import styles from "../styles/messages.styles";
+import MessageCard from "../components/MessageCard";
 import LoadingWheel from "../components/LoadingWheel";
+import { getChoirById, getMessagesByChoirId } from "../utils/api";
+import { auth } from "../../firebase";
+import styles from "../styles/messages.styles";
 
 export default function MessagesScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
+  const { choirId } = route.params;
+
   const [isLoading, setIsLoading] = useState(true);
   const [choir, setChoir] = useState({});
-
-  const { choirId } = route.params;
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -31,11 +28,16 @@ export default function MessagesScreen({ navigation, route }) {
         setChoir(choir);
         setIsLoading(false);
       })
+      .then(() => {
+        return getMessagesByChoirId(choirId).then((messages) => {
+          setMessages(messages);
+        });
+      })
       .catch((err) => {
         setIsLoading(false);
         console.log(err);
       });
-  }, [choirId]);
+  }, []);
 
   if (isLoading) {
     return <LoadingWheel />;
@@ -50,7 +52,18 @@ export default function MessagesScreen({ navigation, route }) {
         <ChoirSummary navigation={navigation} choirId={choirId} />
 
         <View style={styles.messagesContainer}>
-          <GetMessagesForChoir choirId={choirId} navigation={navigation} />
+          <ScrollView>
+            {messages.map((message) => {
+              return (
+                <MessageCard
+                  key={message._id}
+                  message={message}
+                  navigation={navigation}
+                  choirId={choirId}
+                />
+              );
+            })}
+          </ScrollView>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -61,7 +74,7 @@ export default function MessagesScreen({ navigation, route }) {
                 navigation.navigate("CreateMessage");
               }}
             >
-              <Text stlye={styles.buttonTextMsg}>Create a post</Text>
+              <Text style={styles.buttonText}>Create a post</Text>
             </TouchableOpacity>
           ) : (
             <Text></Text>

@@ -133,7 +133,7 @@ export const postMessage = (body) => {
   });
 };
 
-export const getMessageByChoirId = (choir_id) => {
+export const getMessagesByChoirId = (choir_id) => {
   return choirlyApi.get(`messages/choir/${choir_id}`).then((res) => {
     return res.data.messages;
   });

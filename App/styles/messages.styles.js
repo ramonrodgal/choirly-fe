@@ -12,34 +12,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
-  topContainer: {
-    marginTop: 10,
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-start",
-  },
-  imageContainer: {
-    width: "40%",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  choirLogo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-  },
-  infoContainer: {
-    width: "60%",
-    flexDirection: "column",
-  },
-  title: {
-    fontWeight: "700",
-    color: "#BD7D1E",
-  },
-  choirInfo: {
-    color: "black",
-    fontSize: 13,
-  },
   buttonContainer: {
     flex: 1,
     alignItems: "center",
@@ -52,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
   },
-  buttonTextMsg: {
+  buttonText: {
     color: "black",
     fontWeight: "700",
     fontSize: 12,
@@ -60,6 +32,46 @@ const styles = StyleSheet.create({
   messagesContainer: {
     flex: 7,
     paddingTop: 30,
+    marginTop: 25,
+    width: 360,
+  },
+  //MESSAGE CARD
+  messageCard: {
+    marginTop: 10,
+    backgroundColor: "#EDE5DA",
+    borderRadius: 15,
+  },
+  titleContainer: {
+    backgroundColor: "#B2DED9",
+    flexDirection: "row",
+    padding: 5,
+    paddingLeft: 10,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  messageTitleText: {
+    fontWeight: "700",
+    color: "black",
+  },
+  messageContainer: {
+    justifyContent: "flex-start",
+    padding: 10,
+  },
+  messageBody: {
+    color: "black",
+    fontSize: 12,
+    backgroundColor: "#EBE2D8",
+  },
+  comments: {
+    fontSize: 12,
+    padding: 5,
+    paddingLeft: 10,
+  },
+  icon: {
+    height: 30,
+    width: 30,
+    marginLeft: 20,
+    marginTop: 7,
   },
 });
 
