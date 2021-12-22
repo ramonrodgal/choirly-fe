@@ -19,16 +19,9 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       navigation.navigate("Home");
-  //     }
-  //   });
-  //   return unsubscribe;
-  // }, []);
-
   const handleSignUp = () => {
+    navigation.navigate("Register", { email: email, password: password });
+    /*
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
@@ -36,6 +29,7 @@ export default function LoginScreen() {
         navigation.navigate("Register"); // change this to nested
       })
       .catch((error) => alert(error.message));
+      */
   };
 
   const handleLogin = () => {
