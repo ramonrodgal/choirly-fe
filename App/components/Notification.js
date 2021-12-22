@@ -5,10 +5,10 @@ import {
   postNotificationByUsername,
   addMemberToChoir,
 } from "../utils/api";
+import styles from "../styles/notifications.styles";
 
 export default function Notification({ notification }) {
   const [notificationObj, setNotificationObj] = useState(notification);
-  // const choirId = "61b9c9f3696b1d23594c6d1b";   //need to delete this later!
 
   useEffect(() => {
     const body = {
@@ -50,10 +50,7 @@ export default function Notification({ notification }) {
         console.log(err.response.data);
       });
   };
-  // console.log(
-  //   notificationObj,
-  //   "<<<<<<notification object does it have choir id?"
-  // );
+
   const handleReject = (notificationId) => {
     updateNotificationById(notificationId, { rejected: true })
       .then((notification) => {
@@ -158,35 +155,3 @@ export default function Notification({ notification }) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  date: {
-    fontSize: 12,
-    color: "#586F7C",
-  },
-  buttonAccept: {
-    borderRadius: 25,
-    backgroundColor: "#BC9C22",
-    color: "black",
-    margin: 10,
-    padding: 8,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    width: 250,
-    alignSelf: "center",
-  },
-  buttonReject: {
-    borderRadius: 25,
-    backgroundColor: "#BD611E",
-    color: "black",
-    margin: 10,
-    padding: 8,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: "700",
-    width: 250,
-    alignSelf: "center",
-  },
-});
