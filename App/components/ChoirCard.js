@@ -7,7 +7,7 @@ export default function ChoirCard({ choir, navigation }) {
   };
 
   return (
-    <View key={choir._id} style={[styles.card, styles.shadowProp]}>
+    <View style={[styles.card, styles.shadowProp]}>
       <Text
         style={styles.choirTitle}
         onPress={() => navigation.navigate("Choir", { choirId: choir._id })}
@@ -19,7 +19,9 @@ export default function ChoirCard({ choir, navigation }) {
         numberOfLines={2}
         ellipsizeMode="tail"
         style={styles.choirDesc}
-        onPress={() => navigation.navigate("Choir", { choirId: choir._id })}
+        onPress={() =>
+          navigation.navigate("Choir", { choirId: choir._id, choir: choir })
+        }
       >
         {choir.description}{" "}
       </Text>
