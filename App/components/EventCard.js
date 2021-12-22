@@ -11,7 +11,9 @@ export default function EventCard({ event }) {
     <View key={event._id} style={styles.eventCard}>
       <TouchableWithoutFeedback
         onPress={() => {
-          navigation.navigate("Event", { eventId: event._id });
+          navigation.navigate("Event", {
+            eventObj: event,
+          });
         }}
       >
         <View style={styles.eventTitle}>
