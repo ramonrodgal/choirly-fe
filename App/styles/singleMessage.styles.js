@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     width: "100%",
   },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
   topContainer: {
     flexDirection: "row",
     flexWrap: "wrap",

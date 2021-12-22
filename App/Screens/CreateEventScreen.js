@@ -19,6 +19,7 @@ import { postEventByChoir } from "../utils/api";
 import { NavigationContainer } from "@react-navigation/native";
 import { getChoirById } from "../utils/api";
 import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
+import Background from "../components/Background";
 import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/createEvent.styles";
 
@@ -133,10 +134,7 @@ export default function CreateEventScreen({ navigation, route }) {
   };
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <Text style={styles.title}>Create an event</Text>
         <Text style={styles.label}>Title:</Text>
@@ -330,8 +328,7 @@ export default function CreateEventScreen({ navigation, route }) {
             <Text style={styles.buttonTextLast}>Create an event</Text>
           </TouchableOpacity>
         )}
-        {/* </View> */}
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

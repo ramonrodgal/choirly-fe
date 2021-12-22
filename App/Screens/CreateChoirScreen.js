@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
+import Background from "../components/Background";
 import { useForm, Controller } from "react-hook-form";
 import { postChoir } from "../utils/api";
 import { auth } from "../../firebase";
@@ -56,10 +57,7 @@ export default function CreateChoirScreen({ navigation }) {
   };
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.titleContainer}>
@@ -170,6 +168,6 @@ export default function CreateChoirScreen({ navigation }) {
           </View>
         </ScrollView>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

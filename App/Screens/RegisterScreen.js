@@ -13,6 +13,7 @@ import { useForm, Controller } from "react-hook-form";
 import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
 import styles from "../styles/register.styles";
+import Background from "../components/Background";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export default function RegisterScreen({ navigation }) {
@@ -79,10 +80,7 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <ScrollView>
           <View style={styles.titleContainer}>
@@ -215,6 +213,6 @@ export default function RegisterScreen({ navigation }) {
           </View>
         </ScrollView>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

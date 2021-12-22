@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 0,
   },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
   titleContainer: {
     marginTop: 100,
     flex: 0.5,

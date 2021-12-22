@@ -7,10 +7,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingTop: 0,
   },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
   input: {
     backgroundColor: "#F0EFEC",
     height: 40,

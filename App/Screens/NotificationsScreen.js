@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  ScrollView,
-} from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import Notification from "../components/Notification";
 import { getNotificationByUsername } from "../utils/api";
 import { auth } from "../../firebase";
+import Background from "../components/Background";
 import styles from "../styles/notifications.styles";
 
 export default function NotificationsScreen() {
@@ -22,10 +17,7 @@ export default function NotificationsScreen() {
   }, []);
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <View style={styles.topName}>
           <Text style={styles.title}>Notifications</Text>
@@ -45,6 +37,6 @@ export default function NotificationsScreen() {
           </View>
         </ScrollView>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

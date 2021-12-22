@@ -16,7 +16,7 @@ import {
   postNotificationByUsername,
   getUserByUsername,
 } from "../utils/api";
-
+import Background from "../components/Background";
 import { auth } from "../../firebase";
 import { useForm, Controller } from "react-hook-form";
 import styles from "../styles/createMessage.styles";
@@ -54,11 +54,9 @@ export default function CreateMessageScreen({ route }) {
     };
     postMessage(body)
       .then((message) => {
-
         //RETURN TO PREVIUS PAGE
         setConfirmation("Your post has been created");
         members.forEach((member) => {
-
           const body = {
             username: member,
             choir: choirName,
@@ -104,10 +102,7 @@ export default function CreateMessageScreen({ route }) {
   }, []);
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         {/* //---------------------------------------------------------TOP CONTAINER */}
         <View style={styles.topContainer}>
@@ -187,6 +182,6 @@ export default function CreateMessageScreen({ route }) {
           </View>
         </View>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

@@ -8,9 +8,6 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     backgroundColor: "white",
   },
-  background: {
-    flex: 1,
-  },
   topName: {
     justifyContent: "flex-start",
   },
