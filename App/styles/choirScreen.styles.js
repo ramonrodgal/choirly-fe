@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   eventsContainer: {
-    flex: 2,
+    flex: 4,
   },
   eventCard: {
     marginTop: 10,
