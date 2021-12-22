@@ -6,10 +6,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
   topContainer: {
     flexDirection: "row",
     alignItems: "center",

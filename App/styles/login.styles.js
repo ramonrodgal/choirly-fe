@@ -6,12 +6,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
   },
-  background: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    alignContent: "center",
-  },
   logoContainer: {
     flex: 2,
     top: 70,

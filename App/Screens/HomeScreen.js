@@ -10,6 +10,7 @@ import { Picker } from "@react-native-picker/picker";
 import { ScrollView } from "react-native-gesture-handler";
 import { auth } from "../../firebase";
 import { getChoirs } from "../utils/api";
+import Background from "../components/Background";
 import styles from "../styles/home.styles";
 import LoadingWheel from "../components/LoadingWheel";
 import ChoirCard from "../components/ChoirCard";
@@ -38,10 +39,7 @@ export default function HomeScreen({ navigation }) {
   }
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.titleWelcome}>Hello {currentUser}! </Text>
@@ -91,6 +89,6 @@ export default function HomeScreen({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

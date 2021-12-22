@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import Background from "../components/Background";
 import { auth } from "../../firebase";
 import { useForm, Controller } from "react-hook-form";
 import { postNotificationByUsername } from "../utils/api";
@@ -49,10 +50,7 @@ export default function JoiningScreen({ route, navigation }) {
   // this submit function needs to change - might need separate for each button
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.topContainer}>
         <Image style={styles.choirLogo} source={{ uri: avatar }} />
       </View>
@@ -107,6 +105,6 @@ export default function JoiningScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       )}
-    </ImageBackground>
+    </Background>
   );
 }

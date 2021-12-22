@@ -14,6 +14,7 @@ import { auth } from "../../firebase";
 import { TextInput } from "react-native-gesture-handler";
 import styles from "../styles/singleMessage.styles";
 import LoadingWheel from "../components/LoadingWheel";
+import Background from "../components/Background";
 
 //WE NEED TO PASS THE MESSAGE ID NEXT NO NAVIGATION
 export default function SingleMessageScreen({ navigation, route }) {
@@ -65,10 +66,7 @@ export default function SingleMessageScreen({ navigation, route }) {
     return <LoadingWheel />;
   }
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         {/* //---------------------------------------------------------TOP CONTAINER */}
         <View style={styles.topContainer}>
@@ -167,6 +165,6 @@ export default function SingleMessageScreen({ navigation, route }) {
           })}
         </ScrollView>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }
