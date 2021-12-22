@@ -3,22 +3,20 @@ import {
   Text,
   View,
   ImageBackground,
-  Image,
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import GroupHeader from "../components/GroupHeader";
-import GetFilesForChoir from "../components/GetFilesForChoir";
-import { auth } from "../../firebase";
-import { getChoirById } from "../utils/api";
-import styles from "../styles/files.styles";
+import FileCard from "../components/FileCard";
 import LoadingWheel from "../components/LoadingWheel";
+import { getChoirById } from "../utils/api";
+import { auth } from "../../firebase";
+import styles from "../styles/files.styles";
 
 export default function FilesScreen({ navigation, route }) {
   const { choirId } = route.params;
   const username = auth.currentUser.displayName;
+
   const [isLoading, setIsLoading] = useState(true);
   const [choir, setChoir] = useState({});
 
@@ -33,7 +31,7 @@ export default function FilesScreen({ navigation, route }) {
         setIsLoading(false);
         console.log(err);
       });
-  }, [choirId]);
+  }, []);
 
   if (isLoading) {
     return <LoadingWheel />;
@@ -49,7 +47,11 @@ export default function FilesScreen({ navigation, route }) {
 
         <View style={styles.filesContainer}>
           <Text style={styles.title}>Recordings and Songsheets:</Text>
-          <GetFilesForChoir choirId={choirId} />
+          <ScrollView>
+            {choir.files.map((file) => {
+              return <FileCard key={file._id} file={file} />;
+            })}
+          </ScrollView>
         </View>
 
         {username === choir.leader ? (
