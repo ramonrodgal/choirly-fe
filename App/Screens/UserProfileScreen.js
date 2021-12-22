@@ -16,6 +16,7 @@ import { useFocusEffect } from "@react-navigation/core";
 import GetChoirNameById from "../components/GetChoirNameById";
 import styles from "../styles/userProfile.styles";
 import LoadingWheel from "../components/LoadingWheel";
+import Background from "../components/Background";
 
 export default function UserProfileScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
@@ -55,79 +56,80 @@ export default function UserProfileScreen({ navigation, route }) {
     // style={styles.background}
     // source={require("../assets/white-background.png")}
     // >
-    <View style={styles.container}>
-      {/* //--------------------------------------------------------------TOP NAME */}
-      {/* <View style={styles.topName}>
+    <Background>
+      <View style={styles.container}>
+        {/* //--------------------------------------------------------------TOP NAME */}
+        {/* <View style={styles.topName}>
         <Text style={styles.titleName}>{username}</Text>
       </View> */}
 
-      {/* //-------------------------------------------------------------AVATAR */}
-      <ImageBackground
-        style={styles.avatar}
-        imageStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
-        source={{
-          uri: "https://img.youtube.com/vi/2Gg6Seob5Mg/maxresdefault.jpg",
-        }}
-      >
-        {user.avatar_url ? (
-          <Image
-            style={styles.image}
-            source={{ uri: user.avatar_url }}
-            alt="Profile Image"
-          />
-        ) : (
-          <Image
-            style={styles.imageRandom}
-            source={{
-              uri: "https://static.wikia.nocookie.net/mrmen/images/6/69/Tickle_transparent.png/revision/latest/scale-to-width-down/262?cb=20200815230202",
-            }}
-            alt="Profile Image"
-          />
-        )}
-      </ImageBackground>
-
-      {/* //----------------------------------------------------------------NAME AND SURNAME */}
-      <View style={styles.nameSurname}>
-        <Text style={styles.title}>
-          {user.first_name} {user.last_name}
-        </Text>
-      </View>
-
-      {/* //----------------------------------------------------------------EDIT PROFILE BUTTON */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          onPress={() =>
-            navigation.navigate("EditProfile", {
-              username: username,
-              firstName: user.first_name,
-              lastName: user.last_name,
-              avatar: user.avatar_url,
-              about: user.about_me,
-              number: user.phone_number,
-            })
-          }
-          title="Edit Profile"
-          style={styles.button}
+        {/* //-------------------------------------------------------------AVATAR */}
+        <ImageBackground
+          style={styles.avatar}
+          imageStyle={{ borderTopLeftRadius: 20, borderTopRightRadius: 20 }}
+          source={{
+            uri: "https://img.youtube.com/vi/2Gg6Seob5Mg/maxresdefault.jpg",
+          }}
         >
-          <Text style={styles.buttonText}>Edit Profile</Text>
-        </TouchableOpacity>
-      </View>
+          {user.avatar_url ? (
+            <Image
+              style={styles.image}
+              source={{ uri: user.avatar_url }}
+              alt="Profile Image"
+            />
+          ) : (
+            <Image
+              style={styles.imageRandom}
+              source={{
+                uri: "https://static.wikia.nocookie.net/mrmen/images/6/69/Tickle_transparent.png/revision/latest/scale-to-width-down/262?cb=20200815230202",
+              }}
+              alt="Profile Image"
+            />
+          )}
+        </ImageBackground>
 
-      {/* //------------------------------------------------------------------ INFO */}
-      <ScrollView>
-        <Text style={styles.titleInfo}>ABOUT</Text>
-        <View style={[styles.basicInfo, styles.shadowProp]}>
-          <Text style={styles.about}>{user.about_me}</Text>
+        {/* //----------------------------------------------------------------NAME AND SURNAME */}
+        <View style={styles.nameSurname}>
+          <Text style={styles.title}>
+            {user.first_name} {user.last_name}
+          </Text>
         </View>
 
-        {/* <Text style={styles.titleInfo}>VOICE</Text>
+        {/* //----------------------------------------------------------------EDIT PROFILE BUTTON */}
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("EditProfile", {
+                username: username,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                avatar: user.avatar_url,
+                about: user.about_me,
+                number: user.phone_number,
+              })
+            }
+            title="Edit Profile"
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Edit Profile</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* //------------------------------------------------------------------ INFO */}
+        <ScrollView>
+          <Text style={styles.titleInfo}>ABOUT</Text>
+          <View style={[styles.basicInfo, styles.shadowProp]}>
+            <Text style={styles.about}>{user.about_me}</Text>
+          </View>
+
+          {/* <Text style={styles.titleInfo}>VOICE</Text>
         <View style={styles.voice}>
           <Text style={styles.about}>{user.voice}</Text>
         </View> */}
-        {/* commented out as nowhere to edit */}
+          {/* commented out as nowhere to edit */}
 
-        {/* <Text style={styles.titleInfo}>CHOIR GROUPS</Text> */}
-        {/* <View style={[styles.basicInfo, styles.shadowProp]}>
+          {/* <Text style={styles.titleInfo}>CHOIR GROUPS</Text> */}
+          {/* <View style={[styles.basicInfo, styles.shadowProp]}>
           {user.groups.length === 0 ? (
             <Text>You are not part of any choir groups yet.</Text>
           ) : (
@@ -137,36 +139,37 @@ export default function UserProfileScreen({ navigation, route }) {
           )}
         </View> */}
 
-        <Text style={styles.titleInfo}>find me on</Text>
+          <Text style={styles.titleInfo}>find me on</Text>
 
-        <View style={styles.iconContainer}>
-          <Image
-            style={styles.icon}
-            source={{
-              uri: "https://brandlogos.net/wp-content/uploads/2021/04/facebook-icon.png",
-            }}
-          />
-          <Image
-            style={styles.icon}
-            source={{
-              uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png",
-            }}
-          />
-          <Image
-            style={styles.icon}
-            source={{
-              uri: "https://cliply.co/wp-content/uploads/2019/04/371903520_SOCIAL_ICONS_YOUTUBE.png",
-            }}
-          />
+          <View style={styles.iconContainer}>
+            <Image
+              style={styles.icon}
+              source={{
+                uri: "https://brandlogos.net/wp-content/uploads/2021/04/facebook-icon.png",
+              }}
+            />
+            <Image
+              style={styles.icon}
+              source={{
+                uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/1024px-Instagram_icon.png",
+              }}
+            />
+            <Image
+              style={styles.icon}
+              source={{
+                uri: "https://cliply.co/wp-content/uploads/2019/04/371903520_SOCIAL_ICONS_YOUTUBE.png",
+              }}
+            />
+          </View>
+        </ScrollView>
+
+        {/* //-------------------------------------------------------------------SING OUT */}
+        <View style={styles.singOutButtonContainer}>
+          <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+            <Text style={styles.buttonText}>Sign out now</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
-
-      {/* //-------------------------------------------------------------------SING OUT */}
-      <View style={styles.singOutButtonContainer}>
-        <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-          <Text style={styles.buttonText}>Sign out now</Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </Background>
   );
 }

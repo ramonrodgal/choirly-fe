@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import GroupHeader from "../components/GroupHeader";
 import FileCard from "../components/FileCard";
+import Background from "../components/Background";
 import LoadingWheel from "../components/LoadingWheel";
 import { getChoirById } from "../utils/api";
 import { auth } from "../../firebase";
@@ -38,10 +33,7 @@ export default function FilesScreen({ navigation, route }) {
   }
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <GroupHeader choir={choir} />
 
@@ -62,6 +54,6 @@ export default function FilesScreen({ navigation, route }) {
           <></>
         )}
       </View>
-    </ImageBackground>
+    </Background>
   );
 }
