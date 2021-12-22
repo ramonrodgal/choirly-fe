@@ -13,7 +13,6 @@ import {
 import { auth } from "../../firebase";
 import { getUserByUsername } from "../utils/api";
 import { useFocusEffect } from "@react-navigation/core";
-import GetChoirNameById from "../components/GetChoirNameById";
 import styles from "../styles/userProfile.styles";
 import LoadingWheel from "../components/LoadingWheel";
 import Background from "../components/Background";
@@ -52,17 +51,8 @@ export default function UserProfileScreen({ navigation, route }) {
   }
 
   return (
-    // <ImageBackground
-    // style={styles.background}
-    // source={require("../assets/white-background.png")}
-    // >
     <Background>
       <View style={styles.container}>
-        {/* //--------------------------------------------------------------TOP NAME */}
-        {/* <View style={styles.topName}>
-        <Text style={styles.titleName}>{username}</Text>
-      </View> */}
-
         {/* //-------------------------------------------------------------AVATAR */}
         <ImageBackground
           style={styles.avatar}
@@ -121,23 +111,6 @@ export default function UserProfileScreen({ navigation, route }) {
           <View style={[styles.basicInfo, styles.shadowProp]}>
             <Text style={styles.about}>{user.about_me}</Text>
           </View>
-
-          {/* <Text style={styles.titleInfo}>VOICE</Text>
-        <View style={styles.voice}>
-          <Text style={styles.about}>{user.voice}</Text>
-        </View> */}
-          {/* commented out as nowhere to edit */}
-
-          {/* <Text style={styles.titleInfo}>CHOIR GROUPS</Text> */}
-          {/* <View style={[styles.basicInfo, styles.shadowProp]}>
-          {user.groups.length === 0 ? (
-            <Text>You are not part of any choir groups yet.</Text>
-          ) : (
-            user.groups.map((group) => {
-              return <GetChoirNameById key={group} choirId={group} />;
-            })
-          )}
-        </View> */}
 
           <Text style={styles.titleInfo}>find me on</Text>
 
