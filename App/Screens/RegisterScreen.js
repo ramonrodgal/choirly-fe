@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import {
   Text,
   View,
-  ImageBackground,
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Button,
-  Image,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { postUser } from "../utils/api";
@@ -16,9 +13,13 @@ import styles from "../styles/register.styles";
 import Background from "../components/Background";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
-export default function RegisterScreen({ navigation }) {
+export default function RegisterScreen({ navigation, route }) {
+  const { email, password } = route.params;
+
+  console.log(email, "EMAIL");
+  console.log(password, "PASSWORD");
+
   const [confirmation, setConfirmation] = useState("");
-  const email = auth.currentUser.email;
   const [imageUri, setImageUri] = useState("");
 
   const {
@@ -36,6 +37,7 @@ export default function RegisterScreen({ navigation }) {
   }); // all this is from useForm which is imported from react-hook-form
 
   const onSubmit = (data) => {
+    console.log("Hello World!");
     const body = {
       email: email,
       username: data.username,
@@ -43,11 +45,15 @@ export default function RegisterScreen({ navigation }) {
       last_name: data.last_name,
       phone_number: data.phone_number,
     };
-    postUser(body)
-      .then((user) => {
-        auth.currentUser.updateProfile({ displayName: user.username });
-        setConfirmation("Your profile has been created");
-        reset();
+
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        postUser(body).then((user) => {
+          auth.currentUser.updateProfile({ displayName: user.username });
+          setConfirmation("Your profile has been created");
+          reset();
+        });
       })
       .catch((err) => {
         console.log(err.response.data);
