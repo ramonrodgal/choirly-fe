@@ -1,42 +1,41 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import GroupHeader from "../components/GroupHeader";
-import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
-import { auth } from "../../firebase";
-import { getChoirById } from "../utils/api";
-import styles from "../styles/events.styles";
+import EventCard from "../components/EventCard";
 import LoadingWheel from "../components/LoadingWheel";
+import { getChoirById, getEventsByChoir } from "../utils/api";
+import { auth } from "../../firebase";
+import styles from "../styles/events.styles";
 
 export default function EventsScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
   const { choirId } = route.params;
-  const [isLoading, setIsLoading] = useState(true);
+
   const [choir, setChoir] = useState({});
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
     getChoirById(choirId)
       .then((choir) => {
         setChoir(choir);
-        setIsLoading(false);
       })
+      .then(
+        getEventsByChoir(choirId).then((events) => {
+          setEvents(events);
+          setIsLoading(false);
+        })
+      )
       .catch((err) => {
         setIsLoading(false);
         console.log(err);
       });
-  }, [choirId]);
+  }, []);
 
   if (isLoading) {
     return <LoadingWheel />;
   }
-
-  console.log(choir, "choir");
 
   return (
     <ImageBackground
@@ -48,8 +47,9 @@ export default function EventsScreen({ navigation, route }) {
 
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
-
-          <GetEventsForChoirGroup choirId={choirId} navigation={navigation} />
+          {events.map((event) => {
+            return <EventCard event={event} />;
+          })}
         </View>
 
         <View style={styles.buttonContainer}>
