@@ -4,20 +4,18 @@ import {
   Text,
   View,
   Image,
-  SafeAreaView,
-  Button,
   TouchableOpacity,
   ImageBackground,
   ScrollView,
 } from "react-native";
 import { auth } from "../../firebase";
 import { getUserByUsername } from "../utils/api";
-import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/userProfile.styles";
 import LoadingWheel from "../components/LoadingWheel";
 import Background from "../components/Background";
 
-export default function UserProfileScreen({ navigation, route }) {
+export default function UserProfileScreen() {
+  const navigation = useNavigation();
   const username = auth.currentUser.displayName;
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState({});
@@ -31,20 +29,18 @@ export default function UserProfileScreen({ navigation, route }) {
       .catch((error) => alert(error.message));
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      setIsLoading(true);
-      getUserByUsername(username)
-        .then((user) => {
-          setUser(user);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          console.log(err);
-        });
-    }, [username])
-  );
+  useEffect(() => {
+    setIsLoading(true);
+    getUserByUsername(username)
+      .then((user) => {
+        setUser(user);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsLoading(false);
+      });
+  }, []);
 
   if (isLoading) {
     return <LoadingWheel />;
