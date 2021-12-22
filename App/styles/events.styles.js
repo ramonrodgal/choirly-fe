@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
   eventContainer: {
     paddingLeft: 40,
     justifyContent: "flex-start",
+    marginBottom: 5,
   },
   eventBody: {
     color: "black",
