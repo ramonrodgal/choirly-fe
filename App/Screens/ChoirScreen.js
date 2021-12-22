@@ -1,35 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Image, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { getChoirById } from "../utils/api";
+import { getEventsByChoir } from "../utils/api";
 import GetEventsForChoir from "../components/GetEventsForChoir";
 import Background from "../components/Background";
 import styles from "../styles/choirScreen.styles";
 import LoadingWheel from "../components/LoadingWheel";
 
 export default function ChoirScreen({ route, navigation }) {
-  const { choirId } = route.params;
+  const { choirId, choir } = route.params;
 
-  const [choir, setChoir] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [events, setEvents] = useState([]);
 
-  const capitalizeFirstLetter = (
-    [first, ...rest],
-    locale = navigator.language
-  ) => first.toLocaleUpperCase(locale) + rest.join("");
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
   useEffect(() => {
     setIsLoading(true);
-    getChoirById(choirId)
-      .then((choir) => {
-        setChoir(choir);
+    getEventsByChoir(choir._id)
+      .then((events) => {
+        setEvents(events);
         setIsLoading(false);
       })
       .catch((err) => {
-        setIsLoading(false);
         console.log(err);
+        setIsLoading(false);
       });
-  }, [choirId]);
+  }, []);
 
   if (isLoading) {
     return <LoadingWheel />;
