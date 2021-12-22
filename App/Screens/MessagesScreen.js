@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import ChoirSummary from "../components/ChoirSummary";
+import GroupHeader from "../components/GroupHeader";
 import MessageCard from "../components/MessageCard";
 import LoadingWheel from "../components/LoadingWheel";
 import { getChoirById, getMessagesByChoirId } from "../utils/api";
@@ -49,7 +49,7 @@ export default function MessagesScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} choirId={choirId} />
+        <GroupHeader choir={choir} />
 
         <View style={styles.messagesContainer}>
           <ScrollView>

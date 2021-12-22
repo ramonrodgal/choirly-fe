@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import ChoirSummary from "../components/ChoirSummary";
+import GroupHeader from "../components/GroupHeader";
 import GetFilesForChoir from "../components/GetFilesForChoir";
 import { auth } from "../../firebase";
 import { getChoirById } from "../utils/api";
@@ -45,7 +45,7 @@ export default function FilesScreen({ navigation, route }) {
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} choirId={choirId} />
+        <GroupHeader choir={choir} />
 
         <View style={styles.filesContainer}>
           <Text style={styles.title}>Recordings and Songsheets:</Text>

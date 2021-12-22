@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import ChoirSummary from "../components/ChoirSummary";
+import GroupHeader from "../components/GroupHeader";
 import GetEventsForChoirGroup from "../components/GetEventsForChoirGroup";
 import { auth } from "../../firebase";
 import { getChoirById } from "../utils/api";
@@ -36,13 +36,15 @@ export default function EventsScreen({ navigation, route }) {
     return <LoadingWheel />;
   }
 
+  console.log(choir, "choir");
+
   return (
     <ImageBackground
       style={styles.background}
       source={require("../assets/white-background.png")}
     >
       <View style={styles.container}>
-        <ChoirSummary navigation={navigation} choirId={choirId} />
+        <GroupHeader choir={choir} />
 
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
