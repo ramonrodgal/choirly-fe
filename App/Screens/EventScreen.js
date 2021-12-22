@@ -1,41 +1,22 @@
-import React, { useState, useCallback, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  Image,
-  ScrollView,
-  TextInput,
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Image, ScrollView, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
-import { addUserToEvent, getEventById } from "../utils/api";
-import { useFocusEffect } from "@react-navigation/core";
+import { addUserToEvent } from "../utils/api";
+import Background from "../components/Background";
 import { auth } from "../../firebase";
 import styles from "../styles/event.styles";
 
 export default function EventScreen({ route, navigation }) {
-  const { eventId, choirId } = route.params;
+  const { eventObj } = route.params;
   const username = auth.currentUser.displayName;
 
-  const [event, setEvent] = useState({
-    date: "",
-    comments: [],
-    going: [],
-    not_going: [],
-  });
+  const [event, setEvent] = useState(eventObj);
+
   const [going, setGoing] = useState();
 
   useEffect(() => {
-    getEventById(eventId)
-      .then((event) => {
-        setEvent(event);
-        setGoing(event.going.includes(username));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setGoing(event.going.includes(username));
   }, [going]);
 
   function handleGoing() {
@@ -61,10 +42,7 @@ export default function EventScreen({ route, navigation }) {
   }
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <View style={styles.eventCard}>
           <View style={styles.eventTitle}>
@@ -75,7 +53,6 @@ export default function EventScreen({ route, navigation }) {
 
             <Text style={styles.eventTitleText}>{event.title}</Text>
           </View>
-
 
           <View style={styles.eventContainer}>
             <Text style={styles.eventBody}>Location: {event.location}</Text>
@@ -179,6 +156,6 @@ export default function EventScreen({ route, navigation }) {
           </ScrollView>
         </View>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }
