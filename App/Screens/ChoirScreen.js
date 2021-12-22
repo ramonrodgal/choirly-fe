@@ -1,15 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { getChoirById } from "../utils/api";
 import GetEventsForChoir from "../components/GetEventsForChoir";
+import Background from "../components/Background";
 import styles from "../styles/choirScreen.styles";
 import LoadingWheel from "../components/LoadingWheel";
 
@@ -42,10 +36,7 @@ export default function ChoirScreen({ route, navigation }) {
   }
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <View style={styles.topContainer}>
           <View style={styles.imageContainer}>
@@ -107,6 +98,6 @@ export default function ChoirScreen({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

@@ -7,10 +7,6 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 0,
   },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
   eventCard: {
     marginTop: 10,
     backgroundColor: "#EDE5DA",

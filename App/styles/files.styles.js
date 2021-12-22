@@ -8,10 +8,6 @@ const styles = StyleSheet.create({
     padding: 15,
     paddingTop: 0,
   },
-  background: {
-    flex: 1,
-    alignItems: "center",
-  },
   topContainer: {
     marginTop: 10,
     flex: 1,
@@ -45,9 +41,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   iconContainer: {
-    width: "10%",
+    width: 35,
     alignItems: "center",
     justifyContent: "center",
+    alignContent: "center",
   },
   icon: {
     height: 30,
@@ -67,6 +64,11 @@ const styles = StyleSheet.create({
   fileContainer: {
     flexDirection: "row",
     width: "100%",
+    backgroundColor: "#B8DBD9",
+    marginVertical: 10,
+    padding: 8,
+    borderTopEndRadius: 15,
+    borderBottomEndRadius: 15,
   },
   button: {
     backgroundColor: "#BD7D1E",
@@ -79,6 +81,10 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "700",
     fontSize: 14,
+  },
+  downloadContainer: {
+    alignSelf: "flex-end",
+    marginLeft: 10,
   },
 });
 

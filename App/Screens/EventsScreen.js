@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ImageBackground, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import GroupHeader from "../components/GroupHeader";
 import EventCard from "../components/EventCard";
+import Background from "../components/Background";
 import LoadingWheel from "../components/LoadingWheel";
 import { getChoirById, getEventsByChoir } from "../utils/api";
 import { auth } from "../../firebase";
@@ -38,17 +39,14 @@ export default function EventsScreen({ navigation, route }) {
   }
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <GroupHeader choir={choir} />
 
         <View style={styles.eventsContainer}>
           <Text style={styles.title}>Upcoming events:</Text>
           {events.map((event) => {
-            return <EventCard event={event} />;
+            return <EventCard key={event._id} event={event} />;
           })}
         </View>
 
@@ -70,6 +68,6 @@ export default function EventsScreen({ navigation, route }) {
           )}
         </View>
       </View>
-    </ImageBackground>
+    </Background>
   );
 }

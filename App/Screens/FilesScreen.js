@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ImageBackground,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import GroupHeader from "../components/GroupHeader";
-import GetFilesForChoir from "../components/GetFilesForChoir";
-import { auth } from "../../firebase";
-import { getChoirById } from "../utils/api";
-import styles from "../styles/files.styles";
+import FileCard from "../components/FileCard";
+import Background from "../components/Background";
 import LoadingWheel from "../components/LoadingWheel";
+import { getChoirById } from "../utils/api";
+import { auth } from "../../firebase";
+import styles from "../styles/files.styles";
 
 export default function FilesScreen({ navigation, route }) {
   const { choirId } = route.params;
   const username = auth.currentUser.displayName;
+
   const [isLoading, setIsLoading] = useState(true);
   const [choir, setChoir] = useState({});
 
@@ -33,23 +26,24 @@ export default function FilesScreen({ navigation, route }) {
         setIsLoading(false);
         console.log(err);
       });
-  }, [choirId]);
+  }, []);
 
   if (isLoading) {
     return <LoadingWheel />;
   }
 
   return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/white-background.png")}
-    >
+    <Background>
       <View style={styles.container}>
         <GroupHeader choir={choir} />
 
         <View style={styles.filesContainer}>
           <Text style={styles.title}>Recordings and Songsheets:</Text>
-          <GetFilesForChoir choirId={choirId} />
+          <ScrollView>
+            {choir.files.map((file) => {
+              return <FileCard key={file._id} file={file} />;
+            })}
+          </ScrollView>
         </View>
 
         {username === choir.leader ? (
@@ -60,6 +54,6 @@ export default function FilesScreen({ navigation, route }) {
           <></>
         )}
       </View>
-    </ImageBackground>
+    </Background>
   );
 }
