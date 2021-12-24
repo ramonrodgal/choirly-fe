@@ -11,11 +11,13 @@ import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
 import styles from "../styles/register.styles";
 import Background from "../components/Background";
+import LoadingWheel from "../components/LoadingWheel";
 
 export default function RegisterScreen({ navigation, route }) {
   const { email, password } = route.params;
 
   const [confirmation, setConfirmation] = useState("");
+  const [isLoading, setIsloading] = useState(false);
 
   const {
     control,
@@ -32,6 +34,8 @@ export default function RegisterScreen({ navigation, route }) {
   }); // all this is from useForm which is imported from react-hook-form
 
   const onSubmit = (data) => {
+    setIsloading(true);
+
     const body = {
       email: email,
       username: data.username,
@@ -46,6 +50,7 @@ export default function RegisterScreen({ navigation, route }) {
         postUser(body).then((user) => {
           auth.currentUser.updateProfile({ displayName: user.username });
           setConfirmation("Your profile has been created");
+          setIsloading(false);
           navigation.navigate("drawer", { screen: "Home" });
           reset();
         });
@@ -54,6 +59,8 @@ export default function RegisterScreen({ navigation, route }) {
         console.log(err.response.data);
       });
   };
+
+  if (isLoading) return <LoadingWheel />;
 
   return (
     <Background>
