@@ -89,16 +89,14 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 12,
   },
-
   bottomContainer: {
     alignItems: "center",
     flex: 2,
   },
   button: {
     backgroundColor: "#BC9C22",
-    width: "60%",
-    padding: 15,
-    borderRadius: 25,
+    padding: 10,
+    borderRadius: 20,
     alignItems: "center",
     marginTop: 10,
   },
