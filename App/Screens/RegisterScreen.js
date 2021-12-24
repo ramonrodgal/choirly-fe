@@ -11,16 +11,11 @@ import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
 import styles from "../styles/register.styles";
 import Background from "../components/Background";
-import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 
 export default function RegisterScreen({ navigation, route }) {
   const { email, password } = route.params;
 
-  console.log(email, "EMAIL");
-  console.log(password, "PASSWORD");
-
   const [confirmation, setConfirmation] = useState("");
-  const [imageUri, setImageUri] = useState("");
 
   const {
     control,
@@ -37,7 +32,6 @@ export default function RegisterScreen({ navigation, route }) {
   }); // all this is from useForm which is imported from react-hook-form
 
   const onSubmit = (data) => {
-    console.log("Hello World!");
     const body = {
       email: email,
       username: data.username,
@@ -52,37 +46,13 @@ export default function RegisterScreen({ navigation, route }) {
         postUser(body).then((user) => {
           auth.currentUser.updateProfile({ displayName: user.username });
           setConfirmation("Your profile has been created");
+          navigation.navigate("drawer", { screen: "Home" });
           reset();
         });
       })
       .catch((err) => {
         console.log(err.response.data);
       });
-  };
-
-  choosePhoto = () => {
-    let options = {
-      storageOptions: {
-        path: "images",
-        mediaType: "photo",
-      },
-      includeBase64: true,
-    };
-
-    launchImageLibrary(options, (response) => {
-      console.log("Response = ", response);
-      if (response.didCancel) {
-        console.log("User cancelled image picker");
-      } else if (response.error) {
-        console.log("ImagePicker Error: ", response.error);
-      } else if (response.customButton) {
-        console.log("User tapped custom button: ", response.customButton);
-      } else {
-        // you can display an image using data:
-        const source = { uri: "data:image/jpeg;base64," + response.base64 };
-        setImageUri(source);
-      }
-    });
   };
 
   return (
@@ -92,20 +62,6 @@ export default function RegisterScreen({ navigation, route }) {
           <View style={styles.titleContainer}>
             <Text style={styles.title}>Add more details</Text>
           </View>
-
-          {/* //----------------------------------------------------------------------CAMERA */}
-          {/* <View style={{ alignItems: 'center'}}>
-          <TouchableOpacity
-                  title="Submit"
-                  onPress={() => {
-                    choosePhoto()
-                  }}
-                  style={styles.photoButton}
-                >
-                  <Text style={styles.buttonText}>Choose a photo</Text>
-                </TouchableOpacity>
-            <Image source={imageUri} style={{ height: 80, width: 80, borderRadius: 75 }} />
-          </View> */}
 
           <View style={styles.formContainer}>
             <Text style={styles.label}>Username *</Text>
