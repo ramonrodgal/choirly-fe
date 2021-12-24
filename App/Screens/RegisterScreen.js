@@ -1,21 +1,17 @@
 import React, { useState } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { useForm } from "react-hook-form";
 import { postUser } from "../utils/api";
 import { auth } from "../../firebase";
 import styles from "../styles/register.styles";
 import Background from "../components/Background";
+import LoadingWheel from "../components/LoadingWheel";
+import InputText from "../components/form/InputText";
 
 export default function RegisterScreen({ navigation, route }) {
   const { email, password } = route.params;
 
-  const [confirmation, setConfirmation] = useState("");
+  const [isLoading, setIsloading] = useState(false);
 
   const {
     control,
@@ -29,9 +25,11 @@ export default function RegisterScreen({ navigation, route }) {
       last_name: "",
       phone_number: "",
     },
-  }); // all this is from useForm which is imported from react-hook-form
+  });
 
   const onSubmit = (data) => {
+    setIsloading(true);
+
     const body = {
       email: email,
       username: data.username,
@@ -45,13 +43,13 @@ export default function RegisterScreen({ navigation, route }) {
       .then(() => {
         postUser(body).then((user) => {
           auth.currentUser.updateProfile({ displayName: user.username });
-          setConfirmation("Your profile has been created");
-          navigation.navigate("drawer", { screen: "Home" });
           reset();
+          setIsloading(false);
+          navigation.navigate("drawer", { screen: "Home" });
         });
       })
       .catch((err) => {
-        console.log(err.response.data);
+        console.log(err);
       });
   };
 
@@ -64,103 +62,43 @@ export default function RegisterScreen({ navigation, route }) {
           </View>
 
           <View style={styles.formContainer}>
-            <Text style={styles.label}>Username *</Text>
-            <Controller
+            <InputText
+              label={"Username *"}
+              placeholder={"username"}
+              name={"username"}
+              errorMessage={"Username is required."}
+              errors={errors}
               control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  style={styles.input}
-                  placeholder="username"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="username"
             />
-            {errors.username && (
-              <Text style={styles.warning}>Username is required.</Text>
-            )}
-
-            <Text style={styles.label}>First name *</Text>
-            <Controller
+            <InputText
+              label={"First name *"}
+              placeholder={"Enter your first name here"}
+              name={"first_name"}
+              errors={errors}
+              errorMessage={"First name is required."}
               control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your first name here"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="first_name"
             />
-            {errors.first_name && (
-              <Text style={styles.warning}>First name is required.</Text>
-            )}
-
-            <Text style={styles.label}>Last name *</Text>
-            <Controller
+            <InputText
+              label={"Last name *"}
+              placeholder={"Enter your last name here"}
+              name={"last_name"}
+              errors={errors}
+              errorMessage={"Last name is required."}
               control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your last name here"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="last_name"
             />
-            {errors.last_name && (
-              <Text style={styles.warning}>Last name is required.</Text>
-            )}
-
-            <Text style={styles.label}>
-              Phone number (don't worry, we won't make it publically visible)
-            </Text>
-            <Controller
+            <InputText
+              label={"Phone number"}
+              placeholder={"Enter your phone number here"}
+              name={"phone_number"}
+              errors={errors}
+              errorMessage={"Phone Number is required."}
               control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <TextInput
-                  style={styles.input}
-                  placeholder="Enter your phone number here"
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="phone_number"
             />
           </View>
           <Text style={styles.label}>* Required fields</Text>
           <View style={styles.buttonContainer}>
-            {confirmation ? (
-              <View>
-                <Text>{confirmation}</Text>
-                <TouchableOpacity
-                  style={styles.yellowButton}
-                  onPress={() => {
-                    navigation.navigate("drawer", { screen: "Profile" });
-                  }}
-                >
-                  <Text style={styles.buttonText}>See profile</Text>
-                </TouchableOpacity>
-              </View>
+            {isLoading ? (
+              <LoadingWheel />
             ) : (
               <View style={styles.requestContainer}>
                 <TouchableOpacity
