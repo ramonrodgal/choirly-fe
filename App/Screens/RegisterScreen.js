@@ -60,8 +60,6 @@ export default function RegisterScreen({ navigation, route }) {
       });
   };
 
-  if (isLoading) return <LoadingWheel />;
-
   return (
     <Background>
       <View style={styles.container}>
@@ -156,19 +154,7 @@ export default function RegisterScreen({ navigation, route }) {
           </View>
           <Text style={styles.label}>* Required fields</Text>
           <View style={styles.buttonContainer}>
-            {confirmation ? (
-              <View>
-                <Text>{confirmation}</Text>
-                <TouchableOpacity
-                  style={styles.yellowButton}
-                  onPress={() => {
-                    navigation.navigate("drawer", { screen: "Profile" });
-                  }}
-                >
-                  <Text style={styles.buttonText}>See profile</Text>
-                </TouchableOpacity>
-              </View>
-            ) : (
+            {isLoading ?  <LoadingWheel/> :
               <View style={styles.requestContainer}>
                 <TouchableOpacity
                   title="Submit"
