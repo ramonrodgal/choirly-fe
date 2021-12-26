@@ -3,14 +3,8 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Alert,
-  SafeAreaView,
   Platform,
-  Image,
-  ImageBackground,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
 import { useForm } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -22,7 +16,6 @@ import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/createEvent.styles";
 import InputText from "../components/form/InputText";
 import TextArea from "../components/form/TextArea";
-import DatePicker from "../components/form/DatePicker";
 
 export default function CreateEventScreen({ navigation, route }) {
   const { choirId, choirName } = route.params;
@@ -47,7 +40,6 @@ export default function CreateEventScreen({ navigation, route }) {
     { label: "Other", value: "other" },
   ]);
 
-  // submitted state
   const [submitted, setSubmitted] = useState(false);
 
   useFocusEffect(
@@ -55,13 +47,11 @@ export default function CreateEventScreen({ navigation, route }) {
       const durationMilliseconds = endTime - startTime;
       const durationHours = Math.floor(
         (durationMilliseconds % 86400000) / 3600000
-      ); // hours
+      );
       const durationMins = Math.round(
         ((durationMilliseconds % 86400000) % 3600000) / 60000
-      ); // minutes
-      // this sometimes gives 59 mins instead of 1 hour so may want to try out other method
+      );
 
-      // deals with singular/plural
       let h;
       if (durationHours === 1) {
         h = "1 hour ";
@@ -71,7 +61,6 @@ export default function CreateEventScreen({ navigation, route }) {
         h = "";
       }
 
-      // deals with singular/plural
       let m;
       if (durationMins === 1) {
         m = "1 minute";
@@ -81,7 +70,6 @@ export default function CreateEventScreen({ navigation, route }) {
         m = "";
       }
 
-      // combining the date with the start time
       const dateString = date.toISOString().slice(0, 11);
       const timeString = startTime.toISOString().slice(11);
       const finalDate = new Date(`${dateString}${timeString}`);
@@ -109,7 +97,6 @@ export default function CreateEventScreen({ navigation, route }) {
     setEndTimeOpen(false);
   };
 
-  // from react-hook-form
   const {
     control,
     handleSubmit,
@@ -159,8 +146,6 @@ export default function CreateEventScreen({ navigation, route }) {
           required={true}
         />
 
-        {/* //-------------------------------------------------------------TIME AND DATE */}
-
         <View style={styles.circles}>
           {Platform.OS === "ios" || dateOpen ? (
             <View style={styles.date}>
@@ -189,24 +174,6 @@ export default function CreateEventScreen({ navigation, route }) {
             </TouchableOpacity>
           )}
 
-          <DatePicker
-            featherName={"calendar"}
-            color={"#586F7C"}
-            onPress={setDateOpen}
-            text={date.toString().slice(4, 15)}
-          />
-
-          {/*
-            <DatePicker
-              featherName={"clock"}
-              color={"#586F7C"}
-              value={startTime}
-              mode={"time"}
-              onChange={startTimeChange}
-              onPress={setStartTimeOpen}
-              state={startTimeOpen}
-            />
-            */}
           {Platform.OS === "ios" || startTimeOpen ? (
             <View style={styles.time}>
               <DateTimePicker
