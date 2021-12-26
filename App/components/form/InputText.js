@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import { Text, View, TextInput } from "react-native";
 import { Controller } from "react-hook-form";
 import styles from "../../styles/register.styles";
 
