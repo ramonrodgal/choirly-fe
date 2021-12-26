@@ -10,6 +10,7 @@ export default function InputText({
   errors,
   errorMessage,
   control,
+  required = false,
 }) {
   return (
     <View>
@@ -17,7 +18,7 @@ export default function InputText({
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: required,
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
