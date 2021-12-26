@@ -69,6 +69,7 @@ export default function RegisterScreen({ navigation, route }) {
               errorMessage={"Username is required."}
               errors={errors}
               control={control}
+              required={true}
             />
             <InputText
               label={"First name *"}
@@ -77,6 +78,7 @@ export default function RegisterScreen({ navigation, route }) {
               errors={errors}
               errorMessage={"First name is required."}
               control={control}
+              required={true}
             />
             <InputText
               label={"Last name *"}
@@ -85,6 +87,7 @@ export default function RegisterScreen({ navigation, route }) {
               errors={errors}
               errorMessage={"Last name is required."}
               control={control}
+              required={true}
             />
             <InputText
               label={"Phone number"}
@@ -93,6 +96,7 @@ export default function RegisterScreen({ navigation, route }) {
               errors={errors}
               errorMessage={"Phone Number is required."}
               control={control}
+              required={true}
             />
           </View>
           <Text style={styles.label}>* Required fields</Text>

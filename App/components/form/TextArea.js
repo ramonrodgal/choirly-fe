@@ -3,7 +3,7 @@ import { Text, View, TextInput } from "react-native";
 import { Controller } from "react-hook-form";
 import styles from "../../styles/register.styles";
 
-export default function InputText({
+export default function TextArea({
   label,
   placeholder,
   name,
@@ -11,6 +11,7 @@ export default function InputText({
   errorMessage,
   control,
   required = false,
+  multiline = true,
 }) {
   return (
     <View>
@@ -22,11 +23,12 @@ export default function InputText({
         }}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
-            style={styles.input}
+            style={styles.inputDesc}
             placeholder={placeholder}
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
+            multiline={multiline}
           />
         )}
         name={name}
