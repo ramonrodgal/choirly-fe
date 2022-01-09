@@ -3,25 +3,19 @@ import {
   Text,
   View,
   TextInput,
-  Button,
-  Alert,
-  SafeAreaView,
   Platform,
-  Image,
-  ImageBackground,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import { postEventByChoir } from "../utils/api";
-import { NavigationContainer } from "@react-navigation/native";
-import { getChoirById } from "../utils/api";
-import { FontAwesome, Ionicons, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import Background from "../components/Background";
 import { useFocusEffect } from "@react-navigation/core";
 import styles from "../styles/createEvent.styles";
+import InputText from "../components/form/InputText";
+import TextArea from "../components/form/TextArea";
 
 export default function CreateEventScreen({ navigation, route }) {
   const { choirId, choirName } = route.params;
@@ -46,7 +40,6 @@ export default function CreateEventScreen({ navigation, route }) {
     { label: "Other", value: "other" },
   ]);
 
-  // submitted state
   const [submitted, setSubmitted] = useState(false);
 
   useFocusEffect(
@@ -54,13 +47,11 @@ export default function CreateEventScreen({ navigation, route }) {
       const durationMilliseconds = endTime - startTime;
       const durationHours = Math.floor(
         (durationMilliseconds % 86400000) / 3600000
-      ); // hours
+      );
       const durationMins = Math.round(
         ((durationMilliseconds % 86400000) % 3600000) / 60000
-      ); // minutes
-      // this sometimes gives 59 mins instead of 1 hour so may want to try out other method
+      );
 
-      // deals with singular/plural
       let h;
       if (durationHours === 1) {
         h = "1 hour ";
@@ -70,7 +61,6 @@ export default function CreateEventScreen({ navigation, route }) {
         h = "";
       }
 
-      // deals with singular/plural
       let m;
       if (durationMins === 1) {
         m = "1 minute";
@@ -80,7 +70,6 @@ export default function CreateEventScreen({ navigation, route }) {
         m = "";
       }
 
-      // combining the date with the start time
       const dateString = date.toISOString().slice(0, 11);
       const timeString = startTime.toISOString().slice(11);
       const finalDate = new Date(`${dateString}${timeString}`);
@@ -108,7 +97,6 @@ export default function CreateEventScreen({ navigation, route }) {
     setEndTimeOpen(false);
   };
 
-  // from react-hook-form
   const {
     control,
     handleSubmit,
@@ -137,47 +125,28 @@ export default function CreateEventScreen({ navigation, route }) {
     <Background>
       <View style={styles.container}>
         <Text style={styles.title}>Create an event</Text>
-        <Text style={styles.label}>Title:</Text>
-        <Controller
-          control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              placeholder="Enter a title for your event here"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="title"
-        />
-        {errors.title && <Text>A title is required.</Text>}
 
-        <Text style={styles.label}>Location:</Text>
-        <Controller
+        <InputText
+          label={"Title:"}
+          placeholder={"Enter a title for your event here"}
+          name={"title"}
+          errorMessage={"A title is required."}
+          errors={errors}
           control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.input}
-              placeholder="Enter a location here"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="location"
+          required={true}
         />
-        {errors.location && <Text>A location is required.</Text>}
 
-        {/* //-------------------------------------------------------------TIME AND DATE */}
+        <InputText
+          label={"Location:"}
+          placeholder={"Enter a location here"}
+          name={"location"}
+          errorMessage={"A location is required."}
+          errors={errors}
+          control={control}
+          required={true}
+        />
+
         <View style={styles.circles}>
-          {/* <Text style={styles.label}>Date: {date.toString().slice(0, 15)}</Text> */}
           {Platform.OS === "ios" || dateOpen ? (
             <View style={styles.date}>
               <DateTimePicker
@@ -198,7 +167,6 @@ export default function CreateEventScreen({ navigation, route }) {
                 setDateOpen(true);
               }}
             >
-              {/* <Text style={styles.buttonText}>Choose a date</Text> */}
               <Text style={styles.buttonText}>
                 {date.toString().slice(4, 15)}
               </Text>
@@ -206,19 +174,14 @@ export default function CreateEventScreen({ navigation, route }) {
             </TouchableOpacity>
           )}
 
-          {/* <Text style={styles.label}>
-        Start time: {startTime.toString().slice(16, 21)}
-      </Text> */}
           {Platform.OS === "ios" || startTimeOpen ? (
             <View style={styles.time}>
               <DateTimePicker
                 value={startTime}
                 onDateChange={setStartTime}
-                // is24Hour={true}
                 display="default"
                 onChange={startTimeChange}
                 mode="time"
-                // minuteInterval="5"
               />
               <Text style={styles.buttonText}>
                 From {startTime.toString().slice(16, 21)}
@@ -239,20 +202,15 @@ export default function CreateEventScreen({ navigation, route }) {
             </TouchableOpacity>
           )}
 
-          {/* <Text style={styles.label}>
-        End time: {endTime.toString().slice(16, 21)}
-      </Text> */}
           {Platform.OS === "ios" || endTimeOpen ? (
             <View style={styles.endTime}>
               <DateTimePicker
                 value={endTime}
                 onDateChange={setEndTime}
-                // is24Hour={true}
                 display="default"
                 onChange={endTimeChange}
                 mode="time"
                 minimumDate={startTime}
-                // minuteInterval="5"
               />
               <Text style={styles.buttonText}>
                 Until {endTime.toString().slice(16, 21)}
@@ -273,8 +231,7 @@ export default function CreateEventScreen({ navigation, route }) {
             </TouchableOpacity>
           )}
         </View>
-        {/* <Text>Duration: {duration}</Text> */}
-        {/* //------------------------------------------------------------TYPE OF EVENT */}
+
         <Text style={styles.labelType}>Type of event:</Text>
         <DropDownPicker
           style={styles.dropdown}
@@ -287,26 +244,16 @@ export default function CreateEventScreen({ navigation, route }) {
           placeholder="Rehearsal"
         />
 
-        <Text style={styles.labelDetails}>Details:</Text>
-        <Controller
+        <TextArea
+          label={"Details:"}
+          placeholder={"Enter a description here"}
+          name={"details"}
+          errorMessage={"Details about the event are required."}
+          errors={errors}
           control={control}
-          rules={{
-            required: true,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              style={styles.inputDetails}
-              placeholder="Enter a description here"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-          name="details"
+          required={true}
         />
-        {errors.details && <Text>Details about the event are required.</Text>}
 
-        {/* <View style={styles.button}> */}
         {submitted ? (
           <View>
             <Text>Your event has been created</Text>

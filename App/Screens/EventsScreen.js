@@ -7,6 +7,7 @@ import LoadingWheel from "../components/LoadingWheel";
 import { getChoirById, getEventsByChoir } from "../utils/api";
 import { auth } from "../../firebase";
 import styles from "../styles/events.styles";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function EventsScreen({ navigation, route }) {
   const username = auth.currentUser.displayName;
@@ -16,22 +17,20 @@ export default function EventsScreen({ navigation, route }) {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setIsLoading(true);
-    getChoirById(choirId)
-      .then((choir) => {
-        setChoir(choir);
-      })
-      .then(
-        getEventsByChoir(choirId).then((events) => {
-          setEvents(events);
-          setIsLoading(false);
-        })
-      )
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
+  useEffect(async () => {
+    try {
+      const choir = await getChoirById(choirId);
+      const events = await getEventsByChoir(choirId);
+
+      setChoir(choir);
+      setEvents(events);
+
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
+    setIsLoading(false);
   }, []);
 
   if (isLoading) {
@@ -44,10 +43,18 @@ export default function EventsScreen({ navigation, route }) {
         <GroupHeader choir={choir} />
 
         <View style={styles.eventsContainer}>
-          <Text style={styles.title}>Upcoming events:</Text>
-          {events.map((event) => {
-            return <EventCard key={event._id} event={event} />;
-          })}
+          <Text style={styles.eventsTitle}>Upcoming events</Text>
+          <ScrollView>
+            {events.length === 0 ? (
+              <View style={styles.eventsContainer}>
+                <Text>There are currently no events scheduled.</Text>
+              </View>
+            ) : (
+              events.map((event) => {
+                return <EventCard key={event._id} event={event} />;
+              })
+            )}
+          </ScrollView>
         </View>
 
         <View style={styles.buttonContainer}>
